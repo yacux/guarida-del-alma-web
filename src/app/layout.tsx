@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import Header from "@/shared/components/Header";
 import Footer from "@/shared/components/Footer";
 import "./globals.css";
-import { Inter, Cormorant_Garamond } from "next/font/google";
+import { Inter, Raleway } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
 
-const cormorant = Cormorant_Garamond({
+const raleway = Raleway({
   weight: ["300", "400", "600"], // Variedad de grosores para jerarquía
   style: ["normal", "italic"], // La cursiva de Cormorant es hermosa para frases
   subsets: ["latin"],
@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${inter.variable} ${cormorant.variable}`}>
+    <html lang="es" className={`${inter.variable} ${raleway.variable}`}>
       <body className="min-h-screen flex flex-col bg-fuchsia-100 text-violet-600">
         <Header />
         {children}

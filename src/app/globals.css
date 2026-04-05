@@ -38,6 +38,31 @@
   .text-glow {
     text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
   }
+
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-guarida-fuchsia) var(--color-guarida-violet);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--color-guarida-violet);
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-guarida-fuchsia);
+    border-radius: 4px;
+
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #c0265a;
+    /* darker fuchsia */
+  }
 }
 
 .container {

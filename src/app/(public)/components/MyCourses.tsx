@@ -1,4 +1,4 @@
-import CourseCard from "./CourseCard";
+import CourseCard from "./ServiceCard";
 import { Heart, Music } from "lucide-react";
 import Image from "next/image";
 
@@ -34,7 +34,7 @@ export default function MyCourses() {
         />
       ),
       colorText: "text-guarida-fuchsia",
-      title: "curso de amor propio incondicional",
+      title: "curso de amor \n propio  incondicional",
       description: "Un viaje de 8 semanas hacia tu centro.",
       href: "/cursos/amor-propio",
       cta: "Ver programa",
@@ -56,8 +56,10 @@ export default function MyCourses() {
   ];
 
   return (
-    <section className="relative h-full py-16 flex flex-col bg-guarida-dark overflow-hidden">
-      <div className="absolute translate-y-1/2 inset-0">
+    <section className="relative h-full py-28 bg-guarida-dark overflow-hidden">
+      <div className="bg-linear-to-b from-guarida-dark to-transparent z-30 absolute top-0 left-0 w-full h-20" />
+      {/* Fondo decorativo */}
+      <div className="absolute rotate-45 w-[120%] top-0 inset-0 pointer-events-none">
         <Image
           src="/onda.svg"
           alt="onda"
@@ -73,43 +75,46 @@ export default function MyCourses() {
           className="-translate-y-1/6 opacity-50"
         />
       </div>
-      {/* Fondo decorativo sutil (opcional para dar profundidad) */}
-      <div className="relative z-10 text-center">
-        <h2 className="text-4xl md:text-5xl font-spiritual text-white">
-          Explorá mis cursos
-        </h2>
-        <br />
-        {/* Lista de beneficios unificada */}
-        <ul className="space-y-3 text-guarida-fuchsia/80 text-sm leading-relaxed max-w-md mx-auto">
-          {CourseBenefits.map((item, index) => (
-            <li
-              key={`course-benefit-${index}`}
-              className="flex items-center justify-center gap-2"
-            >
-              <span className="text-guarida-fuchsia">•</span>
+      <div className="container grid grid-cols-2 gap-20">
+        {/* Columna izquierda: título + checklist */}
+        <div className=" relative z-10 content-center px-8">
+          <h2 className="text-4xl md:text-5xl font-spiritual text-white mb-8">
+            Explorá mis cursos
+          </h2>
 
-              {item.onlyText ? (
-                <span className="italic">{item.texto}</span>
-              ) : (
-                <span>
-                  {item.texto}
-                  <strong
-                    className={`text-guarida-fuchsia font-medium ${item.isItalic ? "italic" : ""}`}
-                  >
-                    {item.resaltado}
-                  </strong>
-                  {item.extra}
-                </span>
-              )}
-            </li>
+          <ul className="space-y-4 text-guarida-fuchsia/80 text-lg leading-relaxed max-w-md">
+            {CourseBenefits.map((item, index) => (
+              <li
+                key={`course-benefit-${index}`}
+                className="flex items-start gap-3"
+              >
+                {/* Checkmark estilizado */}
+                <span className="text-guarida-fuchsia mt-0.5 text-xl">✓</span>
+
+                {item.onlyText ? (
+                  <span className="italic text-white/70">{item.texto}</span>
+                ) : (
+                  <span className="text-white/70">
+                    {item.texto}
+                    <strong
+                      className={`text-guarida-fuchsia font-medium ${item.isItalic ? "italic" : ""}`}
+                    >
+                      {item.resaltado}
+                    </strong>
+                    {item.extra}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Columna derecha: cards apiladas verticalmente */}
+        <div className="relative z-10 flex flex-col gap-10 justify-center pr-8 pt-6">
+          {MAIN_COURSES.map((course, index) => (
+            <CourseCard key={index} course={course} />
           ))}
-        </ul>
-      </div>
-      <br />
-      <div className="container flex justify-around gap-40">
-        {MAIN_COURSES.map((course, index) => (
-          <CourseCard key={index} course={course} />
-        ))}
+        </div>
       </div>
     </section>
   );
