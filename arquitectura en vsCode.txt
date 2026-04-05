@@ -1,0 +1,30 @@
+arquitectura en vsCode de guarida del alma.
+
+src/app/
+├── (auth)/                 # Grupo de rutas para login/registro (no sale en la URL)
+│   ├── login/
+│   │   └── page.tsx
+│   └── register/
+│       └── page.tsx
+├── (public)/               # Grupo de rutas públicas
+│   ├── page.tsx            # HOME principal (Guarida del Alma)
+│   ├── cursos/
+│   │   ├── page.tsx        # Catálogo de cursos y packs
+│   │   └── [id]/           # Ruta dinámica: Detalle del curso
+│   │       └── page.tsx
+│   ├── sesiones/
+│   │   └── page.tsx        # Reserva de terapias individuales
+│   └── productos/
+│       └── page.tsx        # E-commerce (ropa, agendas)
+├── admin/                  # Panel de administración (Protegido)
+│   ├── page.tsx            # Dashboard con métricas
+│   ├── cursos/
+│   │   └── page.tsx        # ABM de cursos y precios
+│   └── productos/
+│       └── page.tsx        # ABM de stock de ropa/agendas
+├── api/                    # Webhooks de Mercado Pago y PayPal
+│   └── webhooks/
+│       └── payments/
+│           └── route.ts
+├── layout.tsx              # Configuración global (Fuentes, Colores, Navbar, Footer)
+└── globals.css             # Tus variables de Tailwind (Violeta, Fucsia, etc.)

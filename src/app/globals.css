@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+  --font-spiritual: var(--font-spiritual);
+  /* Enlazamos la variable de Next.js */
+
+  /* colores del logo y diseño general */
+  --color-guarida-violet: #7758bf;
+  --color-guarida-sky: #89dadb;
+
+  /* resto de colores */
+  --color-guarida-dark: #05070a;
+  --color-guarida-fuchsia: #db2777;
+  --color-guarida-blue: #2563eb;
+}
+
+@layer base {
+  body {
+    font-family: "Inter", sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-spiritual {
+    font-family: var(--font-spiritual);
+  }
+}
+
+/* Clases de utilidad personalizadas con @apply */
+@layer utilities {
+  .bg-guarida-gradient {
+    background: linear-gradient(135deg,
+        var(--color-guarida-violet),
+        var(--color-guarida-fuchsia));
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+  }
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
