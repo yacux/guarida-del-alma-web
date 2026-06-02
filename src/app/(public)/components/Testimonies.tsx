@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-
+import { CarouselControls } from "@/shared/components/molecules/CarouselControls";
 const testimonios = [
   {
     nombre: "Viviana Giadas",
@@ -63,12 +63,12 @@ export default function Testimonies() {
 
   return (
     <section
-      className="bg-guarida-violet relative py-28 overflow-hidden"
+      className="relative py-20 overflow-hidden"
       aria-label="Testimonios de pacientes"
     >
       {/* Fondo sutil */}
       <div
-        className="absolute inset-0 opacity-5 pointer-events-none"
+        className="absolute inset-0 opacity-14 pointer-events-none"
         style={{
           backgroundImage:
             "radial-gradient(circle at 20% 50%, #89dadb 0%, transparent 50%), radial-gradient(circle at 80% 50%, #db2777 0%, transparent 50%)",
@@ -76,39 +76,33 @@ export default function Testimonies() {
         aria-hidden="true"
       />
 
-      <div className="container relative z-10">
-        <p className="text-guarida-sky text-sm tracking-[0.3em] uppercase text-center mb-3">
-          Experiencias reales
-        </p>
-        <h2 className="text-4xl sm:text-5xl font-spiritual text-white text-center mb-16">
-          Lo que dicen quienes me eligieron
-        </h2>
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 container relative z-10">
+        <div className="col-span-1">
+          <p className="text-guarida-sky text-sm tracking-[0.3em] uppercase mb-8">
+            Experiencias reales
+          </p>
+          <h2 className="text-4xl sm:text-5xl font-spiritual text-white uppercase">
+            Lo que dicen quienes me eligieron
+          </h2>
+        </div>
 
         {/* Carrusel */}
-        <div className="max-w-3xl mx-auto">
+        <div className="col-span-2 max-w-3xl mx-auto">
           <div
-            className="relative bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 sm:p-12 transition-all duration-500"
+            className="relative space-y-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4 sm:p-8 transition-all duration-500"
             role="region"
             aria-live="polite"
             aria-label={`Testimonio ${current + 1} de ${total}`}
           >
             {/* Comilla decorativa */}
-            <span
-              className="absolute top-6 left-8 text-guarida-sky/30 font-spiritual text-8xl leading-none select-none"
-              aria-hidden="true"
-            >
-              "
-            </span>
 
-            <StarRating count={t.stars} />
-
-            <p className="text-white/90 text-lg leading-relaxed italic mb-8 relative z-10">
-              {t.testimonio}
+            <p className="text-white/90 text-lg leading-relaxed italic relative z-10">
+              " {t.testimonio} "
             </p>
 
-            <div className="flex items-center gap-4 border-t border-white/20 pt-6">
+            <div className="flex items-center gap-4 border-t border-white/20 pt-4">
               <img
-                src={t.foto}
+                src="/1.png"
                 alt={`Foto de ${t.nombre}`}
                 className="w-14 h-14 rounded-full object-cover border-2 border-guarida-sky/50"
                 width={56}
@@ -126,45 +120,15 @@ export default function Testimonies() {
           </div>
 
           {/* Controles */}
-          <div className="flex items-center justify-center gap-6 mt-10">
-            <button
-              onClick={prev}
-              aria-label="Testimonio anterior"
-              className="w-11 h-11 rounded-full border border-white/30 text-white hover:bg-white/10 hover:border-guarida-sky transition-all duration-200 flex items-center justify-center text-lg"
-            >
-              ←
-            </button>
 
-            {/* Dots */}
-            <div
-              className="flex gap-2"
-              role="tablist"
-              aria-label="Navegación de testimonios"
-            >
-              {testimonios.map((_, i) => (
-                <button
-                  key={i}
-                  role="tab"
-                  aria-selected={i === current}
-                  aria-label={`Ver testimonio ${i + 1}`}
-                  onClick={() => setCurrent(i)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    i === current
-                      ? "w-8 bg-guarida-sky"
-                      : "w-2 bg-white/30 hover:bg-white/50"
-                  }`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={next}
-              aria-label="Siguiente testimonio"
-              className="w-11 h-11 rounded-full border border-white/30 text-white hover:bg-white/10 hover:border-guarida-sky transition-all duration-200 flex items-center justify-center text-lg"
-            >
-              →
-            </button>
-          </div>
+          <CarouselControls
+            current={current}
+            total={testimonios.length}
+            onPrev={prev}
+            onNext={next}
+            onSelect={setCurrent}
+            color="sky"
+          />
         </div>
       </div>
     </section>

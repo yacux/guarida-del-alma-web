@@ -2,20 +2,91 @@
 
 @theme {
   --font-spiritual: var(--font-spiritual);
-  /* Enlazamos la variable de Next.js */
 
-  /* colores del logo y diseño general */
-  --color-guarida-violet: #7758bf;
+  /* Colores del logo y diseño general */
+  --color-guarida-violet: #683eab;
+  --color-guarida-dark-violet: #1d112e;
   --color-guarida-sky: #89dadb;
-
-  /* resto de colores */
+  /* Resto de colores */
   --color-guarida-dark: #05070a;
   --color-guarida-fuchsia: #db2777;
   --color-guarida-blue: #2563eb;
+
+  /* estilos para los rayos de luz */
+  /* 1. Animación de escala (Contenedor Padre) */
+  @keyframes lights-pulse-scale {
+    0%,
+    100% {
+      transform: translate(-50%, -50%) scale(0.7);
+    }
+
+    50% {
+      transform: translate(-50%, -50%) scale(1.02);
+    }
+  }
+
+  /* 2. Animaciones de opacidad (Hijos) FUNCIONA */
+  @keyframes opacity-breath-1 {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes opacity-breath-2 {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  /* 3. Rotaciones  */
+  @keyframes spin-clockwise {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    50% {
+      transform: rotate(180deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes spin-counter {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    50% {
+      transform: rotate(-180deg);
+    }
+
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+
+  --animate-pulse-scale: lights-pulse-scale 14s ease-in-out infinite;
+  --animate-combined-1:
+    spin-clockwise 90s linear infinite, opacity-breath-1 5s ease-in-out infinite;
+  --animate-combined-2:
+    spin-counter 80s linear infinite, opacity-breath-2 10s ease-in-out infinite;
 }
 
 @layer base {
   body {
+    @apply text-white;
     font-family: "Inter", sans-serif;
   }
 
@@ -27,18 +98,42 @@
   }
 }
 
-/* Clases de utilidad personalizadas con @apply */
 @layer utilities {
-  .bg-guarida-gradient {
-    background: linear-gradient(135deg,
-        var(--color-guarida-violet),
-        var(--color-guarida-fuchsia));
+  /* Contenedor que escala */
+  .lights-container {
+    @apply pointer-events-none absolute translate-x-1/2 translate-y-1/2 w-screen h-screen;
+    animation: var(--animate-pulse-scale);
+    will-change: transform;
+  }
+
+  /* Las luces solo rotan y cambian opacidad */
+  .light-beam {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-none;
+    height: auto;
+    width: 550px;
+    will-change: transform, opacity;
+  }
+
+  .light-beam-left {
+    @apply fixed top-1/2 -translate-y-1/2 -left-26;
+    height: auto;
+    width: 550px;
+    will-change: transform, opacity;
+  }
+
+  .animate-light-1 {
+    animation: var(--animate-combined-1);
+  }
+
+  .animate-light-2 {
+    animation: var(--animate-combined-2);
   }
 
   .text-glow {
     text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
   }
 
+  /* Scrollbar personalizada */
   .custom-scrollbar {
     scrollbar-width: thin;
     scrollbar-color: var(--color-guarida-fuchsia) var(--color-guarida-violet);
@@ -56,12 +151,10 @@
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: var(--color-guarida-fuchsia);
     border-radius: 4px;
-
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #c0265a;
-    /* darker fuchsia */
   }
 }
 

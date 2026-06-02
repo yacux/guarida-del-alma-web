@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import Header from "@/shared/components/Header";
-import Footer from "@/shared/components/Footer";
+import Header from "@/shared/components/organisms/Header";
+import Footer from "@/shared/components/organisms/Footer";
 import "./globals.css";
 import { Inter, Raleway } from "next/font/google";
+import Image from "next/image";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,7 +29,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${inter.variable} ${raleway.variable}`}>
-      <body className="min-h-screen flex flex-col bg-fuchsia-100 text-violet-600">
+      <body className="min-h-screen flex flex-col bg-linear-to-r via-35% from-guarida-violet via-guarida-dark-violet to-guarida-dark-violet text-guarida-violet">
+        <Image
+          src="/lights-1.png.webp"
+          alt="alma"
+          width={550}
+          height={550}
+          className="aspect-square light-beam-left animate-light-1"
+        />
+        <Image
+          src="/lights-2.png.webp"
+          alt="alma"
+          width={550}
+          height={550}
+          className="aspect-square light-beam-left animate-light-2 "
+        />
         <Header />
         {children}
         <Footer />

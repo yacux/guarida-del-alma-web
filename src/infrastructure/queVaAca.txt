@@ -1,0 +1,66 @@
+2. La carpeta infrastructure/ (La Obra de Construcción)
+Aquí es donde viven las librerías reales. Esta capa está llena de importaciones a @supabase/supabase-js, stripe, resend, etc. Su único trabajo es cumplir los contratos que dictó el core.
+
+infrastructure/repositories/ (Los Albañiles de la Base de Datos):
+Aquí NUNCA son interfaces, son clases con código real. Un archivo aquí (como SupabaseProfileRepository.ts) 
+importa el contrato del core y ejecuta el código SQL o las llamadas a la API de Supabase para cumplirlo. 
+Si mañana cambias Supabase por MongoDB, creas un MongoProfileRepository.ts aquí mismo, y el core ni se entera.
+
+infrastructure/adapters/ (Los Traductores del Mundo Exterior):
+Mientras que los repositorios se usan casi exclusivamente para "hablar con tu base de datos", 
+los adaptadores se usan para hablar con servicios de terceros que no son de almacenamiento directo.
+
+Ejemplo 1: Un adaptador para Clerk. Tu core podría tener un contrato IAuthService, 
+y en infrastructure/adapters/ tendrías un ClerkAuthAdapter que sabe cómo pedirle a Clerk que banee a un usuario.
+
+Ejemplo 2: Un adaptador para pagos. Tu core exige un IPaymentGateway, y aquí tendrías un MercadoPagoAdapter o StripeAdapter.
+
+
+En Resumen: El Viaje de la Información
+El Caso de Uso dice: "Necesito guardar este perfil usando el contrato IProfileRepository".
+
+Next.js le entrega el Repositorio de Infraestructura (SupabaseProfileRepository).
+
+Ese repositorio toma los datos, usa las herramientas reales (Supabase), y devuelve una Entidad del Core (Profile).
+
+Tener repositories en ambos lados (core e Infrastructure) es el puente mágico que permite que tu negocio (Core) 
+esté completamente aislado de la tecnología (Infrastructure).
+
+-------------------------------------------------------------------------------------------------------------
+MAS EXPLICACIONES PARA PROFUNDIZAR...
+
+Adapters y Repositories separados, se diferencian en:
+
+- cómo me comunico con el exterior (Adapters). se les llama puentes.
+- y cómo accedes a los datos de tu dominio (Repositories). se les llama puertos.
+
+Perfecto. Esa división dentro de infrastructure es muy acertada y sigue fielmente los principios de la arquitectura hexagonal (puertos y adaptadores).
+
+Al tener Adapters y Repositories separados, estás diferenciando claramente entre cómo te comunicas con el exterior (Adapters) y cómo accedes a los datos de tu dominio (Repositories).
+
+---------------------------------------------
+
+1. La carpeta repositories
+Aquí van las implementaciones concretas de las interfaces que definiste en el Core. 
+Es el lugar donde "hablas" con tu base de datos o fuente de verdad.
+
+PrismaCourseRepository.ts / SupabaseCourseRepository.ts: Aquí escribes las queries reales (ej: select * from courses).
+
+Mapeo de datos: Es vital que aquí conviertas lo que viene de la base de datos (que suele ser un JSON plano) a tu Entidad del Core (que tiene los métodos de "1 año de acceso").
+
+Propósito: Aislar el origen de los datos. Si mañana cambias de Supabase a una base de datos propia, solo tocas esta carpeta.
+
+--------------------------------------------
+
+2. La carpeta adapters
+Esta carpeta es para "traducir" herramientas externas o servicios de terceros para que tu aplicación los pueda usar sin ensuciar la lógica de negocio.
+
+Aquí es donde encajarían cosas como:
+
+MercadoPagoAdapter.ts: Para procesar el pago del Programa Fénix. El adaptador traduce la respuesta compleja de Mercado Pago a algo que tu aplicación entienda (ej: paymentStatus: 'SUCCESS').
+
+VimeoAdapter.ts: Si los videos de los módulos están en Vimeo, este adaptador maneja la comunicación con su API.
+
+AuthAdapter.ts: Para gestionar el login (ya sea con NextAuth, Clerk o Supabase Auth).
+
+Hooks de Dominio (Data Hooks): Como mencionamos antes, si usas hooks para conectar la UI con tus Casos de Uso, puedes ponerlos aquí dentro de una subcarpeta /hooks.

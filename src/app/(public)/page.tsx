@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import Hero from "./components/Hero";
 import MyCourses from "./components/MyCourses";
 import MyWorkshops from "./components/MyWorkshops";
 import Testimonies from "./components/Testimonies";
 import FeaturedProducts from "./components/FeaturedProducts";
-
+import SpaceForYou from "./components/SpaceForYou";
 export const metadata: Metadata = {
   title: "La Guarida del Alma | Coaching, Bienestar y Sanación Integral",
   description:
@@ -21,161 +22,41 @@ export const metadata: Metadata = {
   },
 };
 
-const especialidades = [
-  "Coach mente, cuerpo y emociones",
-  "Programación Neurolingüística (PNL)",
-  "Bioneuroemoción",
-  "Psicoeducación emocional",
-  "Danza terapia",
-  "Hipnosis",
-  "Agente de cambio",
-  "Divulgadora sobre narcisismo",
-  "Microdosis: dolor, insomnio, ansiedad y depresión",
-];
-
 export default function Home() {
   return (
     <main className="font-sans">
       {/* ── 1. HERO ──────────────────────────────────────────────── */}
-      <section
-        className="sticky top-0 min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden"
-        aria-label="Bienvenida"
-        style={{
-          background:
-            "linear-gradient(175deg, #f0f8ff 0%, #e8f4f8 25%, #ddeef7 50%, #ede8f5 80%, #e8e0f0 100%)",
-        }}
-      >
-        {/* Orbes de luz atmosféricos */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 60% 50% at 30% 30%, rgba(137,218,219,0.35) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 75% 65%, rgba(119,88,191,0.15) 0%, transparent 55%), radial-gradient(ellipse 40% 30% at 60% 20%, rgba(255,255,255,0.8) 0%, transparent 50%)",
-          }}
-          aria-hidden="true"
-        />
+      <Hero />
 
-        {/* Partículas suaves */}
-        <div
-          className="absolute top-1/4 left-1/5 w-1.5 h-1.5 rounded-full bg-guarida-sky opacity-40"
-          aria-hidden="true"
-        />
-        <div
-          className="absolute top-1/3 right-1/4 w-1 h-1 rounded-full bg-guarida-violet opacity-30"
-          aria-hidden="true"
-        />
-        <div
-          className="absolute bottom-1/3 left-1/3 w-2 h-2 rounded-full bg-guarida-sky opacity-20"
-          aria-hidden="true"
-        />
-        <div
-          className="absolute top-2/3 right-1/3 w-1 h-1 rounded-full bg-guarida-fuchsia opacity-25"
-          aria-hidden="true"
-        />
+      {/* ── ¿ESTE ESPACIO ES PARA VOS? ─────────────────────── */}
+      <SpaceForYou />
 
-        {/* Contenido */}
-        <div className="relative z-10 max-w-4xl mx-auto">
-          {/* Tagline superior */}
-          <p className="text-guarida-violet/70 text-xs sm:text-sm tracking-[0.4em] uppercase mb-8">
-            Bienestar · Sanación · Consciencia
-          </p>
-
-          {/* Título principal */}
-          <h1 className="font-spiritual text-5xl sm:text-6xl md:text-7xl mb-6 leading-none bg-linear-to-b from-guarida-sky via-guarida-violet to-guarida-violet uppercase bg-clip-text text-transparent">
-            La Guarida del Alma
-          </h1>
-
-          {/* Bajada */}
-          <p className="text-lg sm:text-xl text-guarida-violet/60 font-light tracking-wide max-w-xl mx-auto mb-12 leading-relaxed">
-            Un espacio para encontrarte con vos misma,
-            <br />
-            sanar desde la raíz y vivir con plenitud.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/cursos"
-              className="bg-guarida-violet hover:bg-guarida-violet/80 text-white px-10 py-4 rounded-full text-sm tracking-widest uppercase transition-all duration-300 hover:scale-105"
-            >
-              Explorar cursos
-            </Link>
-            <Link
-              href="#sobre-hebe"
-              className="border border-guarida-violet/30 hover:border-guarida-violet text-guarida-violet/70 hover:text-guarida-violet px-10 py-4 rounded-full text-sm tracking-widest uppercase transition-all duration-300"
-            >
-              Conocé a Hebe
-            </Link>
-          </div>
-        </div>
-
-        {/* Flecha scroll */}
-        <div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-guarida-violet/50 animate-bounce"
-          aria-hidden="true"
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-          >
-            <path d="M12 5v14M5 12l7 7 7-7" />
-          </svg>
-        </div>
-      </section>
-
-      {/* ── 2. CURSOS PRINCIPALES ───────────────────────────────── */}
-      <MyCourses />
-
-      {/* ── 3. SOBRE HEBE ───────────────────────────────────────── */}
+      {/* ── . SOBRE HEBE ───────────────────────────────────────── */}
       <section
         id="sobre-hebe"
-        className="relative py-28 overflow-hidden"
+        className="relative py-20 overflow-hidden"
         aria-label="Sobre Hebe"
-        style={{
-          background:
-            "linear-gradient(160deg, #faf8ff 0%, #f3effe 40%, #eaf6f6 100%)",
-        }}
       >
-        {/* Orbe decorativo */}
-        <div
-          className="absolute inset-0 opacity-40 pointer-events-none"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 15% 50%, rgba(137,218,219,0.3) 0%, transparent 50%), radial-gradient(circle at 90% 20%, rgba(119,88,191,0.15) 0%, transparent 45%)",
-          }}
-          aria-hidden="true"
-        />
-
-        <div className="container relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className=" container relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
             {/* Foto */}
-            <div className="flex justify-center lg:justify-start order-2 lg:order-1">
-              <div className="relative">
-                {/* Marco decorativo */}
+            <div className="order-2 col-span-1 my-auto space-y-4 sm:space-y-8">
+              <div className="mr-auto relative">
                 <div
-                  className="absolute -inset-3 rounded-3xl opacity-40"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #7758bf, #89dadb, #db2777)",
-                  }}
+                  className="absolute -inset-3 rounded-3xl opacity-30 bg-linear-to-br from-guarida-violet via-guarida-sky to-guarida-fuchsia"
                   aria-hidden="true"
                 />
-                <div className="relative w-72 h-96 sm:w-80 sm:h-105 rounded-2xl overflow-hidden border border-guarida-violet/10">
+                <div className="relative w-72 sm:w-80 sm:h-105 rounded-2xl overflow-hidden border border-guarida-violet/10">
                   <Image
-                    src="/1.png"
+                    src="/hebewebp.webp"
                     alt="Hebe, coach de bienestar integral en La Guarida del Alma"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 640px) 288px, 320px"
+                    sizes=""
                     priority
                   />
                 </div>
-                {/* Badge flotante */}
-                <div className="absolute -bottom-4 -right-4 bg-guarida-violet rounded-2xl px-4 py-3 shadow-lg shadow-guarida-violet/20">
+                <div className="absolute -bottom-4 -right-4 bg-guarida-violet rounded-2xl px-4 py-2 shadow-lg shadow-guarida-violet/20">
                   <p className="text-white text-xs tracking-widest uppercase">
                     Agente de cambio
                   </p>
@@ -184,73 +65,49 @@ export default function Home() {
             </div>
 
             {/* Texto */}
-            <div className="order-1 lg:order-2">
-              <p className="text-guarida-sky text-sm tracking-[0.3em] uppercase mb-4">
-                Quién soy
-              </p>
-              <h2 className="text-4xl sm:text-5xl font-spiritual text-guarida-violet mb-6 leading-tight">
-                Hola, soy Hebe
-              </h2>
-              <p className="text-guarida-violet/70 text-lg leading-relaxed mb-6">
-                Soy coach integrativa especializada en mente, cuerpo y
-                emociones. Mi camino de vida me llevó a formarme en múltiples
-                disciplinas del bienestar para acompañar a otras personas a
-                encontrar su propia raíz de sanación.
-              </p>
-              <p className="text-guarida-violet/55 leading-relaxed mb-10">
-                Creo profundamente que cada síntoma tiene un mensaje, y que el
-                verdadero cambio ocurre cuando nos atrevemos a escucharlo. Desde
-                un enfoque amoroso, profesional y sin juicio, acompaño procesos
-                de transformación real.
-              </p>
-
-              {/* Especialidades */}
-              <div
-                className="grid grid-cols-1 sm:grid-cols-2 gap-3"
-                role="list"
-                aria-label="Especialidades de Hebe"
-              >
-                {especialidades.map((esp) => (
-                  <div
-                    key={esp}
-                    role="listitem"
-                    className="flex items-start gap-2.5"
-                  >
-                    <span
-                      className="text-guarida-sky mt-1 text-sm shrink-0"
-                      aria-hidden="true"
-                    >
-                      ◆
-                    </span>
-                    <span className="text-guarida-violet/70 text-sm leading-snug">
-                      {esp}
-                    </span>
-                  </div>
-                ))}
+            <div className="col-span-1 order-1 sm:col-span-2 space-y-10">
+              {/* Encabezado */}
+              <div className="text-white/90">
+                <h2 className="text-4xl sm:text-5xl font-spiritual text-white mb-6 leading-tight">
+                  Hola, soy Hebe
+                </h2>
+                <p className="text-lg leading-relaxed mb-4">
+                  En mi hogar siempre llamamos <strong>"Guarida"</strong> a ese
+                  rincón de protección y calma. <br /> Hoy transformé ese
+                  concepto en un espacio de sanación para vos.
+                </p>
+                <p className="leading-relaxed">
+                  Mi <strong>misión</strong> es acompañarte a
+                  <strong> tomar conciencia</strong>. Creo firmemente que la
+                  sanación comienza cuando descubrimos el el mensaje que nos
+                  envían nuestros síntomas y nuestras trabas emocionales.
+                </p>
+                <br />
+                <p className="leading-relaxed">
+                  Para llegar a la <strong>raíz de lo que te detiene</strong>,
+                  integro diversas herramientas que trabajan de manera profunda
+                  a nivel mental, emocional, corporal y espiritual.
+                </p>
               </div>
 
-              <div className="mt-10">
-                <Link
-                  href="/sesiones"
-                  className="inline-block bg-guarida-fuchsia hover:bg-guarida-fuchsia/80 text-white px-10 py-4 rounded-full text-sm tracking-widest uppercase transition-all duration-300 hover:scale-105"
-                >
-                  Trabajar con Hebe
-                </Link>
-              </div>
+              {/* Cita destacada */}
+              <blockquote className="border-l-2 border-white/30 pl-6">
+                <p className="font-spiritual text-xl sm:text-2xl text-white/80 italic leading-snug">
+                  "La sanación comienza cuando descubrimos el conflicto detrás
+                  del conflicto."
+                </p>
+              </blockquote>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 4. TESTIMONIOS ─────────────────────────────────────── */}
-      <Testimonies />
-
-      {/* ── 5. TALLERES ────────────────────────────────────────── */}
-      <MyWorkshops />
+      {/* ── CURSOS PRINCIPALES ───────────────────────────────── */}
+      <MyCourses />
 
       {/* ── 6. ACOMPAÑAMIENTO INDIVIDUAL ───────────────────────── */}
       <section
-        className="relative py-24 text-center bg-guarida-violet overflow-hidden"
+        className="relative py-20 text-center overflow-hidden"
         aria-label="Acompañamiento individual"
       >
         <div
@@ -274,15 +131,146 @@ export default function Home() {
           </p>
           <Link
             href="/sesiones"
-            className="inline-block bg-white text-guarida-violet px-10 py-4 rounded-full font-semibold hover:scale-105 transition-transform duration-300 text-sm tracking-widest uppercase"
+            className="inline-block border hover:bg-linear-to-t hover:to-guarida-sky/24 hover:text-white border-guarida-sky text-guarida-sky px-8 py-4 rounded-full font-semibold text-sm tracking-widest uppercase"
           >
             Reservar mi lugar
           </Link>
         </div>
       </section>
 
-      {/* ── 7. PRODUCTOS DESTACADOS ───────────────────────────── */}
+      {/* ── TALLERES ────────────────────────────────────────── */}
+      <MyWorkshops />
+
+      {/* ── TESTIMONIOS ─────────────────────────────────────── */}
+      <Testimonies />
+
+      {/* ── PRODUCTOS DESTACADOS ───────────────────────────── */}
       <FeaturedProducts />
+
+      {/* ── PROGRAMAS DE TRANSFORMACIÓN ─────────────────────── */}
+      <section className="container py-26" id="programas">
+        <div className="text-center mb-16">
+          <p className="text-guarida-sky text-sm tracking-[0.3em] uppercase mb-4">
+            Elegí tu camino
+          </p>
+          <h2 className="text-4xl md:text-5xl font-spiritual text-white">
+            Programas de Transformación
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          {/* PROGRAMA FLOR DE LOTO */}
+          <div className="relative group p-8 rounded-3xl border border-sky/10 bg-guarida-sky/10 backdrop-blur-sm flex flex-col h-full transition-all hover:border-guarida-sky/30">
+            <div className="mb-6">
+              <span className="text-4xl mb-4 block">🪷</span>
+              <h3 className="text-3xl font-spiritual text-white mb-2">
+                Flor de Loto
+              </h3>
+              <p className="text-guarida-sky text-sm uppercase tracking-widest">
+                Semestre de introspección
+              </p>
+            </div>
+
+            <ul className="space-y-4 mb-12 grow text-white/80">
+              <li className="flex items-start gap-3">
+                <span className="text-guarida-sky">✓</span>
+                <p>
+                  Acceso a la plataforma por <strong>6 meses</strong>.
+                </p>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-guarida-sky">✓</span>
+                <p>
+                  Incluye curso <strong>"Amor Propio"</strong> y talleres{" "}
+                  <strong>"Desata tu Voz"</strong> y{" "}
+                  <strong>"Renacer del Abuso Narcisista"</strong>.
+                </p>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-guarida-sky">✓</span>
+                <p>
+                  <strong>8 encuentros</strong> de sesiones individuales (1 a
+                  1).
+                </p>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-guarida-sky">✓</span>
+                <p>
+                  1 encuentro grupal en el semestre para profundizar en los
+                  talleres.
+                </p>
+              </li>
+            </ul>
+
+            <Link
+              href="/contacto"
+              className="w-full text-center py-4 rounded-xl border border-guarida-sky text-guarida-sky font-bold hover:bg-guarida-sky hover:text-guarida-violet transition-colors uppercase tracking-widest text-xs"
+            >
+              Más información
+            </Link>
+          </div>
+
+          {/* PROGRAMA AVE FÉNIX */}
+          <div className="relative group p-8 rounded-3xl border border-guarida-violet bg-linear-to-b from-guarida-violet/20 to-transparent flex flex-col h-full shadow-2xl shadow-guarida-violet/20">
+            <div className="absolute -top-4 right-8 bg-guarida-fuchsia text-white text-[10px] px-3 py-1 rounded-full uppercase tracking-tighter font-bold">
+              Más Completo
+            </div>
+
+            <div className="mb-6">
+              <span className="text-4xl mb-4 block">🔥</span>
+              <h3 className="text-3xl font-spiritual text-white mb-2">
+                Ave Fénix
+              </h3>
+              <p className="text-guarida-fuchsia text-sm uppercase tracking-widest">
+                Un año de renacimiento
+              </p>
+            </div>
+
+            <ul className="space-y-4 mb-12 grow text-white/90">
+              <li className="flex items-start gap-3">
+                <span className="text-guarida-fuchsia">-</span>
+                <p>
+                  Acceso por <strong>1 año</strong> a TODA la plataforma.
+                </p>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-guarida-fuchsia">-</span>
+                <p>
+                  <strong>Certificado</strong> de Danza Terapeuta Shaumbra.
+                </p>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-guarida-fuchsia">-</span>
+                <p>
+                  Un encuentro mensual de formación en Danza Terapéutica y Amor
+                  Propio.
+                </p>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-guarida-fuchsia">-</span>
+                <p>
+                  2 encuentros especiales de profundización (Desata tu Voz y
+                  Abuso Narcisista).
+                </p>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-guarida-fuchsia">-</span>
+                <p>
+                  <strong>12 sesiones individuales</strong> (Mentoria, PNL,
+                  Hipnosis y Coaching).
+                </p>
+              </li>
+            </ul>
+
+            <Link
+              href="/contacto"
+              className="w-full text-center py-4 rounded-xl bg-linear-to-r from-guarida-violet to-guarida-fuchsia text-white font-bold hover:brightness-110 transition-all uppercase tracking-widest text-xs shadow-lg shadow-guarida-fuchsia/20"
+            >
+              Comenzar mi transformación
+            </Link>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

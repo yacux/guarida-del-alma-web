@@ -1,0 +1,12 @@
+1. La carpeta core/ (El Estudio del Arquitecto)
+En esta carpeta nunca hay código de librerías externas (ni Supabase, ni Clerk, ni Axios). Es puro TypeScript.
+
+core/entities/ (El Qué): Aquí están tus moldes de datos puros. Como vimos con tu Profile.ts o tu Product.ts.
+Definen qué propiedades tiene una alumna o un curso. No saben de dónde vienen esos datos ni a dónde van.
+
+core/repositories/ (Los Contratos):
+Aquí SÍ son siempre interfaces. Esta carpeta contiene las reglas que dictan cómo se debe interactuar con las entidades. 
+El archivo IProfileRepository.ts es solo un contrato que dice: "Para guardar un Profile, necesito una función create que devuelva una promesa".
+
+¿Por qué están separados? Porque las Entidades son los datos, y los Repositorios del Core son las reglas de cómo esos datos pueden entrar o 
+salir del sistema, sin importar la tecnología que uses.

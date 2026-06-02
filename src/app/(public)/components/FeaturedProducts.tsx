@@ -1,7 +1,8 @@
 "use client";
-
+import Image from "next/image";
 import { useState, useCallback } from "react";
 import Link from "next/link";
+import { CarouselControls } from "@/shared/components/molecules/CarouselControls";
 
 const productos = [
   {
@@ -9,7 +10,7 @@ const productos = [
     descripcion:
       "Blend de aceites esenciales de rosa, sándalo y lavanda. Ideal para rituales de autocuidado y meditación. Calma el sistema nervioso y eleva la vibración emocional.",
     precio: "$4.800",
-    emoji: "🌹",
+    imgSrc: "/servicios/danza-terapia.jpeg",
     categoria: "Aceites & Aromas",
     href: "/productos",
   },
@@ -18,7 +19,7 @@ const productos = [
     descripcion:
       "Formulada con manteca de karité, aceite de argán y extracto de caléndula. Nutre profundamente la piel mientras promueve el bienestar emocional a través del tacto consciente.",
     precio: "$6.200",
-    emoji: "✨",
+    imgSrc: "/servicios/danza-terapia.jpeg",
     categoria: "Cremas & Cuidado",
     href: "/productos",
   },
@@ -27,7 +28,7 @@ const productos = [
     descripcion:
       "Tu compañera de autoconocimiento. Con espacios guiados para registrar emociones, gratitudes, metas y reflexiones. Diseñada para acompañar tu proceso interior a lo largo del año.",
     precio: "$8.500",
-    emoji: "📖",
+    imgSrc: "/servicios/danza-terapia.jpeg",
     categoria: "Papelería Consciente",
     href: "/productos",
   },
@@ -36,7 +37,7 @@ const productos = [
     descripcion:
       "Incluye aceite de meditación, vela aromática de soja, cristal de cuarzo rosa y guía de prácticas de bienestar. El regalo perfecto para empezar un camino de sanación.",
     precio: "$12.900",
-    emoji: "🔮",
+    imgSrc: "/servicios/danza-terapia.jpeg",
     categoria: "Kits & Regalos",
     href: "/productos",
   },
@@ -56,52 +57,51 @@ export default function FeaturedProducts() {
 
   return (
     <section
-      className="bg-guarida-dark relative py-28 overflow-hidden border-t border-white/5"
+      className="bg-violet-50 relative py-20 overflow-hidden border-t border-white/5"
       aria-label="Productos destacados"
     >
       {/* Fondo decorativo */}
       <div
         className="absolute inset-0 opacity-5 pointer-events-none"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 70% 30%, #7758bf 0%, transparent 50%), radial-gradient(circle at 20% 80%, #89dadb 0%, transparent 50%)",
-        }}
         aria-hidden="true"
       />
 
-      <div className="container relative z-10">
-        <p className="text-guarida-fuchsia text-sm tracking-[0.3em] uppercase text-center mb-3">
-          Bazar Holístico
-        </p>
-        <h2 className="text-4xl sm:text-5xl font-spiritual text-white text-center mb-4">
-          Productos para tu bienestar
-        </h2>
-        <p className="text-white/50 text-center mb-16 max-w-xl mx-auto">
-          Selección de productos naturales y herramientas de autoconocimiento
-          para acompañar tu proceso.
-        </p>
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 container relative z-10">
+        <div className="col-span-1 flex flex-col gap-4 md:gap-8">
+          <p className="text-guarida-fuchsia text-sm tracking-[0.3em] uppercase mb-8">
+            Bazar Holístico
+          </p>
+          <h2 className="text-4xl sm:text-5xl font-spiritual uppercase">
+            Productos para tu bienestar
+          </h2>
+
+          {/* CTA */}
+          <Link
+            href="/productos"
+            className="border border-guarida-violet/60 text-guarida-violet px-8 py-4 rounded-full hover:bg-guarida-violet/20 hover:border-guarida-violet transition-all duration-300 text-sm tracking-widest uppercase mr-auto "
+          >
+            Ver catálogo completo
+          </Link>
+        </div>
 
         {/* Carrusel */}
-        <div className="max-w-3xl mx-auto">
+        <div className="col-span-2 max-w-3xl mx-auto text-guarida-sky">
           <div
-            className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 sm:p-12 transition-all duration-500"
+            className="relative bg-guarida-dark-violet backdrop-blur-sm border border-white/10 rounded-2xl transition-all duration-500"
             role="region"
             aria-live="polite"
             aria-label={`Producto ${current + 1} de ${total}`}
           >
-            {/* Categoría badge */}
-            <span className="inline-block text-xs tracking-widest uppercase text-guarida-sky border border-guarida-sky/30 rounded-full px-3 py-1 mb-6">
-              {p.categoria}
-            </span>
-
-            <div className="flex flex-col sm:flex-row items-start gap-8">
-              {/* Emoji / icono producto */}
-              <div
-                className="shrink-0 w-24 h-24 rounded-2xl bg-guarida-violet/20 border border-guarida-violet/30 flex items-center justify-center text-5xl"
+            <div className="grid grid-cols-2 sm:flex-row items-start gap-8">
+              {/* imgSrc / icono producto */}
+              <Image
+                src={p.imgSrc}
+                alt="producto de bienestar"
+                width={80}
+                height={80}
+                className="shrink-0 w-full h-auto rounded-2xl bg-guarida-violet/20 border border-guarida-violet/30 flex items-center justify-center text-5xl"
                 aria-hidden="true"
-              >
-                {p.emoji}
-              </div>
+              />
 
               <div className="flex-1">
                 <h3 className="text-2xl sm:text-3xl font-spiritual text-white mb-4">
@@ -126,54 +126,15 @@ export default function FeaturedProducts() {
           </div>
 
           {/* Controles */}
-          <div className="flex items-center justify-center gap-6 mt-10">
-            <button
-              onClick={prev}
-              aria-label="Producto anterior"
-              className="w-11 h-11 rounded-full border border-white/20 text-white hover:bg-white/5 hover:border-guarida-violet transition-all duration-200 flex items-center justify-center text-lg"
-            >
-              ←
-            </button>
-
-            <div
-              className="flex gap-2"
-              role="tablist"
-              aria-label="Navegación de productos"
-            >
-              {productos.map((_, i) => (
-                <button
-                  key={i}
-                  role="tab"
-                  aria-selected={i === current}
-                  aria-label={`Ver producto ${i + 1}`}
-                  onClick={() => setCurrent(i)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    i === current
-                      ? "w-8 bg-guarida-fuchsia"
-                      : "w-2 bg-white/20 hover:bg-white/40"
-                  }`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={next}
-              aria-label="Siguiente producto"
-              className="w-11 h-11 rounded-full border border-white/20 text-white hover:bg-white/5 hover:border-guarida-violet transition-all duration-200 flex items-center justify-center text-lg"
-            >
-              →
-            </button>
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center mt-14">
-          <Link
-            href="/productos"
-            className="inline-block border border-guarida-violet/60 text-white px-10 py-4 rounded-full hover:bg-guarida-violet/20 hover:border-guarida-violet transition-all duration-300 text-sm tracking-widest uppercase"
-          >
-            Ver catálogo completo
-          </Link>
+          {/* Aquí usas el nuevo componente reutilizable */}
+          <CarouselControls
+            current={current}
+            total={productos.length}
+            onPrev={prev}
+            onNext={next}
+            onSelect={setCurrent}
+            color="fuchsia"
+          />
         </div>
       </div>
     </section>

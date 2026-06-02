@@ -1,56 +1,57 @@
 import Link from "next/link";
+import Image from "next/image";
 
-type CourseProps = {
+type serviceProps = {
   title: string;
-  colorText?: string;
   description: string;
   href: string;
   cta: string;
-  bgColor: string;
-  glowColor: string; // Nueva propiedad para el efecto neón
-  icon?: React.ReactNode; // Opcional por si quieres añadir iconos como en la imagen
+  srcImg: string;
 };
 
 // ServiceCard.tsx - layout horizontal (ícono izquierda + texto + botón derecha)
-export default function ServiceCard({ course }: { course: CourseProps }) {
+export default function ServiceCard({
+  title,
+  description,
+  href,
+  cta,
+  srcImg,
+}: serviceProps) {
+  const imageSource = srcImg || "/logo.jpg"; // Ruta de imagen por defecto si no se proporciona srcImg
   return (
     <div
-      className={`relative z-10 w-full px-6 py-10 rounded-2xl border border-white/10 
-                  backdrop-blur-md transition-all duration-500
-                  hover:scale-[1.02] hover:border-white/20
-                  ${course.glowColor} 
-                  ${course.bgColor}`}
+      className="h-full relative z-10 w-full rounded-xl border 
+                  transition-all duration-500
+                  hover:scale-[1.01] cursor-pointer border-white hover:border-white
+                  bg-guarida-violet hover:bg-guarida-violet/86 p-1"
     >
-      <div className="flex items-center gap-4">
-        {/* Ícono circular a la izquierda */}
-        {course.icon && (
-          <div className="flex items-center justify-center opacity-80">
-            {course.icon}
-          </div>
-        )}
+      <div className="h-44 flex items-center gap-4">
+        <Image
+          alt="imagen de servicio"
+          className="rounded-xl object-cover h-full w-auto aspect-square"
+          src={imageSource}
+          width={140}
+          height={140}
+        />
 
         {/* Título y descripción al centro */}
-        <div className="flex-1 min-w-0">
+        <div className="grow flex flex-col justify-center gap-4 h-full text-white">
           <h3
             className={`text-base md:text-xl font-semibold font-spiritual uppercase mb-1 
-                        leading-tight whitespace-pre-line ${course.colorText}`}
+                        leading-tight whitespace-pre-line`}
           >
-            {course.title}
+            {title}
           </h3>
-          <p className={`text-sm ${course.colorText} opacity-70 line-clamp-2`}>
-            {course.description}
-          </p>
+          <p className={`opacity-90 line-clamp-2`}>{description}</p>
+          <Link
+            href={href}
+            className="shrink-0 inline-block mr-auto  
+                     px-5 py-2 rounded-full bg-guarida-fuchsia text-white text-sm font-medium tracking-wide
+                     hover:brightness-125 transition-all whitespace-pre-line text-center shadow-lg active:scale-95"
+          >
+            {cta}
+          </Link>
         </div>
-
-        {/* Botón "Ver" a la derecha */}
-        <Link
-          href={course.href}
-          className="shrink-0 inline-block bg-guarida-violet  
-                     px-5 py-2 rounded-full text-white text-sm font-medium tracking-wide
-                     hover:brightness-125 transition-all shadow-lg active:scale-95"
-        >
-          {course.cta}
-        </Link>
       </div>
     </div>
   );

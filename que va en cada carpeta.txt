@@ -1,0 +1,7 @@
+src/
+├── app/             <-- Capa de Presentación (Rutas y Páginas)
+├── components/      <-- Componentes visuales
+├── hooks/           <-- AQUÍ: useCarousel.ts, useForm.ts, etc.
+├── core/            <-- Lógica de negocio (Entidades, Interfaces)
+├── application/     <-- Casos de Uso
+└── infrastructure/  <-- Implementaciones técnicas
