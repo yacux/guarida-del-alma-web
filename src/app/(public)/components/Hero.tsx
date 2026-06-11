@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Hero() {
   return (
     <section
-      className="h-[92vh] z-30 sm:h-[89vh] lg:h-[87vh] relative flex flex-col justify-between items-center text-center py-20 overflow-hidden bg-linear-to-r from-guarida-violet via-guarida-dark-violet to-guarida-dark-violet"
+      className="z-30 h-screen relative flex flex-col justify-between items-center text-center py-20 overflow-hidden bg-linear-to-r from-guarida-violet via-guarida-dark-violet to-guarida-dark-violet"
       aria-label="Bienvenida"
     >
       <div className="lights-container">
@@ -25,6 +25,8 @@ export default function Hero() {
       </div>
       {/* Contenido */}
       <div className="container z-10 flex flex-col justify-center h-full  text-guarida-sky space-y-16">
+        <br />
+        <br />
         {/* Tagline superior */}
         <p className="text-xs sm:text-sm tracking-[0.4em] uppercase">
           Bienestar · Sanación · Consciencia

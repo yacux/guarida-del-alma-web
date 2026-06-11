@@ -50,9 +50,9 @@ export default function Home() {
                   <Image
                     src="/hebewebp.webp"
                     alt="Hebe, coach de bienestar integral en La Guarida del Alma"
-                    fill
                     className="object-cover object-top"
-                    sizes=""
+                    width={1600}
+                    height={2396}
                     priority
                   />
                 </div>

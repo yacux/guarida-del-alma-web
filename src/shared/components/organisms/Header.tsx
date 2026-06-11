@@ -1,9 +1,9 @@
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/image"; 
 
 export default function Header() {
   return (
-    <header className="bg-white/98 text-guarida-violet p-1 shadow-lg flex sticky top-0 h-[8vh] sm:h-[11vh] lg:h-[13vh] w-full z-50">
+    <header className="bg-linear-to-b from-guarida-dark-violet/92 via-guarida-dark-violet/50 via-40% to-transparent text-white pt-2 pb-20 flex fixed top-0 w-full z-50">
       <div className="container mx-auto flex items-center justify-between">
         <Link href="/" className="my-auto h-full flex items-center gap-2">
           <Image
@@ -21,17 +21,26 @@ export default function Header() {
           <ul className="flex items-center gap-6 text-lg">
             <li>
               <Link
-                href="/cursos"
-                className="hover:text-fuchsia-500 transition"
+                href="/dashboard"
+                className="hover:text-guarida-sky transition"
               >
-                Cursos y talleres
+                Aula Virtual
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                href="/cursos"
+                className="hover:text-guarida-sky transition"
+              >
+                Cursos y Talleres
               </Link>
             </li>
 
             <li>
               <Link
                 href="/sesiones"
-                className="hover:text-fuchsia-500 transition"
+                className="hover:text-guarida-sky transition"
               >
                 Sesiones
               </Link>
@@ -39,7 +48,7 @@ export default function Header() {
             <li>
               <Link
                 href="/productos"
-                className="hover:text-fuchsia-500 transition"
+                className="hover:text-guarida-sky transition"
               >
                 Productos
               </Link>
@@ -47,9 +56,24 @@ export default function Header() {
             <li>
               <Link
                 href="/login"
-                className="bg-guarida-fuchsia text-white px-4 py-2 rounded-full hover:bg-fuchsia-600 transition"
+                className="bg-guarida-fuchsia text-white w-11 h-11 rounded-full hover:bg-fuchsia-600 transition flex items-center justify-center shadow-lg hover:shadow-fuchsia-500/20"
+                aria-label="Ingresar a mi cuenta"
               >
-                Iniciar Sesión
+                {/* Ícono de Persona Minimalista */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                  />
+                </svg>
               </Link>
             </li>
           </ul>

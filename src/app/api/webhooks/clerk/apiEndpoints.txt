@@ -1,0 +1,32 @@
+hay 2 tipos de api endpoints
+
+---------------------------------------------------------------------
+
+1. El Endpoint Tradicional (Modelo "Pull" o Consultar)
+Un API Endpoint es simplemente una URL en tu servidor preparada para recibir peticiones. 
+En el flujo tradicional, tu propio Frontend (el navegador de la alumna) 
+es quien toma la iniciativa y llama al servidor para pedir o mandar algo.
+
+Ejemplo: Cuando la alumna entra a su panel y la pantalla parpadea cargando los cursos.
+El flujo: El Frontend le dice a tu API: "Che, /api/courses, pasame la lista de cursos de Hebe". 
+Tu API va a Supabase, busca los cursos y se los devuelve al Frontend.
+
+¿Quién inicia la acción?    El navegador del usuario (Frontend).	
+
+¿Para qué sirve?	Para pedir datos o hacer acciones en tiempo real mientras el usuario usa la app.
+---------------------------------------------------------------------
+
+2. El Webhook (Modelo "Push" o Avisar)
+Un Webhook sigue siendo una URL (un endpoint) en tu servidor, pero con una diferencia clave: 
+lo creás para que lo llame un sistema externo (un tercero) de forma automática cuando pasa algo en su mundo. 
+Tu frontend ni se entera de esto.
+
+Ejemplo: Alguien se registra en Clerk.
+
+El flujo: Clerk dice en sus propios servidores: "¡Epa! Se registró alguien. Dejame avisarle a la app de benja". 
+Clerk agarra el payload (los datos del usuario) y hace un disparo HTTP POST hacia la URL que vos le configuraste: 
+https://tu-plataforma.com/api/webhooks/clerk.
+
+¿Quién inicia la acción?    Un servidor externo (Clerk, Stripe, etc.).
+
+¿Para qué sirve?	Para enterarse de eventos que pasaron "afuera" de tu app.

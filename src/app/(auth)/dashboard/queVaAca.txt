@@ -1,2 +1,0 @@
-Donde el alumno ve sus módulos. 
-Aquí el frontend llama al caso de uso CheckAccessValidity

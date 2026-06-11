@@ -16,7 +16,6 @@ export interface Profile {
   email: string;
   fullName: string;
   avatarUrl: string | null;
-  phone: string | null;
   /** 'student' = alumna | 'admin' = Hebe */
   role: UserRole;
   createdAt: ISODateString;
@@ -30,16 +29,12 @@ export interface Profile {
 export type ClerkWebhookUserPayload = {
   id: ClerkUserId;
   email_addresses: Array<{ email_address: string; primary: boolean }>;
-  first_name: string | null;
-  last_name: string | null;
+  username: string | null;
   image_url: string | null;
 };
 
 /** Campos editables por la propia alumna desde su panel de perfil */
 export type UpdateProfileInput = Partial<
-  Pick<Profile, 'fullName' | 'avatarUrl' | 'phone'>
+  Pick<Profile, 'avatarUrl' >
 >;
 
-/** Helper: construir fullName desde payload de Clerk */
-export const buildFullName = (p: ClerkWebhookUserPayload): string =>
-  [p.first_name, p.last_name].filter(Boolean).join(' ');

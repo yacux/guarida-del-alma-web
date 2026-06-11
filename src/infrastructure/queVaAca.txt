@@ -1,3 +1,46 @@
+CARPETAS DENTRO DE INFRASTRUCTURE:
+
+REPOSITORIES
+Los repositorios tienen un trabajo muy específico: implementar contratos del Core.
+Un archivo en repositories debe ser siempre una clase que firma un contrato 
+(ej. implements IProfileRepository) y expone métodos como create, findById, etc.
+
+ADAPTERS
+Los adaptadores (en el contexto de nuestra arquitectura) se usan para traducir el idioma de un servicio externo
+de terceros al idioma de nuestro dominio. Por ejemplo, si integrás Mercado Pago, tendrías un MercadoPagoAdapter
+que toma la respuesta HTTP cruda de Mercado Pago y la convierte en una entidad Payment del Core.
+
+/CONFIG (o /CLIENTS)
+Las clases dentro de repositories y adapters necesitan herramientas para trabajar (el "martillo" y el "destornillador"). 
+La subcarpeta config es la caja de herramientas.
+Aquí es donde inicializas los SDKs puros antes de usarlos en el resto de la infraestructura. 
+ejemplos de archivos que irían en config:
+
+supabaseServerClient.ts (El cliente autenticado).
+
+resendClient.ts (La inicialización pura de la API key de correos).
+
+stripeConfig.ts (La inicialización del SDK de pagos).
+
+Luego, cuando un repositorio necesita hablar con la base de datos, simplemente importa ese cliente preconfigurado. 
+Esto mantiene el código DRY (Don't Repeat Yourself) porque no tenés que reescribir la lógica de inyección del 
+token JWT en cada uno de los repositorios que vayas a crear.
+
+En resumen:
+
+config/: Configura e inicializa la herramienta externa (Ej: "Prender el motor de la base de datos con el JWT").
+
+repositories/: Usa esa herramienta para guardar y leer entidades del Core (Ej: "Usar el motor para guardar a la alumna").
+
+adapters/: Usa otras herramientas para hablar con sistemas de terceros ajenos a la base de datos.
+
+
+
+
+-----------------------------------------------------------------------------
+
+
+
 2. La carpeta infrastructure/ (La Obra de Construcción)
 Aquí es donde viven las librerías reales. Esta capa está llena de importaciones a @supabase/supabase-js, stripe, resend, etc. Su único trabajo es cumplir los contratos que dictó el core.
 
