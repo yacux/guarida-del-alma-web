@@ -1,10 +1,12 @@
 import Link from "next/link";
-import Image from "next/image"; 
+import Image from "next/image";
+import MobileMenu from "./MobileMenu"; // Asegúrate de que la ruta sea correcta
 
 export default function Header() {
   return (
     <header className="bg-linear-to-b from-guarida-dark-violet/92 via-guarida-dark-violet/50 via-40% to-transparent text-white pt-2 pb-20 flex fixed top-0 w-full z-50">
-      <div className="container mx-auto flex items-center justify-between">
+      <div className="container mx-auto flex items-center justify-between px-4 lg:px-0">
+        {/* LOGO */}
         <Link href="/" className="my-auto h-full flex items-center gap-2">
           <Image
             src="/logo2.png"
@@ -17,6 +19,8 @@ export default function Header() {
             la guarida del alma
           </span>
         </Link>
+
+        {/* NAVEGACIÓN DESKTOP */}
         <nav className="hidden lg:block">
           <ul className="flex items-center gap-6 text-lg">
             <li>
@@ -27,7 +31,6 @@ export default function Header() {
                 Aula Virtual
               </Link>
             </li>
-
             <li>
               <Link
                 href="/cursos"
@@ -36,7 +39,6 @@ export default function Header() {
                 Cursos y Talleres
               </Link>
             </li>
-
             <li>
               <Link
                 href="/sesiones"
@@ -59,7 +61,6 @@ export default function Header() {
                 className="bg-guarida-fuchsia text-white w-11 h-11 rounded-full hover:bg-fuchsia-600 transition flex items-center justify-center shadow-lg hover:shadow-fuchsia-500/20"
                 aria-label="Ingresar a mi cuenta"
               >
-                {/* Ícono de Persona Minimalista */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -78,6 +79,9 @@ export default function Header() {
             </li>
           </ul>
         </nav>
+
+        {/* AQUI LLAMAMOS A LA INTERACTIVIDAD */}
+        <MobileMenu />
       </div>
     </header>
   );
