@@ -1,6 +1,6 @@
 // src/application/use-cases/CreateProfileUseCase.ts
-import { Profile, ClerkWebhookUserPayload } from '@/core/entities/Profile';
-import { IProfileRepository } from '@/core/repositories';
+import { Profile, ClerkWebhookUserPayload } from "@/core/entities/Profile";
+import { IProfileRepository } from "@/core/repositories";
 
 export class CreateProfileUseCase {
   /**
@@ -23,7 +23,7 @@ export class CreateProfileUseCase {
      * 2. Asignación:
      * Tomamos el repositorio que nos pasaron como argumento y lo guardamos
      * en la propiedad 'profileRepository' de nuestra instancia de caso de uso.
-     * a la propiedad privada definida arriba (profileRepository) 
+     * a la propiedad privada definida arriba (profileRepository)
      * le asignamos el valor del argumento recibido (profileRepository).
      * el de la derecha es el que se le pasa a este constructor cuando se instancia la clase, y el de la izquierda es la propiedad privada de esta clase.
      */
@@ -32,26 +32,27 @@ export class CreateProfileUseCase {
 
   // El método execute es el que recibe el argumento de la llamada a este caso de uso cuando a este se le pone .execute
   // recibira el payload del usuario.
-  // y defino que el payload recibido debe ser del tipo ClerkWebhookUserPayload, 
-  // que es el formato específico que Clerk me manda en su webhook. 
+  // y defino que el payload recibido debe ser del tipo ClerkWebhookUserPayload,
+  // que es el formato específico que Clerk me manda en su webhook.
   async execute(payload: ClerkWebhookUserPayload): Promise<Profile> {
     // 1. Buscamos el email principal del array que nos manda Clerk
-    const primaryEmailObj = payload.email_addresses.find(e => e.primary) 
-                         || payload.email_addresses[0];
-    
+    const primaryEmailObj =
+      payload.email_addresses.find((e) => e.primary) ||
+      payload.email_addresses[0];
+
     if (!primaryEmailObj) {
       throw new Error("El payload de Clerk no contiene un email válido.");
     }
 
     // 2. Construimos la entidad base usando tus reglas de dominio
-    // esta lógica de construcción del perfil es parte de la "lógica de negocio" 
+    // esta lógica de construcción del perfil es parte de la "lógica de negocio"
     // y por eso la dejamos aquí, en el caso de uso, que es donde debe estar.
     const newProfile: Profile = {
       id: payload.id,
       email: primaryEmailObj.email_address,
-      fullName: payload.username || 'Alumno', 
+      username: payload.username || "Alumno",
       avatarUrl: payload.image_url,
-      role: 'student', 
+      role: "student",
       createdAt: new Date().toISOString(), // Asumiendo que ISODateString es un alias de string
       updatedAt: new Date().toISOString(),
     };
@@ -61,19 +62,17 @@ export class CreateProfileUseCase {
   }
 }
 
-
 // llamando al caso de uso desde el webhook:
-
 
 // 1. AQUÍ se inicializa el caso de uso.
 // se ejecuta EL CONSTRUCTOR: Pasas la HERRAMIENTA (el repositorio)
 // Esto se hace con el "new". No le pasas datos de ningún usuario todavía.
-// 
-// const profileRepository = new SupabaseProfileRepository(); 
+//
+// const profileRepository = new SupabaseProfileRepository();
 
 // en este punto, el CU ya tiene la herramienta (el repo) para guardar perfiles, pero no tiene ningún dato de usuario todavía.
 // le paso por parametro el repo y dentro del CU se usa en el con
-// const createProfileUseCase = new CreateProfileUseCase(profileRepository); 
+// const createProfileUseCase = new CreateProfileUseCase(profileRepository);
 
 // 2. AQUÍ se ejecuta el caso de uso propiamente dicho.
 // se ejecuta EL EXECUTE: Pasas los DATOS (el payload del usuario)

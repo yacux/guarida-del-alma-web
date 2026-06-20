@@ -68,7 +68,7 @@ export class SupabaseProfileRepository implements IProfileRepository {
     return {
       id: data.id,
       email: data.email,
-      username: data.full_name,
+      username: data.username,
       avatarUrl: data.avatar_url,
       role: data.role,
       createdAt: data.created_at, // Asumimos que viene como ISODateString de la DB
