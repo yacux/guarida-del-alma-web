@@ -156,11 +156,15 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-spiritual text-white">
             Programas de Transformación
           </h2>
+          <br />
+          <p className="text-white/90 text-lg">
+            Incluyen cursos y talleres juntos para que empieces como necesites
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {/* PROGRAMA FLOR DE LOTO */}
-          <div className="relative group p-8 rounded-3xl border border-sky/10 bg-guarida-sky/10 backdrop-blur-sm flex flex-col h-full transition-all hover:border-guarida-sky/30">
+          <div className="relative group p-8 rounded-3xl border border-sky/10 bg-guarida-sky/8 backdrop-blur-sm flex flex-col h-full transition-all hover:border-guarida-sky/30">
             <div className="mb-6">
               <span className="text-4xl mb-4 block">🪷</span>
               <h3 className="text-3xl font-spiritual text-white mb-2">
@@ -212,7 +216,7 @@ export default function Home() {
 
           {/* PROGRAMA AVE FÉNIX */}
           <div className="relative group p-8 rounded-3xl border border-guarida-violet bg-linear-to-b from-guarida-violet/20 to-transparent flex flex-col h-full shadow-2xl shadow-guarida-violet/20">
-            <div className="absolute -top-4 right-8 bg-guarida-fuchsia text-white text-[10px] px-3 py-1 rounded-full uppercase tracking-tighter font-bold">
+            <div className="absolute -top-4 right-8 bg-guarida-fuchsia text-white px-6 py-2 rounded-full uppercase tracking-tighter font-semibold">
               Más Completo
             </div>
 

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { MAIN_NAV_LINKS } from "@/shared/constants/navigation"; // Ajusta la ruta a tu proyecto
 
 export default function MobileMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,35 +52,20 @@ export default function MobileMenu() {
 
       {/* MENÚ MÓVIL DESPLEGABLE */}
       {isMenuOpen && (
-        <nav className="absolute top-[90px] left-0 w-full bg-guarida-dark-violet lg:hidden flex flex-col items-center gap-6 py-8 shadow-xl border-t border-guarida-dark-violet/50">
-          <Link
-            href="/dashboard"
-            onClick={closeMenu}
-            className="text-xl hover:text-guarida-sky transition"
-          >
-            Aula Virtual
-          </Link>
-          <Link
-            href="/cursos"
-            onClick={closeMenu}
-            className="text-xl hover:text-guarida-sky transition"
-          >
-            Cursos y Talleres
-          </Link>
-          <Link
-            href="/sesiones"
-            onClick={closeMenu}
-            className="text-xl hover:text-guarida-sky transition"
-          >
-            Sesiones
-          </Link>
-          <Link
-            href="/productos"
-            onClick={closeMenu}
-            className="text-xl hover:text-guarida-sky transition"
-          >
-            Productos
-          </Link>
+        <nav className="absolute top-[90px] left-0 w-full bg-[#2a1738] lg:hidden flex flex-col items-center gap-6 py-8 shadow-xl border-t border-guarida-dark-violet/50">
+          {/* ITERAMOS SOBRE LA CONSTANTE */}
+          {MAIN_NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={closeMenu}
+              className="text-xl hover:text-guarida-sky transition"
+            >
+              {link.label}
+            </Link>
+          ))}
+
+          {/* El botón de login suele manejarse separado porque tiene una UI y lógica distinta */}
           <Link
             href="/login"
             onClick={closeMenu}

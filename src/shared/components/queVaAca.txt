@@ -1,0 +1,3 @@
+Acá aplicás Atomic Design estricto. 
+Ninguno de estos componentes conoce el negocio. 
+Reciben datos primitivos (string, number, boolean) y funciones genéricas (onClick) por props.

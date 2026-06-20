@@ -8,13 +8,13 @@
 //   NO mediante un trigger de Supabase sobre auth.users.
 // ============================================================
 
-import type { ClerkUserId, ISODateString, UserRole } from './shared';
+import type { ClerkUserId, ISODateString, UserRole } from "./shared";
 
 export interface Profile {
   /** Clerk User ID. Formato: "user_2abc123xyz". PK en public.profiles. */
   id: ClerkUserId;
   email: string;
-  fullName: string;
+  username: string;
   avatarUrl: string | null;
   /** 'student' = alumna | 'admin' = Hebe */
   role: UserRole;
@@ -34,7 +34,4 @@ export type ClerkWebhookUserPayload = {
 };
 
 /** Campos editables por la propia alumna desde su panel de perfil */
-export type UpdateProfileInput = Partial<
-  Pick<Profile, 'avatarUrl' >
->;
-
+export type UpdateProfileInput = Partial<Pick<Profile, "avatarUrl">>;

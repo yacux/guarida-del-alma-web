@@ -1,10 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import MobileMenu from "./MobileMenu"; // Asegúrate de que la ruta sea correcta
+import MobileMenu from "./MobileMenu";
+import { MAIN_NAV_LINKS } from "@/shared/constants/navigation"; // Ajusta la ruta
 
 export default function Header() {
   return (
-    <header className="bg-linear-to-b from-guarida-dark-violet/92 via-guarida-dark-violet/50 via-40% to-transparent text-white pt-2 pb-20 flex fixed top-0 w-full z-50">
+    <header className="bg-linear-to-b from-guarida-dark-violet/92 via-guarida-dark-violet/58 via-40% to-transparent text-white pt-2 pb-20 flex fixed top-0 w-full z-50">
       <div className="container mx-auto flex items-center justify-between px-4 lg:px-0">
         {/* LOGO */}
         <Link href="/" className="my-auto h-full flex items-center gap-2">
@@ -13,7 +14,7 @@ export default function Header() {
             alt="Logo"
             width={80}
             height={80}
-            className="aspect-square rounded-full"
+            className="aspect-square h-17 w-17 sm:h-21 sm:w-21 rounded-full"
           />
           <span className="hidden text-2xl uppercase font-semibold font-spiritual text-guarida-violet">
             la guarida del alma
@@ -23,38 +24,18 @@ export default function Header() {
         {/* NAVEGACIÓN DESKTOP */}
         <nav className="hidden lg:block">
           <ul className="flex items-center gap-6 text-lg">
-            <li>
-              <Link
-                href="/dashboard"
-                className="hover:text-guarida-sky transition"
-              >
-                Aula Virtual
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/cursos"
-                className="hover:text-guarida-sky transition"
-              >
-                Cursos y Talleres
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/sesiones"
-                className="hover:text-guarida-sky transition"
-              >
-                Sesiones
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/productos"
-                className="hover:text-guarida-sky transition"
-              >
-                Productos
-              </Link>
-            </li>
+            {/* ITERAMOS SOBRE LA CONSTANTE */}
+            {MAIN_NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="hover:text-guarida-sky transition"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+
             <li>
               <Link
                 href="/login"
@@ -80,7 +61,7 @@ export default function Header() {
           </ul>
         </nav>
 
-        {/* AQUI LLAMAMOS A LA INTERACTIVIDAD */}
+        {/* COMPONENTE CLIENTE PARA MÓVILES */}
         <MobileMenu />
       </div>
     </header>
