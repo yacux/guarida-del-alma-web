@@ -3,8 +3,8 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 // 1. Definimos las rutas públicas
 const isPublicRoute = createRouteMatcher([
   "/", // 💡 ¡Clave! Si tenés una landing page o inicio pública
-  "/sign-in(.*)",
-  "/sign-up(.*)",
+  "/login(.*)",
+  "/registro(.*)",
   "/api/webhooks(.*)", // Perfecto para los webhooks de Clerk o Mercado Pago
 ]);
 

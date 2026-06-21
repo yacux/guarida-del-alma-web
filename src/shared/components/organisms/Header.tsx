@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import MobileMenu from "./MobileMenu";
-import { MAIN_NAV_LINKS } from "@/shared/constants/navigation"; // Ajusta la ruta
+import { MAIN_NAV_LINKS } from "@/shared/constants/navigation";
+import { Show, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   return (
@@ -24,7 +25,6 @@ export default function Header() {
         {/* NAVEGACIÓN DESKTOP */}
         <nav className="hidden lg:block">
           <ul className="flex items-center gap-6 text-lg">
-            {/* ITERAMOS SOBRE LA CONSTANTE */}
             {MAIN_NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
@@ -36,28 +36,47 @@ export default function Header() {
               </li>
             ))}
 
-            <li>
-              <Link
-                href="/login"
-                className="bg-guarida-fuchsia text-white w-11 h-11 rounded-full hover:bg-fuchsia-600 transition flex items-center justify-center shadow-lg hover:shadow-fuchsia-500/20"
-                aria-label="Ingresar a mi cuenta"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  className="w-5 h-5"
+            {/* INTERSECCIÓN DE AUTENTICACIÓN */}
+
+            {/* SI NO ESTÁ LOGUEADO */}
+            <Show when="signed-out">
+              <li>
+                <Link
+                  href="/login"
+                  className="bg-guarida-fuchsia text-white w-11 h-11 rounded-full hover:bg-fuchsia-600 transition flex items-center justify-center shadow-lg hover:shadow-fuchsia-500/20"
+                  aria-label="Ingresar a mi cuenta"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                  />
-                </svg>
-              </Link>
-            </li>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                    />
+                  </svg>
+                </Link>
+              </li>
+            </Show>
+
+            {/* SI ESTÁ LOGUEADO */}
+            <Show when="signed-in">
+              <li className="flex items-center justify-center">
+                <UserButton
+                  appearance={{
+                    elements: {
+                      avatarBox:
+                        "w-11 h-11 border-2 border-guarida-fuchsia shadow-lg hover:scale-105 transition",
+                    },
+                  }}
+                />
+              </li>
+            </Show>
           </ul>
         </nav>
 
