@@ -12,6 +12,7 @@
   --color-guarida-fuchsia: #db2777;
   --color-guarida-blue: #2563eb;
 
+
   /* estilos para los rayos de luz */
   /* 1. Animación de escala (Contenedor Padre) */
   @keyframes lights-pulse-scale {

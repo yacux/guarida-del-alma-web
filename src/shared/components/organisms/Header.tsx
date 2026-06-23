@@ -43,7 +43,7 @@ export default function Header() {
               <li>
                 <Link
                   href="/login"
-                  className="bg-guarida-fuchsia text-white w-11 h-11 rounded-full hover:bg-fuchsia-600 transition flex items-center justify-center shadow-lg hover:shadow-fuchsia-500/20"
+                  className="bg-guarida-fuchsia text-white w-13! h-13! rounded-full hover:bg-fuchsia-600 transition flex items-center justify-center shadow-lg hover:shadow-fuchsia-500/20"
                   aria-label="Ingresar a mi cuenta"
                 >
                   <svg
@@ -71,7 +71,7 @@ export default function Header() {
                   appearance={{
                     elements: {
                       avatarBox:
-                        "w-11 h-11 border-2 border-guarida-fuchsia shadow-lg hover:scale-105 transition",
+                        "!w-14 !h-14 border-2 border-guarida-fuchsia shadow-lg hover:scale-105 transition",
                     },
                   }}
                 />
