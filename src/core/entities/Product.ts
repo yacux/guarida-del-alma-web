@@ -10,7 +10,7 @@
 //   • Program  → individualSessionsCount, grantsCertificate, approvalMinScore
 // ============================================================
 
-import type { UUID, ISODateString, ProductType } from './shared';
+import type { UUID, ISODateString, ProductType } from "./shared";
 
 // ——————————————————————————————————————————————
 // TABLA BASE — public.products
@@ -25,8 +25,6 @@ export interface Product {
   price_ars: number;
   productType: ProductType;
   coverImageUrl: string | null;
-  /** Universal: duración del acceso en meses (3, 6 o 12) */
-  accessDurationMonths: number;
   /** Universal: video introductorio / bienvenida */
   welcomeVideoUrl: string | null;
   /** Universal: si incluye comunidad de WhatsApp */
@@ -47,7 +45,7 @@ export interface CourseDetails {
 }
 
 export interface Course extends Product {
-  productType: 'course';
+  productType: "course";
   courseDetails: CourseDetails;
 }
 
@@ -61,7 +59,7 @@ export interface WorkshopDetails {
 }
 
 export interface Workshop extends Product {
-  productType: 'workshop';
+  productType: "workshop";
   workshopDetails: WorkshopDetails;
 }
 
@@ -84,7 +82,7 @@ export interface ProgramDetails {
 }
 
 export interface Program extends Product {
-  productType: 'program';
+  productType: "program";
   programDetails: ProgramDetails;
 }
 
@@ -93,28 +91,34 @@ export interface Program extends Product {
 // ——————————————————————————————————————————————
 export type ProductVariant = Course | Workshop | Program;
 
-export const isCourse   = (p: ProductVariant): p is Course   => p.productType === 'course';
-export const isWorkshop = (p: ProductVariant): p is Workshop => p.productType === 'workshop';
-export const isProgram  = (p: ProductVariant): p is Program  => p.productType === 'program';
+export const isCourse = (p: ProductVariant): p is Course =>
+  p.productType === "course";
+export const isWorkshop = (p: ProductVariant): p is Workshop =>
+  p.productType === "workshop";
+export const isProgram = (p: ProductVariant): p is Program =>
+  p.productType === "program";
 
 // ——————————————————————————————————————————————
 // INPUTS DE CREACIÓN
 // ——————————————————————————————————————————————
-export type CreateProductBaseInput = Omit<Product, 'id' | 'createdAt' | 'updatedAt'>;
+export type CreateProductBaseInput = Omit<
+  Product,
+  "id" | "createdAt" | "updatedAt"
+>;
 
 export type CreateCourseInput = CreateProductBaseInput & {
-  productType: 'course';
+  productType: "course";
   courseDetails: CourseDetails;
 };
 
 export type CreateWorkshopInput = CreateProductBaseInput & {
-  productType: 'workshop';
+  productType: "workshop";
   workshopDetails: WorkshopDetails;
 };
 
 export type CreateProgramInput = CreateProductBaseInput & {
-  productType: 'program';
-  programDetails: Omit<ProgramDetails, 'includedProductIds'>;
+  productType: "program";
+  programDetails: Omit<ProgramDetails, "includedProductIds">;
   includedProductIds: UUID[];
 };
 

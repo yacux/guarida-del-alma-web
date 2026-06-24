@@ -86,7 +86,6 @@ export class SupabaseProductRepository implements IProductRepository {
         coverImageUrl: fila.cover_image_url, // <-- Traducido de snake_case a camelCase
 
         // Propiedades universales añadidas en la Entidad V3:
-        accessDurationMonths: fila.access_duration_months, // <-- Traducido
         welcomeVideoUrl: fila.welcome_video_url, // <-- Traducido
         hasWhatsappCommunity: fila.has_whatsapp_community, // <-- Traducido
 
