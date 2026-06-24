@@ -13,12 +13,12 @@
 // Esta interfaz pertenece al Core y no conoce detalles de
 // Supabase.
 // ============================================================
-import { ProductVariant } from "../entities/Product";
+import { Product } from "../entities/Product";
 import { UUID } from "../entities/shared";
 
 export interface IProductRepository {
   /**
    * Recupera múltiples productos a partir de sus IDs.
    */
-  findByIds(productIds: UUID[]): Promise<ProductVariant[]>;
+  findByIds(productIds: UUID[]): Promise<Product[]>;
 }

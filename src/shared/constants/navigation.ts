@@ -9,6 +9,3 @@ export const MAIN_NAV_LINKS: NavLink[] = [
   { label: "Sesiones", href: "/sesiones" },
   { label: "Productos", href: "/productos" },
 ];
-
-type UUID = string;
-type ISODateString = string;
