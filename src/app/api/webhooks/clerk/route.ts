@@ -12,7 +12,7 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { ClerkWebhookUserPayload } from "@/core/entities/Profile";
-import { CreateProfileUseCase } from "@/application/use-cases/create-profile/CreateProfileUseCase";
+import { CreateProfileUseCase } from "@/application/use-cases/create-profile/create-profile.use-case";
 import { SupabaseProfileRepository } from "@/infrastructure/repositories/SupabaseProfileRepository";
 
 export async function POST(req: Request) {

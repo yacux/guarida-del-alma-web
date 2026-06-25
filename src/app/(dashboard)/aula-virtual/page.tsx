@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { createSupabaseServerClient } from "@/infrastructure/config/supabaseServerClient";
 import { SupabaseEnrollmentRepository } from "@/infrastructure/repositories/SupabaseEnrollmentRepository";
 import { SupabaseProductRepository } from "@/infrastructure/repositories/SupabaseProductRepository";
-import { GetStudentDashboardUseCase } from "@/application/use-cases/get-student-dashboard/getStudentDashboardUseCase";
+import { GetStudentDashboardUseCase } from "@/application/use-cases/get-student-dashboard/get-student-dashboard.UseCase";
 import StudentDashboardGrid from "./components/StudentDashboardGrid";
 
 export default async function AulaVirtualPage() {

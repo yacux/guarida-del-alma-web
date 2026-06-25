@@ -12,7 +12,7 @@
 // Recibe DTOs ya preparados por GetStudentDashboardUseCase.
 // ============================================================
 
-import type { StudentDashboardItem } from "@/application/use-cases/get-student-dashboard/studentDashboardDto";
+import type { StudentDashboardItem } from "@/application/use-cases/get-student-dashboard/student-dashboard.output.dto";
 
 import StudentDashboardCard from "./StudentDashboardCard";
 

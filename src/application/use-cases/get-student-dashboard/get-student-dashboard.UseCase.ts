@@ -2,8 +2,8 @@
 
 import type { IEnrollmentRepository } from "@/core/repositories/IEnrollmentRepository";
 import type { IProductRepository } from "@/core/repositories/IProductRepository";
-import type { StudentDashboardItem } from "./studentDashboardDto";
-import type { GetStudentDashboardInput } from "./getStudentDashboardInput";
+import type { StudentDashboardItem } from "./student-dashboard.output.dto";
+import type { GetStudentDashboardInput } from "./get-student-dashboard.input.dto";
 
 export class GetStudentDashboardUseCase {
   // 1. Aquí se definen tradicionalmente los atributos

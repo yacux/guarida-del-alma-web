@@ -12,7 +12,7 @@
 
 import Link from "next/link";
 
-import type { StudentDashboardItem } from "@/application/use-cases/get-student-dashboard/studentDashboardDto";
+import type { StudentDashboardItem } from "@/application/use-cases/get-student-dashboard/student-dashboard.output.dto";
 
 interface StudentDashboardCardProps {
   item: StudentDashboardItem;
