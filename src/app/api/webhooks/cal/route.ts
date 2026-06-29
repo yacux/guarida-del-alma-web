@@ -19,7 +19,7 @@
 import { NextRequest, NextResponse }  from 'next/server';
 import { createHmac, timingSafeEqual } from 'crypto';
 
-import { SessionRepository }          from '@/infrastructure/repositories/SessionRepository';
+import { SessionRepository }          from '@/infrastructure/repositories/session.repository';
 import { CalComAdapter }              from '@/infrastructure/adapters/CalComAdapter';
 import { ProcessCalBookingUseCase }   from '@/application/use-cases/sessions/ProcessCalBookingUseCase';
 import type { CalWebhookEvent }       from '@/core/entities/BookingHistory';

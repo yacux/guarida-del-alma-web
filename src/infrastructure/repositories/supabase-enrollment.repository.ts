@@ -1,10 +1,10 @@
 // =========================================================================
-// src/infrastructure/repositories/SupabaseEnrollmentRepository.ts
+// src/infrastructure/repositories/supabase-enrollment.repository.ts
 // =========================================================================
 
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Enrollment } from "@/core/entities/Enrollment";
-import type { ClerkUserId } from "@/core/entities/shared";
+import type { ClerkUserId, UUID } from "@/core/entities/shared"; // <-- Añadimos UUID aquí
 import { IEnrollmentRepository } from "@/core/repositories/IEnrollmentRepository";
 
 export class SupabaseEnrollmentRepository implements IEnrollmentRepository {
@@ -18,7 +18,7 @@ export class SupabaseEnrollmentRepository implements IEnrollmentRepository {
     this.supabase = supabaseClient;
   }
 
-  // 3. MÉTODO DEL CONTRATO
+  // 3. MÉTODO DEL CONTRATO: LISTADO DE MATRÍCULAS
   // Recibe el ID de Clerk de la alumna y promete devolver su lista de matrículas activas.
   async findActiveByStudentId(studentId: ClerkUserId): Promise<Enrollment[]> {
     // -------------------------------------------------------------------------
@@ -56,35 +56,99 @@ export class SupabaseEnrollmentRepository implements IEnrollmentRepository {
       // Construimos el objeto traduciendo cada columna de snake_case a camelCase
       const matriculaTraducida: Enrollment = {
         id: fila.id,
-        studentId: fila.student_id, // <-- Traducido de snake_case
-        productId: fila.product_id, // <-- Traducido de snake_case
+        studentId: fila.student_id,
+        productId: fila.product_id,
 
-        // Estos campos pueden ser NULL según tu entidad, TypeScript lo acepta perfecto
-        orderId: fila.order_id, // <-- Traducido de snake_case
+        orderId: fila.order_id,
         source: fila.source,
-        enrolledBy: fila.enrolled_by, // <-- Traducido de snake_case
+        enrolledBy: fila.enrolled_by,
 
         status: fila.status,
-        startedAt: fila.started_at, // <-- Traducido de snake_case
-        expiresAt: fila.expires_at, // <-- Traducido de snake_case
+        startedAt: fila.started_at,
+        expiresAt: fila.expires_at,
 
-        // Control de sesiones (clave para los programas v3)
-        sessionsTotal: fila.sessions_total, // <-- Traducido de snake_case
-        sessionsUsed: fila.sessions_used, // <-- Traducido de snake_case
+        sessionsTotal: fila.sessions_total,
+        sessionsUsed: fila.sessions_used,
 
         notes: fila.notes,
-        createdAt: fila.created_at, // <-- Traducido de snake_case
-        updatedAt: fila.updated_at, // <-- Traducido de snake_case
+        createdAt: fila.created_at,
+        updatedAt: fila.updated_at,
       };
 
       // Guardamos la matrícula ya formateada en nuestra lista de salida
       listaDeMatriculasLimpia.push(matriculaTraducida);
     }
-
     // -------------------------------------------------------------------------
     // PASO D: RETORNO DE DATOS
     // Devolvemos las matrículas en el formato exacto que el Core y el Caso de Uso esperan.
     // -------------------------------------------------------------------------
     return listaDeMatriculasLimpia;
+  }
+
+  // 4. OTRO MÉTODO DEL CONTRATO: VERIFICACIÓN DE ACCESO
+  // Recupera la matrícula activa correspondiente a un producto específico.
+  async findActiveByStudentAndProduct(
+    studentId: ClerkUserId,
+    productId: UUID,
+  ): Promise<Enrollment | null> {
+    // -------------------------------------------------------------------------
+    // PASO A: CONSULTA PARA UN ÚNICO REGISTRO
+    // Aplicamos tres filtros: alumna, producto y estado activo.
+    // Usamos .maybeSingle() en lugar de .single() porque es perfectamente
+    // válido y normal que no exista matrícula (devuelve null sin lanzar error).
+    // -------------------------------------------------------------------------
+    const respuesta = await this.supabase
+      .from("enrollments")
+      .select("*")
+      .eq("student_id", studentId)
+      .eq("product_id", productId)
+      .eq("status", "active")
+      .maybeSingle();
+
+    // -------------------------------------------------------------------------
+    // PASO B: CONTROL DE ERRORES
+    // -------------------------------------------------------------------------
+    if (respuesta.error) {
+      throw new Error(
+        `Error verificando acceso al producto en Supabase: ${respuesta.error.message}`,
+      );
+    }
+
+    // -------------------------------------------------------------------------
+    // PASO C: COMPROBACIÓN DE EXISTENCIA
+    // Si la alumna no compró esto o ya expiró, data será null.
+    // En ese caso, cortamos rápido y devolvemos null al Caso de Uso.
+    // -------------------------------------------------------------------------
+    if (!respuesta.data) {
+      return null;
+    }
+
+    // -------------------------------------------------------------------------
+    // PASO D: EXTRACCIÓN Y TRADUCCIÓN (Mapping de un solo objeto)
+    // Extraemos la única fila encontrada y la traducimos a nuestro formato Core.
+    // -------------------------------------------------------------------------
+    const fila = respuesta.data;
+
+    const matriculaTraducida: Enrollment = {
+      id: fila.id,
+      studentId: fila.student_id,
+      productId: fila.product_id,
+      orderId: fila.order_id,
+      source: fila.source,
+      enrolledBy: fila.enrolled_by,
+      status: fila.status,
+      startedAt: fila.started_at,
+      expiresAt: fila.expires_at,
+      sessionsTotal: fila.sessions_total,
+      sessionsUsed: fila.sessions_used,
+      notes: fila.notes,
+      createdAt: fila.created_at,
+      updatedAt: fila.updated_at,
+    };
+
+    // -------------------------------------------------------------------------
+    // PASO E: RETORNO DE DATOS
+    // -------------------------------------------------------------------------
+    return matriculaTraducida;
   }
 }

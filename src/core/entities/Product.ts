@@ -1,106 +1,148 @@
 // ============================================================
 // src/core/entities/Product.ts
-// v3: access_duration_months, welcome_video_url y
-//     has_whatsapp_community subieron a la entidad base Product
-//     porque aplican universalmente a los 3 tipos de producto.
 //
-// Tablas hijas solo guardan lo EXCLUSIVO de cada tipo:
-//   • Course   → grantsCertificate, approvalMinScore
-//   • Workshop → globalPdfUrl
-//   • Program  → individualSessionsCount, grantsCertificate, approvalMinScore
+// Entidades de dominio para los productos de la plataforma.
+//
+// La tabla base (products) contiene los datos compartidos por
+// Cursos, Talleres y Programas.
+//
+// Cada tipo posee una tabla hija con sus propiedades exclusivas.
+//
+// La información concreta de cada producto (ej. Ave Fénix,
+// Flor de Loto, Amor Propio, etc.) vive únicamente en Supabase.
+// Este archivo solamente define la estructura del dominio.
 // ============================================================
 
 import type { UUID, ISODateString, ProductType } from "./shared";
 
-// ——————————————————————————————————————————————
-// TABLA BASE — public.products
-// ——————————————————————————————————————————————
+// ============================================================
+// TABLA BASE — products
+// ============================================================
+
 export interface Product {
   id: UUID;
+
   name: string;
+
   slug: string;
+
   description: string | null;
+
   shortDescription: string | null;
+
   price_usd: number;
+
   price_ars: number;
+
   productType: ProductType;
+
   coverImageUrl: string | null;
-  /** Universal: video introductorio / bienvenida */
+
+  /**
+   * Video introductorio mostrado al ingresar al producto.
+   */
   welcomeVideoUrl: string | null;
-  /** Universal: si incluye comunidad de WhatsApp */
+
+  /**
+   * Indica si el producto incluye comunidad de WhatsApp.
+   */
   hasWhatsappCommunity: boolean;
+
   isActive: boolean;
+
   createdAt: ISODateString;
+
   updatedAt: ISODateString;
 }
 
-// ——————————————————————————————————————————————
-// ESPECIALIZACIÓN: CURSO — public.product_courses
-// Exclusivo: certificado y nota mínima de aprobación.
-// ——————————————————————————————————————————————
+//
+// CURSOS
+//
+
 export interface CourseDetails {
   grantsCertificate: boolean;
-  /** Nota mínima (1-100) para aprobar tareas y actividad final */
+
   approvalMinScore: number;
 }
 
 export interface Course extends Product {
   productType: "course";
+
   courseDetails: CourseDetails;
 }
 
-// ——————————————————————————————————————————————
-// ESPECIALIZACIÓN: TALLER — public.product_workshops
-// Exclusivo: el PDF global de contenido.
-// ——————————————————————————————————————————————
+//
+// TALLERES
+//
+
 export interface WorkshopDetails {
-  /** El único PDF de contenido del taller */
+  /**
+   * PDF único del taller.
+   */
   globalPdfUrl: string | null;
 }
 
 export interface Workshop extends Product {
   productType: "workshop";
+
   workshopDetails: WorkshopDetails;
 }
 
-// ——————————————————————————————————————————————
-// ESPECIALIZACIÓN: PROGRAMA — public.product_programs
-// Exclusivo: sesiones 1-on-1, certificado, nota mínima.
-// ——————————————————————————————————————————————
+//
+// PROGRAMAS
+//
+
 export interface ProgramDetails {
-  /** Sesiones 1-on-1 incluidas: 12 (Ave Fénix) o 6 (Flor de Loto) */
-  individualSessionsCount: number;
-  grantsCertificate: boolean;
-  /** Nota mínima para los cursos incluidos en el programa */
-  approvalMinScore: number;
   /**
-   * IDs de los productos incluidos en este programa.
-   * Refleja program_included_products.
-   * La duración del PROGRAMA prevalece para todos estos accesos.
+   * Cantidad de sesiones individuales incluidas.
+   */
+  individualSessionsCount: number;
+
+  /**
+   * El programa entrega certificado propio.
+   */
+  grantsCertificate: boolean;
+
+  /**
+   * Nota mínima utilizada por los cursos que forman parte
+   * del programa.
+   */
+  approvalMinScore: number;
+
+  /**
+   * Productos incluidos dentro del programa.
+   *
+   * Esta información proviene de la tabla
+   * program_included_products.
    */
   includedProductIds: UUID[];
 }
 
 export interface Program extends Product {
   productType: "program";
+
   programDetails: ProgramDetails;
 }
 
-// ——————————————————————————————————————————————
-// UNIÓN DISCRIMINADA + TYPE GUARDS
-// ——————————————————————————————————————————————
+//
+// Unión discriminada
+//
+
 export type ProductVariant = Course | Workshop | Program;
 
-export const isCourse = (p: ProductVariant): p is Course =>
-  p.productType === "course";
-export const isWorkshop = (p: ProductVariant): p is Workshop =>
-  p.productType === "workshop";
-export const isProgram = (p: ProductVariant): p is Program =>
-  p.productType === "program";
+export const isCourse = (product: ProductVariant): product is Course =>
+  product.productType === "course";
 
-// ——————————————————————————————————————————————
-// INPUTS DE CREACIÓN
-// ——————————————————————————————————————————————
+export const isWorkshop = (product: ProductVariant): product is Workshop =>
+  product.productType === "workshop";
+
+export const isProgram = (product: ProductVariant): product is Program =>
+  product.productType === "program";
+
+//
+// Inputs de creación
+//
+
 export type CreateProductBaseInput = Omit<
   Product,
   "id" | "createdAt" | "updatedAt"
@@ -119,6 +161,11 @@ export type CreateWorkshopInput = CreateProductBaseInput & {
 export type CreateProgramInput = CreateProductBaseInput & {
   productType: "program";
   programDetails: Omit<ProgramDetails, "includedProductIds">;
+
+  /**
+   * Productos que se insertarán luego en
+   * program_included_products.
+   */
   includedProductIds: UUID[];
 };
 

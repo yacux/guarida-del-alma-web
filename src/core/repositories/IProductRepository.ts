@@ -19,6 +19,16 @@ import { UUID } from "../entities/shared";
 export interface IProductRepository {
   /**
    * Recupera múltiples productos a partir de sus IDs.
+   * lo uso en el CU getStudentDashboardUseCase que trae todos los productos asociados a los enrollments de la alumna
    */
   findByIds(productIds: UUID[]): Promise<Product[]>;
+  /**
+   * Busca un producto por su slug.
+   * un slug es el identificador único de un producto en la URL, por ejemplo: /aula-virtual/desata-tu-voz
+   *
+   *
+   * usado en el CU getProductDetailUseCase para mostrar el "detalle" de un producto
+   *
+   */
+  findBySlug(slug: string): Promise<Product | null>;
 }

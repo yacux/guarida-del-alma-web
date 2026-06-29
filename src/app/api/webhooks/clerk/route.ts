@@ -13,7 +13,7 @@ import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { ClerkWebhookUserPayload } from "@/core/entities/Profile";
 import { CreateProfileUseCase } from "@/application/use-cases/create-profile/create-profile.use-case";
-import { SupabaseProfileRepository } from "@/infrastructure/repositories/SupabaseProfileRepository";
+import { SupabaseProfileRepository } from "@/infrastructure/repositories/supabase-profile.repository";
 
 export async function POST(req: Request) {
   console.log("¡Webhook recibido en el servidor!");

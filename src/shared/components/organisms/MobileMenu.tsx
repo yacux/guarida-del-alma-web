@@ -11,20 +11,21 @@ export default function MobileMenu() {
 
   return (
     <>
-      {/* BOTÓN HAMBURGUESA */}
+      {/* BOTÓN HAMBURGUESA / X */}
       <button
-        className="block lg:hidden text-white focus:outline-none z-50"
+        className="fixed top-6 right-6 lg:hidden text-white focus:outline-none z-50 p-2 hover:scale-105 transition-transform"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
-        aria-label="Toggle Menu"
+        aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
       >
         {isMenuOpen ? (
+          /* ICONO DE EQUIS (X) */
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth={2}
+            strokeWidth={2.5} /* Un poco más grueso para que resalte */
             stroke="currentColor"
-            className="w-8 h-8"
+            className="w-8 h-8 text-white"
           >
             <path
               strokeLinecap="round"
@@ -33,6 +34,7 @@ export default function MobileMenu() {
             />
           </svg>
         ) : (
+          /* ICONO HAMBURGUESA */
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -51,30 +53,36 @@ export default function MobileMenu() {
       </button>
 
       {/* MENÚ MÓVIL DESPLEGABLE */}
-      {isMenuOpen && (
-        <nav className="absolute top-[90px] left-0 w-full bg-[#2a1738] lg:hidden flex flex-col items-center gap-6 py-8 shadow-xl border-t border-guarida-dark-violet/50">
-          {/* ITERAMOS SOBRE LA CONSTANTE */}
+      <nav
+        className={`fixed top-0 right-0 w-full h-screen bg-[#2a1738] lg:hidden flex flex-col items-center justify-center shadow-xl z-40 transform transition-all duration-300 ease-in-out ${
+          isMenuOpen
+            ? "translate-x-0 opacity-100 visible"
+            : "translate-x-full opacity-0 invisible"
+        }`}
+      >
+        {/* CONTENEDOR DE ENLACES */}
+        <div className="flex flex-col items-center gap-8 w-full px-6">
           {MAIN_NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={closeMenu}
-              className="text-xl hover:text-guarida-sky transition"
+              className="text-2xl font-medium text-white/90 hover:text-guarida-sky transition-colors"
             >
               {link.label}
             </Link>
           ))}
 
-          {/* El botón de login suele manejarse separado porque tiene una UI y lógica distinta */}
+          {/* Botón de login */}
           <Link
             href="/login"
             onClick={closeMenu}
-            className="mt-2 bg-guarida-fuchsia text-white px-6 py-3 rounded-full hover:bg-fuchsia-600 transition flex items-center justify-center shadow-lg"
+            className="mt-4 w-full max-w-xs bg-guarida-fuchsia text-white px-6 py-3 rounded-full hover:bg-fuchsia-600 transition-all flex items-center justify-center shadow-lg font-semibold"
           >
             Ingresar a mi cuenta
           </Link>
-        </nav>
-      )}
+        </div>
+      </nav>
     </>
   );
 }

@@ -1,8 +1,8 @@
 // src/app/aula-virtual/page.tsx
 import { auth } from "@clerk/nextjs/server";
 import { createSupabaseServerClient } from "@/infrastructure/config/supabaseServerClient";
-import { SupabaseEnrollmentRepository } from "@/infrastructure/repositories/SupabaseEnrollmentRepository";
-import { SupabaseProductRepository } from "@/infrastructure/repositories/SupabaseProductRepository";
+import { SupabaseEnrollmentRepository } from "@/infrastructure/repositories/supabase-enrollment.repository";
+import { SupabaseProductRepository } from "@/infrastructure/repositories/supabase-product.repository";
 import { GetStudentDashboardUseCase } from "@/application/use-cases/get-student-dashboard/get-student-dashboard.UseCase";
 import StudentDashboardGrid from "./components/StudentDashboardGrid";
 

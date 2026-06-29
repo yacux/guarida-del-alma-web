@@ -1,61 +1,121 @@
 // ============================================================
 // src/core/entities/Module.ts
-// Estructura interna de un Curso: módulos, videos, tareas y
-// actividad/examen final. Sin dependencias externas.
+//
+// Un Curso está compuesto por:
+//
+// Curso
+//   └── Módulos
+//          ├── Recursos
+//          └── 1 Tarea
+//
+// Los recursos pueden ser:
+//
+// • Videos
+// • PDFs
+// • Audios
+// • Descargables
+// • Links externos
+//
+// Además, el curso posee una única Actividad Final.
 // ============================================================
 
 import type { UUID, ISODateString } from "./shared";
 
-// ——————————————————————————————————————————————
-// MÓDULO — public.modules
-// ——————————————————————————————————————————————
+// ============================================================
+// MÓDULO
+// ============================================================
+
 export interface CourseModule {
   id: UUID;
-  /** ID del producto (curso) al que pertenece */
+
+  /** Curso al que pertenece */
   productId: UUID;
+
   title: string;
+
   description: string | null;
-  /** Posición en el curso, empezando en 0 */
+
+  /** Orden dentro del curso */
   orderIndex: number;
-  /** URL del PDF de contenido del módulo (1 por módulo) */
-  contentPdfUrl: string | null;
+
   createdAt: ISODateString;
 }
 
 export type CreateModuleInput = Omit<CourseModule, "id" | "createdAt">;
 
-// ——————————————————————————————————————————————
-// VIDEO DE MÓDULO — public.module_videos
-// Varios videos por módulo
-// ——————————————————————————————————————————————
-export interface ModuleVideo {
+// ============================================================
+// RECURSO DEL MÓDULO
+// ============================================================
+
+export type ModuleResourceType =
+  | "video"
+  | "pdf"
+  | "audio"
+  | "download"
+  | "external_link";
+
+export interface ModuleResource {
   id: UUID;
+
+  /** Módulo al que pertenece */
   moduleId: UUID;
+
   title: string;
-  videoUrl: string;
-  /** Duración en segundos (opcional, para mostrar en UI) */
+
+  resourceType: ModuleResourceType;
+
+  /**
+   * Puede apuntar a:
+   *
+   * • Youtube
+   * • Vimeo
+   * • Supabase Storage
+   * • Amazon S3
+   * • Google Drive
+   * • etc.
+   */
+  url: string;
+
+  /**
+   * Solo tiene sentido para videos y audios.
+   */
   durationSeconds: number | null;
+
+  /**
+   * Permite ordenar los recursos
+   * dentro del módulo.
+   */
   orderIndex: number;
+
   createdAt: ISODateString;
 }
 
-export type CreateModuleVideoInput = Omit<ModuleVideo, "id" | "createdAt">;
+export type CreateModuleResourceInput = Omit<
+  ModuleResource,
+  "id" | "createdAt"
+>;
 
-// ——————————————————————————————————————————————
-// TAREA DE MÓDULO — public.module_assignments
-// 1 tarea por módulo. Las preguntas son un array de strings.
-// Las respuestas de la alumna van en ModuleSubmission.answers (array paralelo).
-// ——————————————————————————————————————————————
+// ============================================================
+// TAREA DEL MÓDULO
+//
+// Cada módulo posee exactamente UNA tarea.
+// La entrega y corrección viven en Submission.ts.
+// ============================================================
+
 export interface ModuleAssignment {
   id: UUID;
+
   moduleId: UUID;
+
   title: string;
+
   instructions: string | null;
+
   /**
-   * Array de enunciados de preguntas.
-   * Ej: ["¿Qué aprendiste esta semana?", "¿Cómo lo aplicarías?"]
+   * Lista de preguntas.
    */
   questions: string[];
+
   createdAt: ISODateString;
 }
 
@@ -64,18 +124,26 @@ export type CreateModuleAssignmentInput = Omit<
   "id" | "createdAt"
 >;
 
-// ——————————————————————————————————————————————
-// ACTIVIDAD / EXAMEN FINAL — public.final_activities
-// 1 por curso. Mismo patrón de preguntas que la tarea de módulo.
-// Permite recuperación si la alumna reprueba.
-// ——————————————————————————————————————————————
+// ============================================================
+// ACTIVIDAD FINAL
+//
+// Existe una única actividad final por curso.
+//
+// Sus entregas y devoluciones viven
+// en Submission.ts.
+// ============================================================
+
 export interface FinalActivity {
   id: UUID;
-  /** ID del producto (curso) al que pertenece */
+
   productId: UUID;
+
   title: string;
+
   instructions: string | null;
+
   questions: string[];
+
   createdAt: ISODateString;
 }
 
