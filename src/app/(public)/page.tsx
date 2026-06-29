@@ -37,18 +37,15 @@ export default function Home() {
         className="relative py-20 overflow-hidden"
         aria-label="Sobre Hebe"
       >
-        <div className=" container relative z-10">
+        <div className="container-guarida relative z-10 text-center md:text-start">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
             {/* Foto */}
-            <div className="order-2 col-span-1 my-auto space-y-4 sm:space-y-8">
-              <div className="mr-auto relative">
-                <div
-                  className="absolute -inset-3 rounded-3xl opacity-30 bg-linear-to-br from-guarida-violet via-guarida-sky to-guarida-fuchsia"
-                  aria-hidden="true"
-                />
-                <div className="relative w-72 sm:w-80 sm:h-105 rounded-2xl overflow-hidden border border-guarida-violet/10">
+            <div className="md:order-2 col-span-1 my-auto space-y-4 sm:space-y-8">
+              <div className="mr-auto relative rounded-2xl bg-linear-to-br from-transparent to-guarida-fuchsia/20 py-2">
+                {/* Foto para desktop*/}
+                <div className="mx-auto relative w-72 sm:w-80 sm:h-105 rounded-2xl overflow-hidden border border-guarida-violet/10 hidden md:block">
                   <Image
-                    src="/hebewebp.webp"
+                    src="/hebeVertical.webp"
                     alt="Hebe, coach de bienestar integral en La Guarida del Alma"
                     className="object-cover object-top"
                     width={1600}
@@ -56,7 +53,18 @@ export default function Home() {
                     priority
                   />
                 </div>
-                <div className="absolute -bottom-4 -right-4 bg-guarida-violet rounded-2xl px-4 py-2 shadow-lg shadow-guarida-violet/20">
+                {/* Foto para mobile*/}
+                <div className="mx-auto relative w-full aspect-video rounded-2xl overflow-hidden border border-guarida-violet/10 md:hidden">
+                  <Image
+                    src="/hebeHorizontal.png"
+                    alt="Hebe, coach de bienestar integral (versión mobile)"
+                    className="object-cover"
+                    fill
+                    priority
+                  />
+                </div>
+
+                <div className="absolute -bottom-3 -right-3 bg-guarida-violet/74 rounded-2xl px-4 py-2 shadow-lg shadow-guarida-violet/20">
                   <p className="text-white text-xs tracking-widest uppercase">
                     Agente de cambio
                   </p>
@@ -67,23 +75,40 @@ export default function Home() {
             {/* Texto */}
             <div className="col-span-1 order-1 sm:col-span-2 space-y-10">
               {/* Encabezado */}
-              <div className="text-white/90">
-                <h2 className="text-4xl sm:text-5xl font-spiritual text-white mb-6 leading-tight">
-                  Hola, soy Hebe
-                </h2>
-                <p className="text-lg leading-relaxed mb-4">
+              <h2 className="text-4xl sm:text-5xl font-spiritual mb-6 leading-tight text-white">
+                Hola, soy Hebe
+              </h2>
+              <div className="text-white/90 ">
+                {/* Párrafo 1 simplificado para mobile */}
+                <p className="text-lg leading-relaxed mb-4 md:hidden">
+                  Transformé el concepto de <strong>"Guarida"</strong>, un
+                  rincón de calma en mi hogar, en un espacio de sanación para
+                  vos.
+                </p>
+                {/* Versión completa para desktop */}
+                <p className="text-lg leading-relaxed mb-4 hidden md:block">
                   En mi hogar siempre llamamos <strong>"Guarida"</strong> a ese
                   rincón de protección y calma. <br /> Hoy transformé ese
                   concepto en un espacio de sanación para vos.
                 </p>
-                <p className="leading-relaxed">
+
+                {/* Párrafo 2 simplificado para mobile */}
+                <p className="leading-relaxed md:hidden">
+                  Mi <strong>misión</strong> es acompañarte a
+                  <strong> tomar conciencia</strong> de que la sanación comienza
+                  al descubrir el mensaje de tus síntomas.
+                </p>
+                {/* Versión completa para desktop */}
+                <p className="leading-relaxed hidden md:block">
                   Mi <strong>misión</strong> es acompañarte a
                   <strong> tomar conciencia</strong>. Creo firmemente que la
-                  sanación comienza cuando descubrimos el el mensaje que nos
-                  envían nuestros síntomas y nuestras trabas emocionales.
+                  sanación comienza cuando descubrimos el mensaje que nos envían
+                  nuestros síntomas y nuestras trabas emocionales.
                 </p>
                 <br />
-                <p className="leading-relaxed">
+
+                {/* Párrafo 3 oculto por completo en mobile */}
+                <p className="leading-relaxed hidden md:block">
                   Para llegar a la <strong>raíz de lo que te detiene</strong>,
                   integro diversas herramientas que trabajan de manera profunda
                   a nivel mental, emocional, corporal y espiritual.
@@ -101,7 +126,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* ── CURSOS PRINCIPALES ───────────────────────────────── */}
       <MyCourses />
 
@@ -118,7 +142,7 @@ export default function Home() {
           }}
           aria-hidden="true"
         />
-        <div className="container relative z-10 max-w-3xl mx-auto">
+        <div className="container-guarida relative z-10 max-w-3xl mx-auto">
           <p className="text-guarida-sky text-sm tracking-[0.3em] uppercase mb-4">
             Sesiones personalizadas
           </p>
@@ -141,14 +165,8 @@ export default function Home() {
       {/* ── TALLERES ────────────────────────────────────────── */}
       <MyWorkshops />
 
-      {/* ── TESTIMONIOS ─────────────────────────────────────── */}
-      <Testimonies />
-
-      {/* ── PRODUCTOS DESTACADOS ───────────────────────────── */}
-      <FeaturedProducts />
-
       {/* ── PROGRAMAS DE TRANSFORMACIÓN ─────────────────────── */}
-      <section className="container py-26" id="programas">
+      <section className="container-guarida py-26" id="programas">
         <div className="text-center mb-16">
           <p className="text-guarida-sky text-sm tracking-[0.3em] uppercase mb-4">
             Elegí tu camino
@@ -275,6 +293,12 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── PRODUCTOS DESTACADOS ───────────────────────────── */}
+      <FeaturedProducts />
+
+      {/* ── TESTIMONIOS ─────────────────────────────────────── */}
+      <Testimonies />
     </main>
   );
 }

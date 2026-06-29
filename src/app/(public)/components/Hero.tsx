@@ -24,7 +24,7 @@ export default function Hero() {
         />
       </div>
       {/* Contenido */}
-      <div className="container z-10 flex flex-col justify-center h-full  text-guarida-sky space-y-16">
+      <div className="container-guarida z-10 flex flex-col justify-center h-full  text-guarida-sky space-y-16">
         <br />
         <br />
         {/* Tagline superior */}

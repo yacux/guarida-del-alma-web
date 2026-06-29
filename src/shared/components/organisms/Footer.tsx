@@ -4,7 +4,7 @@ import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 export default function Footer() {
   return (
     <footer className="bg-guarida-dark/80 z-40 text-white p-8 mt-12">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="container-guarida mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
           <h3 className="text-2xl font-bold mb-4 text-guarida-violet">
             La Guarida del Alma{" "}

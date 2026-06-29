@@ -54,7 +54,7 @@ export default function MobileMenu() {
 
       {/* MENÚ MÓVIL DESPLEGABLE */}
       <nav
-        className={`fixed top-0 right-0 w-full h-screen bg-[#2a1738] lg:hidden flex flex-col items-center justify-center shadow-xl z-40 transform transition-all duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 w-full h-screen bg-guarida-dark-violet lg:hidden flex flex-col items-center justify-center shadow-xl z-40 transform transition-all duration-300 ease-in-out ${
           isMenuOpen
             ? "translate-x-0 opacity-100 visible"
             : "translate-x-full opacity-0 invisible"

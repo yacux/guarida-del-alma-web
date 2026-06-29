@@ -69,19 +69,15 @@ export default function Testimonies() {
       {/* Fondo sutil */}
       <div
         className="absolute inset-0 opacity-14 pointer-events-none"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 20% 50%, #89dadb 0%, transparent 50%), radial-gradient(circle at 80% 50%, #db2777 0%, transparent 50%)",
-        }}
         aria-hidden="true"
       />
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 container relative z-10">
-        <div className="col-span-1">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 container-guarida relative z-10">
+        <div className="col-span-1 text-center md:text-start">
           <p className="text-guarida-sky text-sm tracking-[0.3em] uppercase mb-8">
             Experiencias reales
           </p>
-          <h2 className="text-4xl sm:text-5xl font-spiritual text-white uppercase">
+          <h2 className="text-2xl sm:text-5xl font-spiritual text-white uppercase">
             Lo que dicen quienes me eligieron
           </h2>
         </div>

@@ -7,9 +7,12 @@ import { Show, UserButton } from "@clerk/nextjs";
 export default function Header() {
   return (
     <header className="bg-linear-to-b from-guarida-dark-violet/92 via-guarida-dark-violet/58 via-40% to-transparent text-white pt-2 pb-20 flex fixed top-0 w-full z-50">
-      <div className="container mx-auto flex items-center justify-between px-4 lg:px-0">
+      <div className="container-guarida mx-auto flex items-center justify-between">
         {/* LOGO */}
-        <Link href="/" className="my-auto h-full flex items-center gap-2">
+        <Link
+          href="/"
+          className="my-auto h-full flex items-center gap-2 mr-auto"
+        >
           <Image
             src="/logo2.png"
             alt="Logo"

@@ -42,23 +42,23 @@ export default function ServiceSection({
       {/* Fondo decorativo (Ondas) */}
       {/* Aplicamos rotación inversa y alineación según la prop 'inverted' */}
       <div
-        className={`absolute ${inverted ? "-rotate-45" : "rotate-45"} w-[120%] top-0 inset-0 pointer-events-none`}
+        className={`absolute ${inverted ? "-rotate-14" : "-rotate-33"} md:${inverted ? "-rotate-45" : "rotate-45"} w-[160%] md:w-[120%] top-40 md:top-0 inset-0 pointer-events-none`}
       >
         <Image
           src="/onda.svg"
           alt="onda"
           fill
-          className="opacity-50 object-cover"
+          className="opacity-26 object-cover"
         />
         <Image
           src="/onda2.svg"
           alt="onda"
           fill
-          className="-translate-y-1/6 object-cover opacity-50"
+          className="-translate-y-1/6 object-cover opacity-10"
         />
       </div>
 
-      <div className="container grid grid-cols-1 lg:grid-cols-2 gap-20 relative">
+      <div className="container-guarida grid grid-cols-1 lg:grid-cols-2 gap-20 relative">
         {/* Columna de Contenido (Título + Beneficios) */}
         {/* order-last en LG hará que se mueva a la derecha si está invertido */}
         <div

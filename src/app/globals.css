@@ -12,11 +12,9 @@
   --color-guarida-fuchsia: #db2777;
   --color-guarida-blue: #2563eb;
 
-
   /* estilos para los rayos de luz */
   /* 1. Animación de escala (Contenedor Padre) */
   @keyframes lights-pulse-scale {
-
     0%,
     100% {
       transform: translate(-50%, -50%) scale(0.7);
@@ -29,7 +27,6 @@
 
   /* 2. Animaciones de opacidad (Hijos) FUNCIONA */
   @keyframes opacity-breath-1 {
-
     0%,
     100% {
       opacity: 0.5;
@@ -41,7 +38,6 @@
   }
 
   @keyframes opacity-breath-2 {
-
     0%,
     100% {
       opacity: 0.5;
@@ -82,10 +78,10 @@
   }
 
   --animate-pulse-scale: lights-pulse-scale 14s ease-in-out infinite;
-  --animate-combined-1: spin-clockwise 90s linear infinite,
-  opacity-breath-1 5s ease-in-out infinite;
-  --animate-combined-2: spin-counter 80s linear infinite,
-  opacity-breath-2 10s ease-in-out infinite;
+  --animate-combined-1:
+    spin-clockwise 90s linear infinite, opacity-breath-1 5s ease-in-out infinite;
+  --animate-combined-2:
+    spin-counter 80s linear infinite, opacity-breath-2 10s ease-in-out infinite;
 }
 
 @layer base {
@@ -103,9 +99,8 @@
 }
 
 @layer utilities {
-
   /* Contenedor que escala */
-  .lights-container {
+  .lights-container-guarida {
     @apply pointer-events-none absolute translate-x-1/2 translate-y-1/2 w-screen h-screen;
     animation: var(--animate-pulse-scale);
     will-change: transform;
@@ -164,6 +159,6 @@
   }
 }
 
-.container {
-  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+.container-guarida {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full!;
 }

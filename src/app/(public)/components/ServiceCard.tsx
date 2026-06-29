@@ -20,15 +20,15 @@ export default function ServiceCard({
   const imageSource = srcImg || "/logo.jpg"; // Ruta de imagen por defecto si no se proporciona srcImg
   return (
     <div
-      className="h-full relative z-10 w-full rounded-xl border 
+      className="h-full relative z-10 w-full rounded-lg border 
                   transition-all duration-500
                   hover:scale-[1.01] cursor-pointer border-white hover:border-white
-                  bg-guarida-violet hover:bg-guarida-violet/86 p-1"
+                  bg-guarida-dark-violet hover:bg-guarida-violet/86 p-1"
     >
       <div className="h-44 flex items-center gap-4">
         <Image
           alt="imagen de servicio"
-          className="rounded-xl object-cover h-full w-auto aspect-square"
+          className="rounded-lg object-cover h-full w-auto aspect-square"
           src={imageSource}
           width={140}
           height={140}

@@ -66,7 +66,7 @@ export default function FeaturedProducts() {
         aria-hidden="true"
       />
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 container relative z-10">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 container-guarida relative z-10">
         <div className="col-span-1 flex flex-col gap-4 md:gap-8">
           <p className="text-guarida-fuchsia text-sm tracking-[0.3em] uppercase mb-8">
             Bazar Holístico
