@@ -40,10 +40,10 @@ export default function Home() {
         <div className="container-guarida relative z-10 text-center md:text-start">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
             {/* Foto */}
-            <div className="md:order-2 col-span-1 my-auto space-y-4 sm:space-y-8">
+            <div className="col-span-1 my-auto space-y-4 sm:space-y-8">
               <div className="mr-auto relative rounded-2xl bg-linear-to-br from-transparent to-guarida-fuchsia/20 py-2">
                 {/* Foto para desktop*/}
-                <div className="mx-auto relative w-72 sm:w-80 sm:h-105 rounded-2xl overflow-hidden border border-guarida-violet/10 hidden md:block">
+                <div className="mx-auto relative w-72 sm:w-80 sm:h-105 rounded-2xl overflow-hidden border border-guarida-violet/10 hidden lg:block">
                   <Image
                     src="/hebeVertical.webp"
                     alt="Hebe, coach de bienestar integral en La Guarida del Alma"
@@ -54,7 +54,7 @@ export default function Home() {
                   />
                 </div>
                 {/* Foto para mobile*/}
-                <div className="mx-auto relative w-full aspect-video rounded-2xl overflow-hidden border border-guarida-violet/10 md:hidden">
+                <div className="mx-auto relative w-full aspect-video rounded-2xl overflow-hidden border border-guarida-violet/10 lg:hidden">
                   <Image
                     src="/hebeHorizontal.png"
                     alt="Hebe, coach de bienestar integral (versión mobile)"

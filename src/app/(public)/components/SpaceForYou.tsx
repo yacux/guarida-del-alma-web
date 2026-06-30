@@ -56,7 +56,7 @@ export default function SpaceForYou() {
       <div className="container-guarida mx-auto px-4 sm:px-8">
         {/* Header - Diseño Adaptado al Prototipo */}
         <div className="text-center mb-16 relative">
-          <p className="text-guarida-violet/80 text-xs tracking-[0.35em] uppercase mb-4 md:mb-2">
+          <p className="text-guarida-violet/90 text-xs tracking-[0.35em] uppercase mb-4 md:mb-2">
             Un espacio para sanar
           </p>
 

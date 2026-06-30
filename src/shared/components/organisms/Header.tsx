@@ -6,7 +6,7 @@ import { Show, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   return (
-    <header className="bg-linear-to-b from-guarida-dark-violet/92 via-guarida-dark-violet/58 via-40% to-transparent text-white pt-2 pb-20 flex fixed top-0 w-full z-50">
+    <header className="bg-linear-to-b from-guarida-dark-violet/88 via-guarida-dark-violet/48 via-40% to-transparent text-white pt-2 pb-12 flex fixed top-0 w-full z-50">
       <div className="container-guarida mx-auto flex items-center justify-between">
         {/* LOGO */}
         <Link
