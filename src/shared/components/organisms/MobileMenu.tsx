@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { MAIN_NAV_LINKS } from "@/shared/constants/navigation"; // Ajusta la ruta a tu proyecto
+import { PUBLIC_NAVIGATION } from "@/shared/navigation/public-navigation"; // Ajusta la ruta a tu proyecto
 
 export default function MobileMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -62,7 +62,7 @@ export default function MobileMenu() {
       >
         {/* CONTENEDOR DE ENLACES */}
         <div className="flex flex-col items-center gap-8 w-full px-6">
-          {MAIN_NAV_LINKS.map((link) => (
+          {PUBLIC_NAVIGATION.map((link) => (
             <Link
               key={link.href}
               href={link.href}

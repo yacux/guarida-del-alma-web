@@ -41,7 +41,7 @@ export interface IModuleRepository {
    * Devuelve todos los recursos
    * pertenecientes a un módulo.
    */
-  findVideosByModuleId(moduleId: UUID): Promise<ModuleResource[]>;
+  findResourcesByModuleId(moduleId: UUID): Promise<ModuleResource[]>;
 
   /**
    * Devuelve la tarea asociada

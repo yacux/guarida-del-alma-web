@@ -3,14 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
-import {
-  LayoutDashboard,
-  BookOpen,
-  User,
-  X,
-  HelpCircle,
-  Award,
-} from "lucide-react";
+import { STUDENT_NAVIGATION } from "@/shared/navigation/student-navigation";
+import { HelpCircle, X } from "lucide-react";
 
 interface DashboardSidebarProps {
   isOpen: boolean;
@@ -22,29 +16,6 @@ export default function DashboardSidebar({
   onClose,
 }: DashboardSidebarProps) {
   const pathname = usePathname();
-
-  const menuItems = [
-    {
-      name: "Mis Formaciones",
-      href: "/aula-virtual",
-      icon: LayoutDashboard,
-    },
-    // {
-    //   name: "Explorar Talleres",
-    //   href: "/talleres",
-    //   icon: BookOpen,
-    // },
-    {
-      name: "Mi Perfil",
-      href: "/aula-virtual/perfil",
-      icon: User,
-    },
-    {
-      name: "Mis Certificados",
-      href: "/aula-virtual/certificados",
-      icon: Award,
-    },
-  ];
 
   return (
     <>
@@ -73,7 +44,7 @@ export default function DashboardSidebar({
           </div>
 
           <nav className="space-y-1.5">
-            {menuItems.map((item) => {
+            {STUDENT_NAVIGATION.map((item) => {
               const isActive = pathname === item.href;
               const Icon = item.icon;
               return (
@@ -93,7 +64,7 @@ export default function DashboardSidebar({
                   <Icon
                     className={`w-5 h-5 transition-transform group-hover:scale-105 ${isActive ? "text-guarida-fuchsia" : "text-zinc-400 group-hover:text-zinc-300"}`}
                   />
-                  {item.name}
+                  {item.label}
                 </Link>
               );
             })}

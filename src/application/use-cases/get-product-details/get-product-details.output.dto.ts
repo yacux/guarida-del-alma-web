@@ -39,16 +39,13 @@ export interface AnnouncementDto {
   meetingId: UUID | null;
 }
 
-// ============================================================================
-// VIDEO DE UN MÓDULO
-// ============================================================================
-
-export interface ModuleVideoDto {
+export interface ResourceDto {
   id: UUID;
-
   title: string;
-
-  youtubeUrl: string;
+  resourceType: "video" | "pdf" | "audio" | "download" | "external_link";
+  url: string;
+  durationSeconds: number | null;
+  orderIndex: number;
 }
 
 // ============================================================================
@@ -57,34 +54,13 @@ export interface ModuleVideoDto {
 
 export interface ModuleDto {
   id: UUID;
-
   title: string;
-
   description: string | null;
-
-  /**
-   * Orden del módulo dentro del curso.
-   */
   order: number;
-
   progressPercentage: number;
-
-  /**
-   * Cada módulo puede tener un PDF.
-   */
-  pdfUrl: string | null;
-
-  /**
-   * Videos del módulo.
-   */
-  videos: ModuleVideoDto[];
-
-  /**
-   * Indica si el módulo posee una tarea entregable.
-   */
+  resources: ResourceDto[];
   hasAssignment: boolean;
 }
-
 // ============================================================================
 // PRODUCTO INCLUIDO (Programas)
 // ============================================================================

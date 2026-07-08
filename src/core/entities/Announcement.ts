@@ -4,7 +4,7 @@
 // Hebe puede vincular un anuncio a una reunión próxima.
 // ============================================================
 
-import type { UUID, ISODateString } from "./shared";
+import type { UUID, ISODateString, ClerkUserId } from "./shared";
 
 export interface Announcement {
   id: UUID;
@@ -18,8 +18,8 @@ export interface Announcement {
    * el anuncio con la fila en meetings.
    */
   meetingId: UUID | null;
-  /** Hebe (admin) es siempre la autora */
-  authorId: UUID;
+  // ✅ — el autor es siempre Hebe, cuyo ID es un Clerk ID (TEXT)
+  authorId: ClerkUserId;
   title: string;
   content: string;
   isPinned: boolean;

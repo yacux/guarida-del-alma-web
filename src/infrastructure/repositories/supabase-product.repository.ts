@@ -67,14 +67,14 @@ export class SupabaseProductRepository implements IProductRepository {
         description: fila.description,
         shortDescription: fila.short_description,
 
-        price_usd: fila.price_usd,
-        price_ars: fila.price_ars,
+        priceUsd: fila.price_usd,
+        priceArs: fila.price_ars,
 
         productType: fila.product_type,
         coverImageUrl: fila.cover_image_url,
 
         welcomeVideoUrl: fila.welcome_video_url,
-        hasWhatsappCommunity: fila.has_whatsapp_community,
+        WhatsappCommunity: fila.whatsapp_community,
 
         isActive: fila.is_active,
         createdAt: fila.created_at,
@@ -135,14 +135,14 @@ export class SupabaseProductRepository implements IProductRepository {
       description: fila.description,
       shortDescription: fila.short_description,
 
-      price_usd: fila.price_usd,
-      price_ars: fila.price_ars,
+      priceUsd: fila.price_usd,
+      priceArs: fila.price_ars,
 
       productType: fila.product_type,
       coverImageUrl: fila.cover_image_url,
 
       welcomeVideoUrl: fila.welcome_video_url,
-      hasWhatsappCommunity: fila.has_whatsapp_community,
+      WhatsappCommunity: fila.whatsapp_community,
 
       isActive: fila.is_active,
       createdAt: fila.created_at,

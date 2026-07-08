@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import DashboardSidebar from "./aula-virtual/components/DashboardSidebar";
-import DashboardHeader from "./aula-virtual/components/DashboardHeader";
+import DashboardSidebar from "./components/DashboardSidebar";
+import DashboardHeader from "./components/DashboardHeader";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;

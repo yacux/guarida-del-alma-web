@@ -1,18 +1,24 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-// 1. Definimos las rutas públicas
 const isPublicRoute = createRouteMatcher([
-  "/", // 💡 ¡Clave! Si tenés una landing page o inicio pública
+  "/",
   "/login(.*)",
   "/registro(.*)",
-  "/api/webhooks(.*)", // Perfecto para los webhooks de Clerk o Mercado Pago
+  "/api/webhooks(.*)",
 ]);
 
+const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
+
 export default clerkMiddleware(async (auth, request) => {
-  // 2. Si no es una ruta pública, protegemos
   if (!isPublicRoute(request)) {
     await auth.protect();
   }
+
+  // Más adelante:
+  //
+  // if (isAdminRoute(request)) {
+  //    ...
+  // }
 });
 
 export const config = {

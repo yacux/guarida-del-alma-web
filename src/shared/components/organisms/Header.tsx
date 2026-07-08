@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import MobileMenu from "./MobileMenu";
-import { MAIN_NAV_LINKS } from "@/shared/constants/navigation";
+import { PUBLIC_NAVIGATION } from "@/shared/navigation/public-navigation";
 import { Show, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
@@ -28,7 +28,7 @@ export default function Header() {
         {/* NAVEGACIÓN DESKTOP */}
         <nav className="hidden lg:block">
           <ul className="flex items-center gap-6 text-lg">
-            {MAIN_NAV_LINKS.map((link) => (
+            {PUBLIC_NAVIGATION.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}

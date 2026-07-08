@@ -30,9 +30,9 @@ export interface Product {
 
   shortDescription: string | null;
 
-  price_usd: number;
+  priceUsd: number;
 
-  price_ars: number;
+  priceArs: number;
 
   productType: ProductType;
 
@@ -46,7 +46,7 @@ export interface Product {
   /**
    * Indica si el producto incluye comunidad de WhatsApp.
    */
-  hasWhatsappCommunity: boolean;
+  WhatsappCommunity: string | null;
 
   isActive: boolean;
 

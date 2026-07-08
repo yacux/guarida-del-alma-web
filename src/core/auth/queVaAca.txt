@@ -1,0 +1,9 @@
+core/auth/
+├── Permission.ts              ← RBAC: enum de permisos
+├── rolePermissions.ts         ← RBAC: mapa rol → permisos
+├── can.ts                     ← RBAC: can(role, permission)
+└── policies/
+    ├── session.policy.ts      ← canBookSession, remainingSessions
+    ├── module.policy.ts       ← canViewModule, canSubmitAssignment
+    ├── certificate.policy.ts  ← canDownloadCertificate
+    └── submission.policy.ts   ← needsReview, canResubmit

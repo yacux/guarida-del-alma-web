@@ -1,3 +1,31 @@
-Acá aplicás Atomic Design estricto. 
-Ninguno de estos componentes conoce el negocio. 
-Reciben datos primitivos (string, number, boolean) y funciones genéricas (onClick) por props.
+Primero: ¿por qué existe shared?
+
+Tus capas son:
+
+src
+├── core
+├── application
+├── infrastructure
+├── app
+└── shared
+
+Las primeras cuatro tienen responsabilidades muy claras.
+
+Pero siempre aparecen cosas que no pertenecen a ninguna capa.
+
+Por ejemplo:
+
+un <Button />
+una función formatPrice()
+un hook useDebounce()
+constantes de colores
+rutas
+permisos de navegación
+
+Eso no es dominio.
+
+Tampoco infraestructura.
+
+Simplemente son cosas reutilizables.
+
+Por eso existe shared.

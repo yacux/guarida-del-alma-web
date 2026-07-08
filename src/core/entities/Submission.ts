@@ -5,7 +5,12 @@
 // y soporte para entregas de recuperación (attempt_number >= 2).
 // ============================================================
 
-import type { UUID, ClerkUserId, ISODateString, SubmissionStatus } from './shared';
+import type {
+  UUID,
+  ClerkUserId,
+  ISODateString,
+  SubmissionStatus,
+} from "./shared";
 
 // ——————————————————————————————————————————————
 // ENTREGA DE TAREA DE MÓDULO — public.assignment_submissions
@@ -35,7 +40,7 @@ export interface ModuleSubmission {
 
 export type CreateModuleSubmissionInput = Omit<
   ModuleSubmission,
-  'id' | 'submittedAt' | 'status'
+  "id" | "submittedAt" | "status"
 >;
 
 // ——————————————————————————————————————————————
@@ -59,7 +64,7 @@ export interface ModuleSubmissionFeedback {
 
 export type CreateModuleSubmissionFeedbackInput = Omit<
   ModuleSubmissionFeedback,
-  'id' | 'reviewedAt'
+  "id" | "reviewedAt"
 >;
 
 // ——————————————————————————————————————————————
@@ -80,7 +85,7 @@ export interface FinalActivitySubmission {
 
 export type CreateFinalActivitySubmissionInput = Omit<
   FinalActivitySubmission,
-  'id' | 'submittedAt' | 'status'
+  "id" | "submittedAt" | "status"
 >;
 
 // ——————————————————————————————————————————————
@@ -99,20 +104,5 @@ export interface FinalActivityFeedback {
 
 export type CreateFinalActivityFeedbackInput = Omit<
   FinalActivityFeedback,
-  'id' | 'reviewedAt'
+  "id" | "reviewedAt"
 >;
-
-// ——————————————————————————————————————————————
-// HELPERS DE DOMINIO (puras, sin I/O)
-// ——————————————————————————————————————————————
-
-/** ¿Puede la alumna re-entregar esta tarea? */
-export const canResubmit = (
-  latest: ModuleSubmission | FinalActivitySubmission
-): boolean => latest.status === 'failed';
-
-/** ¿Está pendiente de revisión por Hebe? */
-export const isPendingReview = (
-  s: ModuleSubmission | FinalActivitySubmission
-): boolean =>
-  s.status === 'pending_review' || s.status === 'recovery_pending';
