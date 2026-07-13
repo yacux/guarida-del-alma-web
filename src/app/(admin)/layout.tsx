@@ -1,3 +1,9 @@
+import { TimezoneProvider } from "@/shared/timezone/TimezoneProvider";
+
 export default function () {
-  <div></div>;
+  return (
+    <TimezoneProvider>
+      <div></div>
+    </TimezoneProvider>
+  );
 }
