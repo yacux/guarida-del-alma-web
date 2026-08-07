@@ -17,6 +17,8 @@ export interface IProfileRepository {
   create(profile: Profile): Promise<Profile>; // Solo la firma del método, sin llaves {}
   // para desarrollar en el Futuro:
   // update(profile: Profile): Promise<Profile>;
+
+  findById(ProfileId: string): Promise<Profile>; // encontrar un perfil mediante el id
 }
 
 // ¿Por qué no lleva llaves {}?

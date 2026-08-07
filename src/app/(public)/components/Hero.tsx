@@ -33,15 +33,14 @@ export default function Hero() {
         </p>
 
         {/* Título principal */}
-        <h1 className="font-spiritual text-3xl sm:text-3xl md:text-6xl lg:text-8xl font-light leading-none bg-linear-to-b from-guarida-sky via-guarida-sky to-guarida-violet uppercase bg-clip-text text-transparent">
+        <h1 className="font-spiritual text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-light leading-none bg-linear-to-b from-guarida-sky via-guarida-sky to-transparent via-60% uppercase bg-clip-text text-transparent">
           La Guarida del Alma
         </h1>
 
         {/* Bajada */}
-        <p className="text-lg sm:text-xl font-light text-white tracking-wide max-w-xl mx-auto mb-16 leading-relaxed">
+        <p className="hidden sm:block text-lg font-light font-spiritual uppercase text-white tracking-wide mx-auto leading-relaxed mt-auto">
           Un espacio para encontrarte con vos mismo,
-          <br />
-          sanar desde la raíz y vivir con plenitud.
+          <br /> sanar desde la raíz y vivir con plenitud.
         </p>
 
         {/* CTAs */}

@@ -6,7 +6,7 @@ import { Show, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   return (
-    <header className="bg-linear-to-b from-guarida-dark-violet/88 via-guarida-dark-violet/48 via-40% to-transparent text-white pt-2 pb-12 flex fixed top-0 w-full z-50">
+    <header className="bg-linear-to-b from-guarida-dark-violet/92 via-guarida-dark-violet/50 hover:via-guarida-dark-violet/51 via-40% to-transparent text-white pt-2 pb-6 flex fixed top-0 w-full z-50 transition-all transform duration-300">
       <div className="container-guarida mx-auto flex items-center justify-between">
         {/* LOGO */}
         <Link
@@ -14,11 +14,11 @@ export default function Header() {
           className="my-auto h-full flex items-center gap-2 mr-auto"
         >
           <Image
-            src="/logo2.png"
+            src="/logoTerminado.png"
             alt="Logo"
             width={80}
             height={80}
-            className="aspect-square h-17 w-17 sm:h-21 sm:w-21 rounded-full"
+            className="aspect-square h-19 w-19 sm:h-23 sm:w-23 rounded-full"
           />
           <span className="hidden text-2xl uppercase font-semibold font-spiritual text-guarida-violet">
             la guarida del alma

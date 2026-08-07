@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "tunnel": "ngrok http --url=snuff-applied-preface.ngrok-free.dev 3000"
   },
   "dependencies": {
     "@clerk/localizations": "^4.9.2",

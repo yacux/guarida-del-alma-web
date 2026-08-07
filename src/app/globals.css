@@ -11,6 +11,10 @@
   --color-guarida-dark: #05070a;
   --color-guarida-fuchsia: #db2777;
   --color-guarida-blue: #2563eb;
+  /* Colores para uv y admin*/
+  --color-guarida-olive: #3d3a1f; /* fondo CertificateCard (ajustar al real)*/
+  --color-guarida-forest: #0f2e1e; /* fondo CommunityCard    (ajustar al real) */
+  --color-guarida-gold: #d4a843; /* texto/accent certificado */
 
   /* estilos para los rayos de luz */
   /* 1. Animación de escala (Contenedor Padre) */
@@ -160,5 +164,5 @@
 }
 
 .container-guarida {
-  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full!;
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full;
 }

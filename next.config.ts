@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  trailingSlash: false
+  trailingSlash: false,
+
+  allowedDevOrigins: ["snuff-applied-preface.ngrok-free.dev"],
 };
 
 export default nextConfig;

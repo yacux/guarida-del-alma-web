@@ -83,7 +83,7 @@ export class SupabaseProductDetailsRepository implements IProductDetailsReposito
       productType: productResponse.data.product_type,
       coverImageUrl: productResponse.data.cover_image_url,
       welcomeVideoUrl: productResponse.data.welcome_video_url,
-      WhatsappCommunity: productResponse.data.whatsapp_community,
+      whatsappCommunityUrl: productResponse.data.whatsapp_community_url,
       isActive: productResponse.data.is_active,
       createdAt: productResponse.data.created_at,
       updatedAt: productResponse.data.updated_at,
@@ -117,7 +117,7 @@ export class SupabaseProductDetailsRepository implements IProductDetailsReposito
 
           courseDetails: {
             grantsCertificate: response.data.grants_certificate,
-
+            accessDurationMonths: response.data.access_duration_months,
             approvalMinScore: response.data.approval_min_score,
           },
         };
@@ -147,6 +147,7 @@ export class SupabaseProductDetailsRepository implements IProductDetailsReposito
 
           workshopDetails: {
             globalPdfUrl: response.data.global_pdf_url,
+            accessDurationMonths: response.data.access_duration_months,
           },
         };
 
@@ -179,7 +180,7 @@ export class SupabaseProductDetailsRepository implements IProductDetailsReposito
         const includedProductsResponse = await this.supabase
           .from("program_included_products")
           .select("included_product_id")
-          .eq("program_product_id", product.id);
+          .eq("program_id", product.id);
 
         if (includedProductsResponse.error) {
           throw new Error(includedProductsResponse.error.message);
@@ -192,7 +193,7 @@ export class SupabaseProductDetailsRepository implements IProductDetailsReposito
 
           programDetails: {
             individualSessionsCount: response.data.individual_sessions_count,
-
+            accessDurationMonths: response.data.access_duration_months,
             grantsCertificate: response.data.grants_certificate,
 
             approvalMinScore: response.data.approval_min_score,

@@ -37,13 +37,13 @@ export default function DashboardSidebar({
             </Link>
             <button
               onClick={onClose}
-              className="md:hidden text-zinc-400 hover:text-white"
+              className="md:hidden text-white/80 hover:text-white"
             >
               <X className="w-6 h-6" />
             </button>
           </div>
 
-          <nav className="space-y-1.5">
+          <nav className="space-y-4">
             {STUDENT_NAVIGATION.map((item) => {
               const isActive = pathname === item.href;
               const Icon = item.icon;
@@ -53,16 +53,16 @@ export default function DashboardSidebar({
                   href={item.href}
                   onClick={onClose}
                   className={`
-                    flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group
+                    flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group 
                     ${
                       isActive
-                        ? "bg-linear-to-r from-guarida-fuchsia/20 to-guarida-violet/10 border-l-4 border-guarida-fuchsia text-white font-semibold"
-                        : "text-zinc-400 hover:bg-guarida-violet/10 hover:text-zinc-200"
+                        ? "bg-linear-to-r from-guarida-fuchsia/20 to-guarida-violet/10 border border-l-4 border-guarida-fuchsia text-white font-semibold"
+                        : "text-white/80 hover:bg-guarida-violet/10 hover:text-white border border-guarida-fuchsia/30"
                     }
                   `}
                 >
                   <Icon
-                    className={`w-5 h-5 transition-transform group-hover:scale-105 ${isActive ? "text-guarida-fuchsia" : "text-zinc-400 group-hover:text-zinc-300"}`}
+                    className={`w-5 h-5 transition-transform group-hover:scale-105 ${isActive ? "text-guarida-fuchsia" : "text-white/80 group-hover:text-white"}`}
                   />
                   {item.label}
                 </Link>

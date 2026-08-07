@@ -46,7 +46,7 @@ export interface Product {
   /**
    * Indica si el producto incluye comunidad de WhatsApp.
    */
-  WhatsappCommunity: string | null;
+  whatsappCommunityUrl: string | null;
 
   isActive: boolean;
 
@@ -61,7 +61,7 @@ export interface Product {
 
 export interface CourseDetails {
   grantsCertificate: boolean;
-
+  accessDurationMonths: number;
   approvalMinScore: number;
 }
 
@@ -80,6 +80,7 @@ export interface WorkshopDetails {
    * PDF único del taller.
    */
   globalPdfUrl: string | null;
+  accessDurationMonths: number;
 }
 
 export interface Workshop extends Product {
@@ -116,6 +117,8 @@ export interface ProgramDetails {
    * program_included_products.
    */
   includedProductIds: UUID[];
+
+  accessDurationMonths: number;
 }
 
 export interface Program extends Product {

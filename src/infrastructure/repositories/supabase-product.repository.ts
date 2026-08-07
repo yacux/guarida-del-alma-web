@@ -1,4 +1,3 @@
-// Esta clase vive en src/infrastructure/repositories/SupabaseProductRepository.ts.
 // Su único trabajo es hablar el idioma de la base de datos (SQL / snake_case)
 // y traducir los resultados al idioma de nuestro Core (TypeScript / camelCase).
 
@@ -6,8 +5,7 @@
 // los repositorios son la capa que conecta el mundo exterior (bases de datos, APIs, etc.) con nuestro Core limpio.
 
 // Importamos las interfaces necesarias del Core
-// src/infrastructure/repositories/SupabaseProductRepository.ts// =========================================================================
-// src/infrastructure/repositories/supabase-product.repository.ts
+// src/infrastructure/repositories/SupabaseProductRepository.ts
 // =========================================================================
 
 import { SupabaseClient } from "@supabase/supabase-js";
@@ -74,7 +72,8 @@ export class SupabaseProductRepository implements IProductRepository {
         coverImageUrl: fila.cover_image_url,
 
         welcomeVideoUrl: fila.welcome_video_url,
-        WhatsappCommunity: fila.whatsapp_community,
+        whatsappCommunityUrl: fila.whatsapp_community_url,
+        //accessDurationMonths: fila.access_duration_months,
 
         isActive: fila.is_active,
         createdAt: fila.created_at,
@@ -142,7 +141,8 @@ export class SupabaseProductRepository implements IProductRepository {
       coverImageUrl: fila.cover_image_url,
 
       welcomeVideoUrl: fila.welcome_video_url,
-      WhatsappCommunity: fila.whatsapp_community,
+      whatsappCommunityUrl: fila.whatsapp_community_url,
+      //accessDurationMonths: fila.access_duration_months,
 
       isActive: fila.is_active,
       createdAt: fila.created_at,

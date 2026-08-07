@@ -36,10 +36,11 @@ export default function StudentDashboardCard({
         overflow-hidden
         rounded-2xl
         border
-        border-guarida-sky/15
-        bg-guarida-dark-violet
+        border-guarida-violet/40
+        bg-guarida-violet/40
         transition-all
-        hover:border-guarida-fuchsia/40
+        hover:border-guarida-violet/50
+        hover:bg-guarida-violet/50
         hover:-translate-y-1
       "
     >
