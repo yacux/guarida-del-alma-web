@@ -20,9 +20,9 @@ export default function ServiceCard({
   const imageSource = srcImg || "/logo.jpg"; // Ruta de imagen por defecto si no se proporciona srcImg
   return (
     <div
-      className="h-full relative z-10 w-full sm:mr-auto sm:w-80% shadow-guarida-fuchsia/19 shadow-xl rounded-xl border p-4 md:p-6
+      className="h-full relative z-10 w-full sm:mr-auto sm:w-80% shadow-guarida-fuchsia/19 hover:shadow-guarida-fuchsia/23 shadow-xl rounded-xl border p-4 md:p-6
                   transition-all duration-500
-                  hover:scale-[1.01] cursor-pointer border-white hover:border-white
+                  hover:scale-[1.01] cursor-pointer border-guarida-fuchsia/20 hover:border-guarida-fuchsia/30
                   bg-white/76 hover:bg-white"
     >
       <div className="h-44 flex items-center gap-4">

@@ -7,6 +7,8 @@ import MyWorkshops from "./components/MyWorkshops";
 import Testimonies from "./components/Testimonies";
 import FeaturedProducts from "./components/FeaturedProducts";
 import SpaceForYou from "./components/SpaceForYou";
+import TransformationPrograms from "./components/TransformationPrograms";
+
 export const metadata: Metadata = {
   title: "La Guarida del Alma | Coaching, Bienestar y Sanación Integral",
   description:
@@ -166,133 +168,7 @@ export default function Home() {
       <MyWorkshops />
 
       {/* ── PROGRAMAS DE TRANSFORMACIÓN ─────────────────────── */}
-      <section className="container-guarida py-26" id="programas">
-        <div className="text-center mb-16">
-          <p className="text-guarida-sky text-sm tracking-[0.3em] uppercase mb-4">
-            Elegí tu camino
-          </p>
-          <h2 className="text-4xl md:text-5xl font-spiritual text-white">
-            Programas de Transformación
-          </h2>
-          <br />
-          <p className="text-white/90 text-lg">
-            Incluyen cursos y talleres juntos para que empieces como necesites
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {/* PROGRAMA FLOR DE LOTO */}
-          <div className="relative group p-8 rounded-3xl border border-sky/10 bg-guarida-sky/8 backdrop-blur-sm flex flex-col h-full transition-all hover:border-guarida-sky/30">
-            <div className="mb-6">
-              <span className="text-4xl mb-4 block">🪷</span>
-              <h3 className="text-3xl font-spiritual text-white mb-2">
-                Flor de Loto
-              </h3>
-              <p className="text-guarida-sky text-sm uppercase tracking-widest">
-                Semestre de introspección
-              </p>
-            </div>
-
-            <ul className="space-y-4 mb-12 grow text-white/80">
-              <li className="flex items-start gap-3">
-                <span className="text-guarida-sky">✓</span>
-                <p>
-                  Acceso a la plataforma por <strong>6 meses</strong>.
-                </p>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-guarida-sky">✓</span>
-                <p>
-                  Incluye curso <strong>"Amor Propio"</strong> y talleres{" "}
-                  <strong>"Desata tu Voz"</strong> y{" "}
-                  <strong>"Renacer del Abuso Narcisista"</strong>.
-                </p>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-guarida-sky">✓</span>
-                <p>
-                  <strong>8 encuentros</strong> de sesiones individuales (1 a
-                  1).
-                </p>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-guarida-sky">✓</span>
-                <p>
-                  1 encuentro grupal en el semestre para profundizar en los
-                  talleres.
-                </p>
-              </li>
-            </ul>
-
-            <Link
-              href="/contacto"
-              className="w-full text-center py-4 rounded-xl border border-guarida-sky text-guarida-sky font-bold hover:bg-guarida-sky hover:text-guarida-violet transition-colors uppercase tracking-widest text-xs"
-            >
-              Más información
-            </Link>
-          </div>
-
-          {/* PROGRAMA AVE FÉNIX */}
-          <div className="relative group p-8 rounded-3xl border border-guarida-violet bg-linear-to-b from-guarida-violet/20 to-transparent flex flex-col h-full shadow-2xl shadow-guarida-violet/20">
-            <div className="absolute -top-4 right-8 bg-guarida-fuchsia text-white px-6 py-2 rounded-full uppercase tracking-tighter font-semibold">
-              Más Completo
-            </div>
-
-            <div className="mb-6">
-              <span className="text-4xl mb-4 block">🔥</span>
-              <h3 className="text-3xl font-spiritual text-white mb-2">
-                Ave Fénix
-              </h3>
-              <p className="text-guarida-fuchsia text-sm uppercase tracking-widest">
-                Un año de renacimiento
-              </p>
-            </div>
-
-            <ul className="space-y-4 mb-12 grow text-white/90">
-              <li className="flex items-start gap-3">
-                <span className="text-guarida-fuchsia">-</span>
-                <p>
-                  Acceso por <strong>1 año</strong> a TODA la plataforma.
-                </p>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-guarida-fuchsia">-</span>
-                <p>
-                  <strong>Certificado</strong> de Danza Terapeuta Shaumbra.
-                </p>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-guarida-fuchsia">-</span>
-                <p>
-                  Un encuentro mensual de formación en Danza Terapéutica y Amor
-                  Propio.
-                </p>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-guarida-fuchsia">-</span>
-                <p>
-                  2 encuentros especiales de profundización (Desata tu Voz y
-                  Abuso Narcisista).
-                </p>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-guarida-fuchsia">-</span>
-                <p>
-                  <strong>12 sesiones individuales</strong> (Mentoria, PNL,
-                  Hipnosis y Coaching).
-                </p>
-              </li>
-            </ul>
-
-            <Link
-              href="/contacto"
-              className="w-full text-center py-4 rounded-xl bg-linear-to-r from-guarida-violet to-guarida-fuchsia text-white font-bold hover:brightness-110 transition-all uppercase tracking-widest text-xs shadow-lg shadow-guarida-fuchsia/20"
-            >
-              Comenzar mi transformación
-            </Link>
-          </div>
-        </div>
-      </section>
+      <TransformationPrograms />
 
       {/* ── PRODUCTOS DESTACADOS ───────────────────────────── */}
       <FeaturedProducts />

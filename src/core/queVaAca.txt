@@ -1,12 +1,64 @@
-1. La carpeta core/ (El Estudio del Arquitecto)
-En esta carpeta nunca hay código de librerías externas (ni Supabase, ni Clerk, ni Axios). Es puro TypeScript.
+# core/ — El Estudio del Arquitecto
 
-core/entities/ (El Qué): Aquí están tus moldes de datos puros. Como vimos con tu Profile.ts o tu Product.ts.
-Definen qué propiedades tiene una alumna o un curso. No saben de dónde vienen esos datos ni a dónde van.
+Puro TypeScript. Nunca hay código de librerías externas acá (ni Supabase,
+ni Clerk, ni fetch a APIs). Todo lo que vive en `core/` son moldes y
+reglas — nunca implementaciones.
 
-core/repositories/ (Los Contratos):
-Aquí SÍ son siempre interfaces. Esta carpeta contiene las reglas que dictan cómo se debe interactuar con las entidades. 
-El archivo IProfileRepository.ts es solo un contrato que dice: "Para guardar un Profile, necesito una función create que devuelva una promesa".
+--------------------------------------------
 
-¿Por qué están separados? Porque las Entidades son los datos, y los Repositorios del Core son las reglas de cómo esos datos pueden entrar o 
-salir del sistema, sin importar la tecnología que uses.
+## core/entities/ (El Qué)
+
+Moldes de datos puros. Definen qué propiedades tiene una alumna, un curso,
+un enrollment. No saben de dónde vienen esos datos ni a dónde van.
+
+## core/repositories/ (Los Contratos de persistencia)
+
+Interfaces que dictan cómo las **Entidades** del dominio entran o salen
+del sistema — sin importar la tecnología. `IEnrollmentRepository` dice
+"para buscar un Enrollment necesito una función que devuelva una promesa",
+sin saber que detrás hay Supabase.
+
+Regla para identificar si algo va acá: si el contrato mueve una Entidad
+propia (`Product`, `Enrollment`, `Profile`) hacia/desde una persistencia
+que vos gobernás, es un Repository.
+
+--------------------------------------------
+
+## core/services/ (Los Contratos de integración externa)
+
+Interfaces que dictan cómo el sistema le pide algo a un **proveedor
+externo** — un sistema ajeno con su propia lógica y estado, que no
+persiste en tu base ni gobernás vos (Cal.com, un gateway de pago, un
+servicio de email).
+
+No hay una Entidad propia de por medio: lo que entra o sale es el reflejo
+momentáneo de lo que ese proveedor contesta en ese instante (un horario
+libre, el resultado de crear una reserva). No se "busca por ID en tu
+sistema" — se consulta o se le pide una acción a alguien de afuera.
+
+`ICalendarService` es el primer ejemplo: consulta disponibilidad y crea/
+cancela bookings contra Cal.com, sin que el Use Case que lo consume sepa
+que existe Cal.com.
+
+**Repository vs. Service, en una frase:** un Repository es el contrato
+para los planos de tu propio edificio (tus entidades). Un Service es el
+contrato para preguntarle a un proveedor externo qué tiene disponible.
+
+----------------------------------------
+
+## core/auth/ (RBAC + ABAC)
+
+core/auth/
+├── Permission.ts ← RBAC: enum de permisos
+├── rolePermissions.ts ← RBAC: mapa rol → permisos
+├── can.ts ← RBAC: can(role, permission)
+└── policies/
+├── session.policy.ts ← canBookSession, remainingSessions
+├── module.policy.ts ← canViewModule, canSubmitAssignment
+├── certificate.policy.ts ← canDownloadCertificate
+└── submission.policy.ts ← needsReview, canResubmit
+
+
+RBAC protege rutas (¿qué rol puede entrar acá?). Las policies ABAC son
+funciones puras que deciden qué puede hacer un usuario con datos que RLS
+ya le autorizó — nunca duplican una regla que RLS ya resuelve.

@@ -1,6 +1,6 @@
 // src/app/(dashboard)/aula-virtual/[slug]/_components/program/ProgramStats.tsx
 
-import { Calendar, Award, Video } from "lucide-react";
+import { Award, Video } from "lucide-react";
 
 interface ProgramStatsProps {
   individualSessionsCount: number;

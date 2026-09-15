@@ -1,77 +1,86 @@
 // ============================================================
 // src/core/repositories/ISubmissionRepository.ts
-//
-// Contrato para leer y crear entregas de tareas de módulo.
-//
-// IMPORTANTE — Acceso directo vs. acceso por programa:
-//   Los métodos de lectura filtran por (assignment_id + student_id)
-//   y NUNCA por enrollment_id. Una entrega es de un alumno para
-//   una tarea concreta, sin importar qué matrícula generó el acceso.
-//
-//   El enrollment_id que se guarda en la entrega es responsabilidad
-//   del caso de uso que la crea (SubmitAssignmentUseCase), no de
-//   este repositorio.
 // ============================================================
 
 import type {
   ModuleSubmission,
   ModuleSubmissionFeedback,
   CreateModuleSubmissionInput,
+  CreateModuleSubmissionFeedbackInput,
 } from "../entities/Submission";
 import type { UUID } from "../entities/shared";
 import type { ClerkUserId } from "../entities/shared";
+import type { SubmissionStatus } from "../entities/shared";
+import type { ISODateString } from "../entities/shared";
+
+/**
+ * Read-model compuesto para la cola de corrección de Hebe.
+ *
+ * NO es una entidad de dominio — es una proyección de consulta
+ * que combina Submission + Assignment + Module + Course + Profile
+ * en una sola forma, para evitar N+1 queries en la UI de admin.
+ *
+ * Vive acá (junto al repositorio) y no en core/entities porque
+ * describe exactamente lo que este método promete devolver,
+ * no un concepto de negocio persistible.
+ */
+export interface SubmissionReviewItem {
+  submissionId: UUID;
+  assignmentId: UUID;
+  assignmentTitle: string;
+  moduleId: UUID;
+  moduleTitle: string;
+  courseId: UUID;
+  courseName: string;
+  /** Nota mínima (1-100) para que la entrega se considere aprobada. */
+  approvalMinScore: number;
+  studentId: ClerkUserId;
+  studentEmail: string;
+  studentUsername: string;
+  attemptNumber: number;
+  answers: string[];
+  submittedAt: ISODateString;
+  status: SubmissionStatus;
+}
 
 export interface ISubmissionRepository {
-  /**
-   * Devuelve el último intento del alumno para una tarea dada.
-   *
-   * "Último" = attempt_number más alto.
-   * Devuelve null si el alumno nunca entregó esa tarea.
-   *
-   * Casos de uso:
-   *   • GetModuleContentsUseCase → saber si puede entregar / re-entregar
-   *   • Vista del módulo → mostrar la última entrega y su estado
-   */
   findLatestByAssignmentAndStudent(
     assignmentId: UUID,
     studentId: ClerkUserId,
   ): Promise<ModuleSubmission | null>;
 
-  /**
-   * Todos los intentos del alumno para una tarea, ordenados por
-   * attempt_number ASC.
-   *
-   * Útil para mostrar el historial completo de entregas en la UI
-   * (intento 1 fallido → intento 2 aprobado).
-   * los parametros pasados son assignmentId o sea el ID de la tarea y studentId o sea el ID del alumno
-   */
   findAllByAssignmentAndStudent(
     assignmentId: UUID,
     studentId: ClerkUserId,
   ): Promise<ModuleSubmission[]>;
 
-  /**
-   * El feedback de Hebe para una entrega concreta.
-   * Devuelve null si Hebe todavía no corrigió esa entrega.
-   *
-   * La tabla tiene UNIQUE (submission_id), por lo que
-   * siempre hay 0 o 1 feedback por entrega.
-   * el parametro pasado es submissionId o sea el ID de la entrega
-   */
   findFeedbackBySubmissionId(
     submissionId: UUID,
   ): Promise<ModuleSubmissionFeedback | null>;
 
-  /**
-   * Crea una nueva entrega.
-   *
-   * El attempt_number lo calcula el caso de uso antes de llamar
-   * a este método (último attempt + 1, o 1 si es la primera vez).
-   *
-   * El trigger fn_unlock_next_module_on_submit se dispara
-   * automáticamente en la DB cuando attempt_number = 1.
-   */
   createSubmission(
     input: CreateModuleSubmissionInput,
   ): Promise<ModuleSubmission>;
+
+  /**
+   * Todas las entregas pendientes de corrección en toda la plataforma
+   * (status = 'pending_review' | 'recovery_pending'), con el contexto
+   * necesario para que Hebe las revise sin navegar entrega por entrega.
+   *
+   * Ordenadas por submitted_at ASC (las más antiguas primero — cola justa).
+   *
+   * Requiere que el cliente que llama esté autenticado como admin:
+   * la policy RLS de assignment_submissions ya permite ver todas las
+   * filas cuando fn_my_role() = 'admin', sin necesidad de service role.
+   */
+  findAllPendingReview(): Promise<SubmissionReviewItem[]>;
+
+  /**
+   * Crea la corrección de Hebe sobre una entrega.
+   * El trigger fn_update_submission_status_on_feedback actualiza
+   * automáticamente el status de la submission en la DB.
+   */
+  createFeedback(
+    input: CreateModuleSubmissionFeedbackInput,
+  ): Promise<ModuleSubmissionFeedback>;
 }

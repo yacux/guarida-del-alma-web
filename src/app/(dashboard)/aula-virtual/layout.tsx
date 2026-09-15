@@ -13,7 +13,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   return (
     <TimezoneProvider>
-      <div className="min-h-screen flex bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-guarida-fuchsia/30">
+      <div className="min-h-screen flex bg-guarida-violet text-zinc-100 font-sans antialiased selection:bg-guarida-fuchsia/30">
         {/* SIDEBAR */}
         <DashboardSidebar
           isOpen={isSidebarOpen}

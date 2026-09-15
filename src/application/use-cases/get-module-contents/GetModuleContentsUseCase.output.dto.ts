@@ -5,8 +5,8 @@
 import type { Course } from "@/core/entities/Product";
 import type {
   CourseModule,
-  ModuleResource,
   ModuleAssignment,
+  ModuleResourceType,
 } from "@/core/entities/Module";
 import type { ModuleProgress } from "@/core/entities/StudentProgress";
 import type {
@@ -14,6 +14,26 @@ import type {
   ModuleSubmissionFeedback,
 } from "@/core/entities/Submission";
 import type { UUID } from "@/core/entities/shared";
+
+/**
+ * Recurso ya resuelto, listo para consumir desde la UI.
+ *
+ * A diferencia de ModuleResource (entidad cruda), `url` acá
+ * SIEMPRE es una URL consumible directamente:
+ *   video → la misma URL directa que tenía en DB
+ *   pdf/audio → una Signed URL temporal de Supabase Storage
+ *
+ * La presentación nunca ve storagePath crudo.
+ */
+export interface ResolvedModuleResource {
+  id: UUID;
+  moduleId: UUID;
+  title: string;
+  resourceType: ModuleResourceType;
+  url: string | null;
+  durationSeconds: number | null;
+  orderIndex: number;
+}
 
 /** Información de navegación entre módulos. */
 export interface ModuleNav {
@@ -32,8 +52,8 @@ export interface GetModuleContentsOutput {
   /** El módulo solicitado. */
   module: CourseModule;
 
-  /** Recursos del módulo ordenados por order_index. */
-  resources: ModuleResource[];
+  /** Recursos del módulo con URLs ya resueltas (signed URLs para pdf/audio). */
+  resources: ResolvedModuleResource[];
 
   /** La tarea del módulo. null si no tiene tarea. */
   assignment: ModuleAssignment | null;

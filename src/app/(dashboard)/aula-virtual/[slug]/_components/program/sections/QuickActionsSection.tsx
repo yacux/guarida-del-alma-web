@@ -10,6 +10,7 @@ import { SessionCard } from "../../cards/SessionCard";
 import { CertificateCard } from "../../cards/CertificateCard";
 import { CommunityCard } from "../../cards/CommunityCard";
 import { LiveSessionCard } from "../../cards/LiveSessionCard";
+import { UpcomingSessionItem } from "../IndividualSessions/UpcomingSessions";
 
 interface UpcomingLive {
   productName: string;
@@ -21,6 +22,7 @@ interface UpcomingLive {
 interface QuickActionsSectionProps {
   remainingSessions: number;
   totalSessions: number;
+  upcomingSessions?: UpcomingSessionItem[]; // ← nuevo
   certificateAvailable: boolean;
   totalIncludedProducts: number;
   whatsappCommunityUrl?: string;
@@ -32,6 +34,7 @@ interface QuickActionsSectionProps {
 export function QuickActionsSection({
   remainingSessions,
   totalSessions,
+  upcomingSessions,
   certificateAvailable,
   totalIncludedProducts,
   whatsappCommunityUrl,

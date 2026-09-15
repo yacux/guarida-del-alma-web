@@ -5,13 +5,15 @@
 import type { IProductDetailsRepository } from "@/core/repositories/IProductDetailsRepository";
 import type { IModuleRepository } from "@/core/repositories/IModuleRepository";
 import type { ISubmissionRepository } from "@/core/repositories/ISubmissionRepository";
+import type { IModuleResourceStorage } from "@/core/repositories/IModuleResourceStorage";
+import type { ModuleResource } from "@/core/entities/Module";
 import type { ModuleSubmission } from "@/core/entities/Submission";
 import type { ModuleSubmissionFeedback } from "@/core/entities/Submission";
-import type { ModuleProgress } from "@/core/entities/StudentProgress";
 import type { GetModuleContentsInput } from "./GetModuleContentsUseCase.input.dto";
 import type {
   GetModuleContentsOutput,
   ModuleNav,
+  ResolvedModuleResource,
 } from "./GetModuleContentsUseCase.output.dto";
 import { isCourse } from "@/core/entities/Product";
 import { canResubmit } from "@/core/auth/policies/submission.policy";
@@ -21,12 +23,12 @@ export class GetModuleContentsUseCase {
     private readonly productDetailsRepository: IProductDetailsRepository,
     private readonly moduleRepository: IModuleRepository,
     private readonly submissionRepository: ISubmissionRepository,
+    private readonly resourceStorage: IModuleResourceStorage,
   ) {}
 
   async execute(
     input: GetModuleContentsInput,
   ): Promise<GetModuleContentsOutput | null> {
-    // ── Paso 1: resolver el curso por slug ─────────────────────
     const variant = await this.productDetailsRepository.findBySlug(
       input.courseSlug,
     );
@@ -34,22 +36,14 @@ export class GetModuleContentsUseCase {
     if (!variant) return null;
     if (!isCourse(variant)) return null;
 
-    // ── Paso 2: módulo solicitado + todos los módulos en paralelo
     const [module, allModules] = await Promise.all([
       this.moduleRepository.findByOrderInCourse(variant.id, input.moduleOrder),
       this.moduleRepository.findByCourseId(variant.id),
     ]);
 
-    console.log({
-      courseId: variant.id,
-      requestedOrder: input.moduleOrder,
-      module,
-      totalModules: allModules.length,
-    });
     if (!module) return null;
 
-    // ── Paso 3: recursos, tarea y progreso en paralelo ─────────
-    const [resources, assignment, progress] = await Promise.all([
+    const [rawResources, assignment, progress] = await Promise.all([
       this.moduleRepository.findResourcesByModuleId(module.id),
       this.moduleRepository.findAssignmentByModuleId(module.id),
       this.moduleRepository.findProgressByStudentAndModule(
@@ -58,7 +52,14 @@ export class GetModuleContentsUseCase {
       ),
     ]);
 
-    // ── Paso 4: última entrega (solo si hay tarea) ─────────────
+    // ── Resolver Signed URLs para pdf/audio ─────────────────────
+    // video ya trae una url externa válida → se deja tal cual.
+    // pdf/audio traen storagePath → hay que pedirle a Storage
+    // la Signed URL temporal. Sin este paso, url siempre es null.
+    const resources = await this.resolveResourceUrls(rawResources);
+    console.log("rawResources:", rawResources);
+    console.log("resolved:", resources);
+
     let latestSubmission: ModuleSubmission | null = null;
     let feedback: ModuleSubmissionFeedback | null = null;
 
@@ -76,19 +77,12 @@ export class GetModuleContentsUseCase {
       }
     }
 
-    // ── Paso 5: canSubmit ──────────────────────────────────────
-    // Puede entregar si:
-    //   • existe tarea
-    //   • el módulo está desbloqueado (progress existe y isUnlocked = true)
-    //   • nunca entregó (latestSubmission === null)
-    //     O su última entrega fue rechazada (canResubmit)
     const canSubmit =
       assignment !== null &&
       progress !== null &&
       progress.isUnlocked &&
       (latestSubmission === null || canResubmit(latestSubmission));
 
-    // ── Paso 6: navegación ─────────────────────────────────────
     const nav = this.buildNav(input.moduleOrder, allModules.length);
 
     return {
@@ -103,6 +97,32 @@ export class GetModuleContentsUseCase {
       enrollmentId: progress?.enrollmentId ?? null,
       nav,
     };
+  }
+
+  private async resolveResourceUrls(
+    rawResources: ModuleResource[],
+  ): Promise<ResolvedModuleResource[]> {
+    return Promise.all(
+      rawResources.map(async (resource) => {
+        const needsSignedUrl =
+          resource.resourceType === "pdf" || resource.resourceType === "audio";
+
+        const url =
+          needsSignedUrl && resource.storagePath
+            ? await this.resourceStorage.createSignedUrl(resource.storagePath)
+            : resource.url;
+
+        return {
+          id: resource.id,
+          moduleId: resource.moduleId,
+          title: resource.title,
+          resourceType: resource.resourceType,
+          url,
+          durationSeconds: resource.durationSeconds,
+          orderIndex: resource.orderIndex,
+        };
+      }),
+    );
   }
 
   private buildNav(currentOrder: number, totalModules: number): ModuleNav {

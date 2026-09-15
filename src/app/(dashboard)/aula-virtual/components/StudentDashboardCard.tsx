@@ -37,10 +37,10 @@ export default function StudentDashboardCard({
         rounded-2xl
         border
         border-guarida-violet/40
-        bg-guarida-violet/40
+        bg-guarida-dark-violet/80
         transition-all
         hover:border-guarida-violet/50
-        hover:bg-guarida-violet/50
+        hover:bg-guarida-dark-violet/50
         hover:-translate-y-1
       "
     >
@@ -110,9 +110,9 @@ export default function StudentDashboardCard({
 
         <div className="mt-5 flex items-center justify-between">
           <div>
-            <p className="text-xs text-zinc-500">Acceso hasta</p>
+            <p className="text-xs text-white/90">Acceso hasta</p>
 
-            <p className="text-sm text-zinc-300">
+            <p className="text-sm font-semibold text-guarida-fuchsia ">
               {new Date(item.expiresAt).toLocaleDateString("es-AR")}
             </p>
           </div>

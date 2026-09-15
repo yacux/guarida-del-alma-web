@@ -32,6 +32,7 @@ interface ResourceRow {
   title: string;
   resource_type: string;
   url: string;
+  storage_path: string | null;
   duration_seconds: number | null;
   order_index: number;
   created_at: string;
@@ -41,8 +42,6 @@ interface AssignmentRow {
   id: string;
   module_id: string;
   title: string;
-  instructions: string | null;
-  questions: string[];
   created_at: string;
 }
 
@@ -197,6 +196,7 @@ export class SupabaseModuleRepository implements IModuleRepository {
       // El CHECK constraint de la DB garantiza que es un ResourceType válido
       resourceType: r.resource_type as ModuleResource["resourceType"],
       url: r.url,
+      storagePath: r.storage_path,
       durationSeconds: r.duration_seconds,
       orderIndex: r.order_index,
       createdAt: r.created_at,
@@ -208,8 +208,6 @@ export class SupabaseModuleRepository implements IModuleRepository {
       id: r.id,
       moduleId: r.module_id,
       title: r.title,
-      instructions: r.instructions,
-      questions: r.questions,
       createdAt: r.created_at,
     };
   }

@@ -2,7 +2,8 @@
 // src/app/(dashboard)/aula-virtual/_components/module/sections/AssignmentSection.tsx
 //
 // Muestra la tarea del módulo, la última entrega y el feedback.
-// Es puramente de lectura — el formulario llega por formSlot.
+// Es puramente de lectura — el formulario llega por formSlot,
+// decidido por ModulePage según canSubmit (no se construye acá).
 // ============================================================
 
 import type {
@@ -12,8 +13,6 @@ import type {
 import type { ModuleAssignment } from "@/core/entities/Module";
 import type { SubmissionStatus } from "@/core/entities/shared";
 import { CheckCircle2, XCircle, Clock, RotateCcw } from "lucide-react";
-
-// ── Config de estados de entrega ─────────────────────────────
 
 const SUBMISSION_STATUS_CONFIG: Record<
   SubmissionStatus,
@@ -61,18 +60,14 @@ const SUBMISSION_STATUS_CONFIG: Record<
   },
 };
 
-// ── Props ─────────────────────────────────────────────────────
-
 interface AssignmentSectionProps {
   assignment: ModuleAssignment | null;
   latestSubmission: ModuleSubmission | null;
   feedback: ModuleSubmissionFeedback | null;
   canSubmit: boolean;
-  /** Phase 5 inyecta AssignmentForm acá. */
+  /** Inyectado por ModulePage cuando canSubmit=true. */
   formSlot?: React.ReactNode;
 }
-
-// ── Componente ────────────────────────────────────────────────
 
 export function AssignmentSection({
   assignment,
@@ -87,33 +82,14 @@ export function AssignmentSection({
     ? SUBMISSION_STATUS_CONFIG[latestSubmission.status]
     : null;
 
+  {
+    console.log("el can submit essss: " + canSubmit);
+  }
+
   return (
     <section className="flex flex-col gap-6">
       <h2 className="text-base font-semibold text-white">{assignment.title}</h2>
 
-      {/* Instrucciones */}
-      {assignment.instructions && (
-        <p className="rounded-xl border border-white/5 bg-guarida-dark-violet p-4 text-sm leading-relaxed text-white/60">
-          {assignment.instructions}
-        </p>
-      )}
-
-      {/* Preguntas */}
-      <ol className="flex flex-col gap-3">
-        {assignment.questions.map((question, index) => (
-          <li
-            key={index}
-            className="flex gap-3 rounded-xl border border-white/5 bg-guarida-dark-violet p-4"
-          >
-            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-guarida-violet/30 text-xs font-semibold text-white/70">
-              {index + 1}
-            </span>
-            <p className="text-sm text-white/80">{question}</p>
-          </li>
-        ))}
-      </ol>
-
-      {/* Estado de la última entrega */}
       {latestSubmission && statusConfig && (
         <div
           className={`rounded-xl border p-4 ${statusConfig.bgClass} ${statusConfig.borderClass}`}
@@ -139,32 +115,26 @@ export function AssignmentSection({
         </div>
       )}
 
-      {/* Respuestas de la última entrega */}
       {latestSubmission && (
-        <div className="flex flex-col gap-3">
-          <h3 className="text-sm font-medium text-white/50">
+        <div className="rounded-xl border border-white/5 bg-guarida-dark-violet p-4 flex flex-col gap-3">
+          <h3 className="text-sm font-semibold text-white">
             Tu última entrega
           </h3>
           {latestSubmission.answers.map((answer, index) => (
-            <div
-              key={index}
-              className="rounded-xl border border-white/5 bg-guarida-dark-violet p-4"
-            >
-              <p className="mb-1 text-xs text-white/30">Pregunta {index + 1}</p>
-              <p className="text-sm text-white/70 leading-relaxed">{answer}</p>
-            </div>
+            <p key={index} className="text-sm text-white/70 leading-relaxed">
+              {answer}
+            </p>
           ))}
         </div>
       )}
 
-      {/* Feedback de Hebe */}
       {feedback && (
         <div className="flex flex-col gap-3 rounded-xl border border-guarida-violet/20 bg-guarida-dark-violet p-5">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-white">
               Devolución de Hebe
             </h3>
-            <div className="flex items-center gap-2">
+            <div className="text-right">
               <span className="text-2xl font-bold text-white">
                 {feedback.score}
               </span>
@@ -179,8 +149,8 @@ export function AssignmentSection({
         </div>
       )}
 
-      {/* Slot del formulario (Phase 5) */}
-      {formSlot}
+      {/* Formulario real de entrega, decidido por ModulePage */}
+      {canSubmit && formSlot}
     </section>
   );
 }

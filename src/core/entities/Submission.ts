@@ -29,7 +29,7 @@ export interface ModuleSubmission {
   attemptNumber: number;
 
   /**
-   * Respuestas de la alumna, en array paralelo a ModuleAssignment.questions.
+   * Respuestas de la alumna
    * Ej: ["Mi respuesta a la pregunta 1", "Mi respuesta a la pregunta 2"]
    */
   answers: string[];

@@ -43,3 +43,6 @@ next-env.d.ts
 # Ignorar configuración y archivos de Supabase
 supabase/
 schema.sql
+
+# Local Supabase Storage assets
+/storage-assets.local/

@@ -48,7 +48,7 @@ export function ModuleNav({
       )}
 
       {/* Contador central */}
-      <span className="text-xs text-white/30">
+      <span className="text-xs text-white/70">
         {/* orderIndex es 0-based, el módulo actual es previousOrder + 1 o nextOrder - 1 */}
         {nav.previousOrder !== null
           ? nav.previousOrder + 2

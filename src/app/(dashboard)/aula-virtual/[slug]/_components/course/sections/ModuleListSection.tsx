@@ -19,10 +19,10 @@ export function ModuleListSection({
   courseSlug,
 }: ModuleListSectionProps) {
   return (
-    <section>
+    <section className="px-8 py-12 border border-guarida-dark-violet/20 bg-guarida-dark-violet/20 rounded-2xl">
       <div className="mb-4 flex items-baseline justify-between">
         <h2 className="text-lg font-semibold text-white">Módulos del curso</h2>
-        <span className="text-sm text-white/40">
+        <span className="text-sm text-white/70">
           {modules.filter((m) => m.status === "completed").length} de{" "}
           {modules.length} completados
         </span>

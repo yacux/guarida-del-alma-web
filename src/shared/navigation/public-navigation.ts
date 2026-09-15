@@ -9,10 +9,6 @@ export const PUBLIC_NAVIGATION: NavLink[] = [
     href: "/aula-virtual",
   },
   {
-    label: "Cursos y Talleres",
-    href: "/cursos-talleres",
-  },
-  {
     label: "Sesiones",
     href: "/sesiones",
   },

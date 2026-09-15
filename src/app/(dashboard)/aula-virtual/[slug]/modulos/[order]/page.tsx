@@ -8,6 +8,7 @@ import { auth } from "@clerk/nextjs/server";
 import { SupabaseProductDetailsRepository } from "@/infrastructure/repositories/supabase-product-details.repository";
 import { SupabaseModuleRepository } from "@/infrastructure/repositories/supabase-module.repository";
 import { SupabaseSubmissionRepository } from "@/infrastructure/repositories/supabase-submission.repository";
+import { SupabaseModuleResourceStorage } from "@/infrastructure/repositories/supabase-module-resource-storage.repository";
 import { createSupabaseServerClient } from "@/infrastructure/config/supabaseServerClient";
 import { GetModuleContentsUseCase } from "@/application/use-cases/get-module-contents/GetModuleContentsUseCase";
 import { ModulePage } from "../[order]/_components/ModulePage";
@@ -18,8 +19,6 @@ interface Props {
 
 export default async function ModuleDetailPage({ params }: Props) {
   const { slug, order } = await params;
-  console.log(slug);
-  console.log(order);
 
   // ── Autenticación ──────────────────────────────────────────
   const { userId } = await auth();
@@ -35,6 +34,7 @@ export default async function ModuleDetailPage({ params }: Props) {
     new SupabaseProductDetailsRepository(client),
     new SupabaseModuleRepository(client),
     new SupabaseSubmissionRepository(client),
+    new SupabaseModuleResourceStorage(client),
   ).execute({
     courseSlug: slug,
     moduleOrder,

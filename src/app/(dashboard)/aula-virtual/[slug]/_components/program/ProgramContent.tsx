@@ -15,6 +15,10 @@ import { EmptyState } from "../shared/EmptyState";
 import { QuickActionsSection } from "./sections/QuickActionsSection";
 import { IncludedProductsGrid } from "./IncludedProductsGrid";
 import { AnnouncementSection } from "./sections/AnnouncementSection";
+import {
+  UpcomingSessionItem,
+  UpcomingSessions,
+} from "./IndividualSessions/UpcomingSessions";
 
 interface ProgramContentProps {
   program: Program;
@@ -23,6 +27,7 @@ interface ProgramContentProps {
   allAnnouncementsHref?: string;
   remainingSessions?: number;
   totalSessions?: number;
+  upcomingSessions?: UpcomingSessionItem[]; // ← se mantiene el prop, cambia destino
   certificateAvailable?: boolean;
   bookingUrl?: string;
   certificateUrl?: string;
@@ -41,6 +46,7 @@ export function ProgramContent({
   allAnnouncementsHref,
   remainingSessions,
   totalSessions,
+  upcomingSessions,
   certificateAvailable = false,
   bookingUrl,
   certificateUrl,
@@ -72,6 +78,7 @@ export function ProgramContent({
       <QuickActionsSection
         remainingSessions={sessionsLeft}
         totalSessions={sessions}
+        upcomingSessions={upcomingSessions}
         certificateAvailable={certificateAvailable}
         totalIncludedProducts={includedProducts.length}
         whatsappCommunityUrl={program.whatsappCommunityUrl ?? undefined}
@@ -83,7 +90,21 @@ export function ProgramContent({
       {/* 4. Video de bienvenida */}
       <WelcomeVideo welcomeVideoUrl={program.welcomeVideoUrl} />
 
-      {/* 5. Contenido del programa */}
+      {/* 5. Próximas sesiones individuales — solo si el programa las incluye */}
+      {/* {sessions > 0 && (
+        <section>
+          <h2 className="mb-1 text-xl font-semibold text-white">
+            Próximas sesiones
+          </h2>
+          <p className="mb-4 text-sm text-white/50">
+            Tus sesiones individuales agendadas con Hebe.
+          </p>
+
+          <UpcomingSessions sessions={upcomingSessions} />
+        </section>
+      )} */}
+
+      {/* 6. productos incluidos del programa (contenido) */}
       <section>
         <h2 className="mb-1 text-xl font-semibold text-white">
           Contenido del programa

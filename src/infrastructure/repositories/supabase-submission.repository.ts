@@ -1,16 +1,17 @@
 // ============================================================
 // src/infrastructure/repositories/supabase-submission.repository.ts
-//
-// Implementación concreta de ISubmissionRepository para Supabase.
-// Mapea snake_case → camelCase del dominio.
 // ============================================================
 
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { ISubmissionRepository } from "@/core/repositories/ISubmissionRepository";
+import type {
+  ISubmissionRepository,
+  SubmissionReviewItem,
+} from "@/core/repositories/ISubmissionRepository";
 import type {
   ModuleSubmission,
   ModuleSubmissionFeedback,
   CreateModuleSubmissionInput,
+  CreateModuleSubmissionFeedbackInput,
 } from "@/core/entities/Submission";
 import type { UUID, ClerkUserId } from "@/core/entities/shared";
 import type { SubmissionStatus } from "@/core/entities/shared";
@@ -47,10 +48,6 @@ export class SupabaseSubmissionRepository implements ISubmissionRepository {
     assignmentId: UUID,
     studentId: ClerkUserId,
   ): Promise<ModuleSubmission | null> {
-    //
-    // "Último" = attempt_number más alto.
-    // Si el alumno nunca entregó, devuelve null.
-    //
     const { data, error } = await this.client
       .from("assignment_submissions")
       .select("*")
@@ -92,9 +89,6 @@ export class SupabaseSubmissionRepository implements ISubmissionRepository {
   async findFeedbackBySubmissionId(
     submissionId: UUID,
   ): Promise<ModuleSubmissionFeedback | null> {
-    //
-    // La tabla tiene UNIQUE (submission_id) → máximo 1 feedback por entrega.
-    //
     const { data, error } = await this.client
       .from("assignment_feedback")
       .select("*")
@@ -112,11 +106,6 @@ export class SupabaseSubmissionRepository implements ISubmissionRepository {
   async createSubmission(
     input: CreateModuleSubmissionInput,
   ): Promise<ModuleSubmission> {
-    //
-    // El trigger fn_unlock_next_module_on_submit se dispara
-    // automáticamente en la DB cuando attempt_number = 1.
-    // No hay lógica de desbloqueo aquí.
-    //
     const { data, error } = await this.client
       .from("assignment_submissions")
       .insert({
@@ -125,8 +114,6 @@ export class SupabaseSubmissionRepository implements ISubmissionRepository {
         enrollment_id: input.enrollmentId,
         attempt_number: input.attemptNumber,
         answers: input.answers,
-        // status DEFAULT 'pending_review' → no lo enviamos,
-        // la DB lo asigna y el trigger de feedback lo actualiza.
       })
       .select()
       .single();
@@ -137,6 +124,167 @@ export class SupabaseSubmissionRepository implements ISubmissionRepository {
       );
 
     return this.submissionRowToDomain(data as SubmissionRow);
+  }
+
+  // ── Cola de corrección (admin) ──────────────────────────────
+
+  async findAllPendingReview(): Promise<SubmissionReviewItem[]> {
+    //
+    // Estrategia: query base + batch fetches por IDs distintos,
+    // en vez de un embedding anidado de PostgREST. Es más código
+    // pero no depende de que PostgREST infiera correctamente las
+    // relaciones FK anidadas (module_assignments → modules →
+    // products → product_courses), que puede ser frágil si hay
+    // ambigüedad de nombres de constraint.
+    //
+
+    // 1. Submissions pendientes, las más antiguas primero
+    const { data: submissionRows, error: subError } = await this.client
+      .from("assignment_submissions")
+      .select("*")
+      .in("status", ["pending_review", "recovery_pending"])
+      .order("submitted_at", { ascending: true });
+
+    if (subError)
+      throw new Error(
+        `[SubmissionRepository.findAllPendingReview] ${subError.message}`,
+      );
+
+    const submissions = (submissionRows ?? []) as SubmissionRow[];
+    if (submissions.length === 0) return [];
+
+    // 2. IDs distintos para las consultas batch
+    const assignmentIds = [...new Set(submissions.map((s) => s.assignment_id))];
+    const studentIds = [...new Set(submissions.map((s) => s.student_id))];
+
+    // 3. Assignments → título + module_id
+    const { data: assignmentRows, error: aError } = await this.client
+      .from("module_assignments")
+      .select("id, title, module_id")
+      .in("id", assignmentIds);
+
+    if (aError)
+      throw new Error(
+        `[SubmissionRepository.findAllPendingReview] assignments: ${aError.message}`,
+      );
+
+    const moduleIds = [
+      ...new Set((assignmentRows ?? []).map((a) => a.module_id)),
+    ];
+
+    // 4. Modules → título + product_id
+    const { data: moduleRows, error: mError } = await this.client
+      .from("modules")
+      .select("id, title, product_id")
+      .in("id", moduleIds);
+
+    if (mError)
+      throw new Error(
+        `[SubmissionRepository.findAllPendingReview] modules: ${mError.message}`,
+      );
+
+    const productIds = [
+      ...new Set((moduleRows ?? []).map((m) => m.product_id)),
+    ];
+
+    // 5. Products (nombre) + product_courses (approval_min_score) en paralelo
+    const [
+      { data: productRows, error: pError },
+      { data: courseRows, error: cError },
+    ] = await Promise.all([
+      this.client.from("products").select("id, name").in("id", productIds),
+      this.client
+        .from("product_courses")
+        .select("product_id, approval_min_score")
+        .in("product_id", productIds),
+    ]);
+
+    if (pError)
+      throw new Error(
+        `[SubmissionRepository.findAllPendingReview] products: ${pError.message}`,
+      );
+    if (cError)
+      throw new Error(
+        `[SubmissionRepository.findAllPendingReview] product_courses: ${cError.message}`,
+      );
+
+    // 6. Profiles (email + username)
+    const { data: profileRows, error: profError } = await this.client
+      .from("profiles")
+      .select("id, email, username")
+      .in("id", studentIds);
+
+    if (profError)
+      throw new Error(
+        `[SubmissionRepository.findAllPendingReview] profiles: ${profError.message}`,
+      );
+
+    // ── Armar mapas de lookup O(1) ──────────────────────────────
+    const assignmentById = new Map(
+      (assignmentRows ?? []).map((a) => [a.id, a]),
+    );
+    const moduleById = new Map((moduleRows ?? []).map((m) => [m.id, m]));
+    const productById = new Map((productRows ?? []).map((p) => [p.id, p]));
+    const courseById = new Map(
+      (courseRows ?? []).map((c) => [c.product_id, c]),
+    );
+    const profileById = new Map((profileRows ?? []).map((p) => [p.id, p]));
+
+    // ── Combinar ─────────────────────────────────────────────
+    const items: SubmissionReviewItem[] = [];
+
+    for (const s of submissions) {
+      const assignment = assignmentById.get(s.assignment_id);
+      if (!assignment) continue; // integridad rota, saltar defensivamente
+
+      const module = moduleById.get(assignment.module_id);
+      if (!module) continue;
+
+      const product = productById.get(module.product_id);
+      const course = courseById.get(module.product_id);
+      const profile = profileById.get(s.student_id);
+
+      items.push({
+        submissionId: s.id,
+        assignmentId: s.assignment_id,
+        assignmentTitle: assignment.title,
+        moduleId: module.id,
+        moduleTitle: module.title,
+        courseId: module.product_id,
+        courseName: product?.name ?? "Curso desconocido",
+        approvalMinScore: course?.approval_min_score ?? 60,
+        studentId: s.student_id,
+        studentEmail: profile?.email ?? "",
+        studentUsername: profile?.username ?? "Alumna",
+        attemptNumber: s.attempt_number,
+        answers: s.answers,
+        submittedAt: s.submitted_at,
+        status: s.status as SubmissionStatus,
+      });
+    }
+
+    return items;
+  }
+
+  async createFeedback(
+    input: CreateModuleSubmissionFeedbackInput,
+  ): Promise<ModuleSubmissionFeedback> {
+    const { data, error } = await this.client
+      .from("assignment_feedback")
+      .insert({
+        submission_id: input.submissionId,
+        reviewer_id: input.reviewerId,
+        feedback_text: input.feedbackText,
+        score: input.score,
+        is_approved: input.isApproved,
+      })
+      .select()
+      .single();
+
+    if (error)
+      throw new Error(`[SubmissionRepository.createFeedback] ${error.message}`);
+
+    return this.feedbackRowToDomain(data as FeedbackRow);
   }
 
   // ── Mappers ────────────────────────────────────────────────
