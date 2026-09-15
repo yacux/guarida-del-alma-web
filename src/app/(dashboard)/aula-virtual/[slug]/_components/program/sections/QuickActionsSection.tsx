@@ -6,11 +6,10 @@
 // No tiene lógica de negocio: solo recibe props y compone.
 // ============================================================
 
-import { SessionCard } from "../../cards/SessionCard";
 import { CertificateCard } from "../../cards/CertificateCard";
 import { CommunityCard } from "../../cards/CommunityCard";
 import { LiveSessionCard } from "../../cards/LiveSessionCard";
-import { UpcomingSessionItem } from "../IndividualSessions/UpcomingSessions";
+import { SessionCard, type UpcomingSessionItem } from "../../cards/SessionCard";
 
 interface UpcomingLive {
   productName: string;
@@ -26,7 +25,8 @@ interface QuickActionsSectionProps {
   certificateAvailable: boolean;
   totalIncludedProducts: number;
   whatsappCommunityUrl?: string;
-  bookingUrl?: string;
+  productId?: string; // ← reemplaza bookingUrl
+  slug?: string; // ← nuevo
   certificateUrl?: string;
   upcomingLive?: UpcomingLive;
 }
@@ -38,7 +38,8 @@ export function QuickActionsSection({
   certificateAvailable,
   totalIncludedProducts,
   whatsappCommunityUrl,
-  bookingUrl,
+  productId,
+  slug,
   certificateUrl,
   upcomingLive,
 }: QuickActionsSectionProps) {
@@ -52,7 +53,8 @@ export function QuickActionsSection({
         <SessionCard
           remainingSessions={remainingSessions}
           totalSessions={totalSessions}
-          bookingUrl={bookingUrl}
+          productId={productId}
+          slug={slug}
         />
 
         <CertificateCard

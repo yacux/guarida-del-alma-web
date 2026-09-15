@@ -8,6 +8,7 @@
     podemos indicarle a TypeScript exactamente qué datos está manejando el webhook.
 */
 }
+import { createClient } from "@supabase/supabase-js";
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
@@ -17,6 +18,14 @@ import { SupabaseProfileRepository } from "@/infrastructure/repositories/supabas
 
 export async function POST(req: Request) {
   console.log("¡Webhook recibido en el servidor!");
+
+  const supabaseAdmin = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  );
+
+  const profileRepository = new SupabaseProfileRepository(supabaseAdmin);
+
   // 1. Validamos que el secreto del webhook exista en las variables de entorno
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
   if (!WEBHOOK_SECRET) {
@@ -63,7 +72,6 @@ export async function POST(req: Request) {
     // tambien instanciamos el caso de uso (CreateProfileUseCase),
     // al que le pasamos el repositorio concreto (SupabaseProfileRepository) para que lo use internamente.
     // el repositorio concreto (SupabaseProfileRepository) es el que se encarga de los detalles de cómo se guardan los datos.
-    const profileRepository = new SupabaseProfileRepository();
     const createProfileUseCase = new CreateProfileUseCase(profileRepository);
 
     try {

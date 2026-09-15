@@ -15,10 +15,7 @@ import { EmptyState } from "../shared/EmptyState";
 import { QuickActionsSection } from "./sections/QuickActionsSection";
 import { IncludedProductsGrid } from "./IncludedProductsGrid";
 import { AnnouncementSection } from "./sections/AnnouncementSection";
-import {
-  UpcomingSessionItem,
-  UpcomingSessions,
-} from "./IndividualSessions/UpcomingSessions";
+import type { UpcomingSessionItem } from "../cards/SessionCard";
 
 interface ProgramContentProps {
   program: Program;
@@ -82,7 +79,8 @@ export function ProgramContent({
         certificateAvailable={certificateAvailable}
         totalIncludedProducts={includedProducts.length}
         whatsappCommunityUrl={program.whatsappCommunityUrl ?? undefined}
-        bookingUrl={bookingUrl}
+        productId={program.id}
+        slug={program.slug}
         certificateUrl={certificateUrl}
         upcomingLive={upcomingLive}
       />
@@ -90,21 +88,7 @@ export function ProgramContent({
       {/* 4. Video de bienvenida */}
       <WelcomeVideo welcomeVideoUrl={program.welcomeVideoUrl} />
 
-      {/* 5. Próximas sesiones individuales — solo si el programa las incluye */}
-      {/* {sessions > 0 && (
-        <section>
-          <h2 className="mb-1 text-xl font-semibold text-white">
-            Próximas sesiones
-          </h2>
-          <p className="mb-4 text-sm text-white/50">
-            Tus sesiones individuales agendadas con Hebe.
-          </p>
-
-          <UpcomingSessions sessions={upcomingSessions} />
-        </section>
-      )} */}
-
-      {/* 6. productos incluidos del programa (contenido) */}
+      {/* 5. productos incluidos del programa (contenido) */}
       <section>
         <h2 className="mb-1 text-xl font-semibold text-white">
           Contenido del programa
