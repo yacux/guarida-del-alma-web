@@ -92,7 +92,9 @@ export function BookingModal({
       return;
     }
     setError(
-      "No pudimos confirmar la reserva. Intentá de nuevo en unos minutos.",
+      result.outcome === "calendar_error"
+        ? `Debug: ${result.error}` // ← temporal, para ver el motivo real
+        : "No pudimos confirmar la reserva. Intentá de nuevo en unos minutos.",
     );
   }
 
