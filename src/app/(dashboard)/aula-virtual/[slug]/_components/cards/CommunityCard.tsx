@@ -24,7 +24,7 @@ interface CommunityCardProps {
 export function CommunityCard({ whatsappUrl }: CommunityCardProps) {
   return (
     <BaseActionCard
-      title="Comunidad WhatsApp"
+      title="Comunidades de WhatsApp"
       className="bg-guarida-forest"
       icon={<Users className="h-5 w-5 text-emerald-400" />}
       footer={<CommunityFooter whatsappUrl={whatsappUrl} />}

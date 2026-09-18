@@ -32,6 +32,8 @@ export function WorkshopContent({
         productType="workshop"
       />
 
+      {/* <LastLivesSection /> */}
+
       <AnnouncementSection
         announcements={announcements}
         allAnnouncementsHref={allAnnouncementsHref}

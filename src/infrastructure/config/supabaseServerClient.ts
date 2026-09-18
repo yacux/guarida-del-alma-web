@@ -11,8 +11,13 @@ export async function createSupabaseServerClient() {
 
   // 2. Solicitamos el token JWT que Clerk generó específicamente para Supabase.
   // con este jwt vamos a poder entrar a supabase y mostrarle para que sepa quien es el alumno. en base a eso supabase me mostrara su data.
-  // Nota: Requiere haber configurado la integración (JWT Template) en el dashboard de Clerk con el nombre 'supabase'
-  const token = await getToken({ template: "supabase" });
+  // Nota: cada entorno usa su propio JWT Template en Clerk, porque cada uno apunta a un Supabase
+  // distinto (local en Docker para desarrollo, proyecto real en producción) con su propio JWT secret.
+  // - "supabase": firmado con el secreto default de Supabase local (Docker).
+  // - "supabase-producion": firmado con el legacy JWT secret del proyecto real de Supabase.
+  // Se controla con la env var CLERK_SUPABASE_JWT_TEMPLATE (seteada en Vercel → Production).
+  const templateName = process.env.CLERK_SUPABASE_JWT_TEMPLATE || "supabase";
+  const token = await getToken({ template: templateName });
 
   // 3. Retornamos el cliente de Supabase inyectando el token en las cabeceras globales
   return createClient(

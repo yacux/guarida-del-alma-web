@@ -74,7 +74,7 @@ export function SessionCard({
     <>
       <BaseActionCard
         className="bg-guarida-fuchsia/20"
-        title="Sesiones individuales"
+        title="Sesiones Individuales"
         icon={<CalendarDays className="h-5 w-5 text-guarida-fuchsia" />}
         footer={
           <button
@@ -83,7 +83,7 @@ export function SessionCard({
             className={[
               "flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-medium transition-opacity",
               canBook
-                ? "bg-guarida-fuchsia/20 text-guarida-fuchsia hover:opacity-80"
+                ? "bg-guarida-fuchsia/20 text-white/80 hover:opacity-80"
                 : "cursor-not-allowed bg-white/5 text-white/30",
             ].join(" ")}
           >

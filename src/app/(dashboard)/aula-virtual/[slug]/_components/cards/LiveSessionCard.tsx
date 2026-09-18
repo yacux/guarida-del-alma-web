@@ -54,9 +54,9 @@ function formatTime(iso: string) {
 export function LiveSessionCard({ upcomingLive }: LiveSessionCardProps) {
   return (
     <BaseActionCard
-      title="Próxima sesión grupal"
+      title="Sesiones Grupales"
       className="bg-guarida-dark-violet"
-      icon={<Video className="h-5 w-5 text-guarida-fuchsia" />}
+      icon={<Video className="h-5 w-5 text-guarida-sky" />}
       footer={<LiveSessionFooter upcomingLive={upcomingLive} />}
     >
       {upcomingLive ? (
@@ -92,7 +92,7 @@ function LiveSessionFooter({ upcomingLive }: LiveSessionFooterProps) {
     return (
       <button
         disabled
-        className="flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl bg-white/5 py-2.5 text-sm font-medium text-white/30"
+        className="flex w-full cursor-not-allowed items-center justify-center bg-white/5 gap-2 rounded-xl py-2.5 text-sm font-medium text-white/30"
       >
         Sin sesiones próximas
       </button>
@@ -102,7 +102,7 @@ function LiveSessionFooter({ upcomingLive }: LiveSessionFooterProps) {
   return (
     <a
       href={upcomingLive.href}
-      className="flex w-full items-center justify-center gap-2 rounded-xl bg-guarida-violet py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-80"
+      className="flex w-full items-center justify-center gap-2 rounded-xl bg-guarida-sky/30 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-80"
     >
       Ir al contenido
       <ArrowRight className="h-3.5 w-3.5" />
