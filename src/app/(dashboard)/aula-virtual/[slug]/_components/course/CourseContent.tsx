@@ -40,10 +40,7 @@ export function CourseContent({
       />
 
       {/* 2. Anuncio destacado — solo si hay anuncios */}
-      <AnnouncementSection
-        announcements={announcements}
-        allAnnouncementsHref={allAnnouncementsHref}
-      />
+      <AnnouncementSection announcements={announcements} />
 
       {/* 3. Video de bienvenida */}
       <WelcomeVideo welcomeVideoUrl={course.welcomeVideoUrl} />

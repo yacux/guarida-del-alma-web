@@ -34,10 +34,7 @@ export function WorkshopContent({
 
       {/* <LastLivesSection /> */}
 
-      <AnnouncementSection
-        announcements={announcements}
-        allAnnouncementsHref={allAnnouncementsHref}
-      />
+      <AnnouncementSection announcements={announcements} />
 
       <WelcomeVideo welcomeVideoUrl={workshop.welcomeVideoUrl} />
 
