@@ -10,7 +10,7 @@ import SpaceForYou from "./components/SpaceForYou";
 import TransformationPrograms from "./components/TransformationPrograms";
 
 export const metadata: Metadata = {
-  title: "La Guarida del Alma | Coaching, Bienestar y Sanación Integral",
+  title: "La Guarida del Alma | Bienestar, Coaching y Sanación Integral",
   description:
     "Acompañamiento holístico con Hebe: coaching mente-cuerpo-emociones, PNL, bioneuroemoción, danza terapia e hipnosis. Transformá tu bienestar desde adentro.",
   openGraph: {

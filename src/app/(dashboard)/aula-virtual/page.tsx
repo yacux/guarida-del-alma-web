@@ -4,7 +4,7 @@ import { createSupabaseServerClient } from "@/infrastructure/config/supabaseServ
 import { SupabaseEnrollmentRepository } from "@/infrastructure/repositories/supabase-enrollment.repository";
 import { SupabaseProductRepository } from "@/infrastructure/repositories/supabase-product.repository";
 import { GetStudentDashboardUseCase } from "@/application/use-cases/get-student-dashboard/get-student-dashboard.UseCase";
-import StudentDashboardGrid from "./components/StudentDashboardGrid";
+import StudentDashboardGrid from "./_components/StudentDashboardGrid";
 
 export default async function AulaVirtualPage() {
   const { userId } = await auth();

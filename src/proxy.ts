@@ -1,4 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { can } from "@/core/auth/can";
+import { Permission } from "@/core/auth/permission";
 
 const isPublicRoute = createRouteMatcher([
   "/",
@@ -15,16 +17,29 @@ export default clerkMiddleware(async (auth, request) => {
     await auth.protect();
   }
 
-  // Más adelante:
-  //
-  // if (isAdminRoute(request)) {
-  //    ...
-  // }
+  if (isAdminRoute(request)) {
+    const { sessionClaims, redirectToSignIn } = await auth();
+
+    console.log("LA METADATA: ", sessionClaims?.metadata);
+
+    // Por si acaso: sin sesión, no debería llegar hasta acá
+    // (auth.protect() ya lo habría redirigido), pero se cubre igual.
+    if (!sessionClaims) {
+      console.log("NO HAY SESSION CLAIMS");
+      return redirectToSignIn();
+    }
+
+    const role = sessionClaims?.metadata?.role;
+    console.log("rol del PANA" + role);
+
+    if (!can(role, Permission.ViewAdminDashboard)) {
+      const dashboardUrl = new URL("/aula-virtual", request.url);
+      return Response.redirect(dashboardUrl);
+    }
+  }
 });
 
 export const config = {
-  // Este matcher le dice a Next.js que ejecute el middleware en TODO,
-  // menos en archivos estáticos (imágenes, fuentes, css)
   matcher: [
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
     "/(api|trpc)(.*)",

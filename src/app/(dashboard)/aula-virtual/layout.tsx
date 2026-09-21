@@ -1,8 +1,8 @@
 "use client";
 import { TimezoneProvider } from "@/shared/timezone/TimezoneProvider";
 import React, { useState } from "react";
-import DashboardSidebar from "./components/DashboardSidebar";
-import DashboardHeader from "./components/DashboardHeader";
+import DashboardSidebar from "./_components/DashboardSidebar";
+import DashboardHeader from "./_components/DashboardHeader";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;

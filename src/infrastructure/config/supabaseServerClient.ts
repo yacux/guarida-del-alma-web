@@ -7,7 +7,7 @@ import { auth } from "@clerk/nextjs/server";
  */
 export async function createSupabaseServerClient() {
   // 1. Obtenemos el control de la sesión de Clerk en el servidor.
-  const { getToken } = await auth();
+  const { getToken, userId } = await auth();
 
   // 2. Solicitamos el token JWT que Clerk generó específicamente para Supabase.
   // con este jwt vamos a poder entrar a supabase y mostrarle para que sepa quien es el alumno. en base a eso supabase me mostrara su data.
@@ -18,6 +18,9 @@ export async function createSupabaseServerClient() {
   // Se controla con la env var CLERK_SUPABASE_JWT_TEMPLATE (seteada en Vercel → Production).
   const templateName = process.env.CLERK_SUPABASE_JWT_TEMPLATE || "supabase";
   const token = await getToken({ template: templateName });
+
+  console.log("👀 [Supabase Client] UserId de Clerk:", userId);
+  console.log("👀 [Supabase Client] ¿Hay Token para Supabase?:", !!token);
 
   // 3. Retornamos el cliente de Supabase inyectando el token en las cabeceras globales
   return createClient(

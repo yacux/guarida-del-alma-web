@@ -15,4 +15,10 @@ export interface IProductRepository {
    * Usado por: GetProductDetailUseCase, GetProgramContentsUseCase
    */
   findBySlug(slug: string): Promise<Product | null>;
+
+  /**
+   * Recupera todos los productos activos.
+   * Usado por: GetActiveProductsUseCase  (ejecutado por el admin, no por un alumno)
+   */
+  findAllActive(): Promise<Product[]>;
 }

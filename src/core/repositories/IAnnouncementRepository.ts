@@ -8,7 +8,10 @@
 // Solo sabe que puede pedir los avisos de un producto.
 // ============================================================
 
-import type { Announcement } from "../entities/Announcement";
+import type {
+  Announcement,
+  CreateAnnouncementInput,
+} from "../entities/Announcement";
 import type { UUID } from "../entities/shared";
 
 export interface IAnnouncementRepository {
@@ -21,4 +24,6 @@ export interface IAnnouncementRepository {
    * - Programa "Flor de Loto"
    */
   findByProductId(productId: UUID): Promise<Announcement[]>;
+
+  create(input: CreateAnnouncementInput): Promise<Announcement>;
 }

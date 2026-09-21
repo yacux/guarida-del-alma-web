@@ -66,10 +66,7 @@ export function ProgramContent({
       />
 
       {/* 2. Anuncio destacado — solo si hay anuncios */}
-      <AnnouncementSection
-        announcements={announcements}
-        allAnnouncementsHref={allAnnouncementsHref}
-      />
+      <AnnouncementSection announcements={announcements} />
 
       {/* 3. Accesos y acciones rápidas */}
       <QuickActionsSection

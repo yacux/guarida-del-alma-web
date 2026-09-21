@@ -19,6 +19,8 @@ export interface IProfileRepository {
   // update(profile: Profile): Promise<Profile>;
 
   findById(ProfileId: string): Promise<Profile>; // encontrar un perfil mediante el id
+
+  findAllStudents(): Promise<Profile[]>;
 }
 
 // ¿Por qué no lleva llaves {}?

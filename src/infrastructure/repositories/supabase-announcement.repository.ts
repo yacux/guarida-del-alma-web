@@ -7,7 +7,10 @@
 
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { IAnnouncementRepository } from "@/core/repositories/IAnnouncementRepository";
-import type { Announcement } from "@/core/entities/Announcement";
+import type {
+  Announcement,
+  CreateAnnouncementInput,
+} from "@/core/entities/Announcement";
 import type { UUID } from "@/core/entities/shared";
 
 // Shape cruda de la fila en Supabase
@@ -44,6 +47,25 @@ export class SupabaseAnnouncementRepository implements IAnnouncementRepository {
     if (!data || data.length === 0) return [];
 
     return data.map((row: AnnouncementRow) => this.toDomain(row));
+  }
+
+  async create(input: CreateAnnouncementInput): Promise<Announcement> {
+    const { data, error } = await this.client
+      .from("announcements")
+      .insert({
+        product_id: input.productId,
+        meeting_id: input.meetingId,
+        author_id: input.authorId,
+        title: input.title,
+        content: input.content,
+        is_pinned: input.isPinned,
+      })
+      .select()
+      .single();
+
+    if (error)
+      throw new Error(`[AnnouncementRepository.create] ${error.message}`);
+    return this.toDomain(data); // usar el mapper privado ya existente
   }
 
   private toDomain(row: AnnouncementRow): Announcement {

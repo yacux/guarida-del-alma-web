@@ -2,8 +2,8 @@
 // src/app/(dashboard)/aula-virtual/_components/program/sections/AnnouncementSection.tsx
 //
 // Sección de avisos del programa.
-// Muestra el aviso más reciente/pinneado como banner.
-// Si no hay avisos, no renderiza nada (null).
+// Muestra el aviso más reciente/pinneado como banner y pasa
+// todo el historial de avisos para abrir el modal.
 // ============================================================
 
 import type { Announcement } from "@/core/entities/Announcement";
@@ -11,16 +11,13 @@ import { AnnouncementCard } from "../../cards/AnnouncementCard";
 
 interface AnnouncementSectionProps {
   announcements: Announcement[];
-  allAnnouncementsHref?: string;
 }
 
 export function AnnouncementSection({
   announcements,
-  allAnnouncementsHref,
 }: AnnouncementSectionProps) {
-  // El repositorio ya devuelve los anuncios ordenados:
-  // pinneados primero, después por fecha desc.
-  // Mostramos solo el primero como banner destacado.
+  // El repositorio ya devuelve los anuncios ordenados.
+  // Tomamos el primero para el banner principal.
   const latest = announcements[0];
 
   if (!latest) return null;
@@ -28,7 +25,7 @@ export function AnnouncementSection({
   return (
     <AnnouncementCard
       announcement={latest}
-      allAnnouncementsHref={allAnnouncementsHref}
+      allAnnouncements={announcements} // 👈 Le pasamos la lista completa de anuncios para el Modal
     />
   );
 }
