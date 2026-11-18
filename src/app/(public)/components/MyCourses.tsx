@@ -32,11 +32,12 @@ export default function MyCourses() {
           className="w-12 h-12 mx-auto text-guarida-fuchsia"
         />
       ),
-      title: "curso de amor \n propio",
-      description: "Un viaje de 8 semanas hacia tu centro.",
-      href: "/cursos/amor-propio",
-      cta: "Quiero mi transformación",
-      srcImg: "/servicios/amor-propio.png",
+      title: "Renacer del \n abuso narcisista",
+      description:
+        "Sana y renacé del abuso narcisista a través de la danza terapéutica.",
+      href: "/cursos/renacer-abuso-narcisista",
+      cta: "Ver curso",
+      srcImg: "/servicios/renacer-luego-abuso-narcisista.jpeg",
     },
     {
       title: `curso de danza \n terapia`,

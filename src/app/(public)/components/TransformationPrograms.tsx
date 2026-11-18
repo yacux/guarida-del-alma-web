@@ -19,12 +19,12 @@ const programsData = [
         Acceso a la plataforma por <strong>6 meses</strong>.
       </>,
       <>
-        Incluye curso <strong>"Amor Propio"</strong> y talleres{" "}
-        <strong>"Desata tu Voz"</strong> y{" "}
-        <strong>"Renacer del Abuso Narcisista"</strong>.
+        Incluye los cursos <strong>"Amor Propio"</strong> y{" "}
+        <strong>"Renacer del Abuso Narcisista"</strong> y el taller{" "}
+        <strong>"Desata tu Voz"</strong>.
       </>,
       <>
-        <strong>8 sesiones individuales</strong> (Mentoria, PNL, Hipnosis y
+        <strong>6 sesiones individuales</strong> (Mentoria, PNL, Hipnosis y
         Coaching).
       </>,
       <>2 encuentros especiales de profundización de los talleres</>,

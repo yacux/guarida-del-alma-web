@@ -7,11 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "tunnel": "ngrok http --url=snuff-applied-preface.ngrok-free.dev 3000"
+    "tunnel": "ngrok http --config \"%LOCALAPPDATA%\\ngrok\\guarida.yml\" --url=snuff-applied-preface.ngrok-free.dev 3000"
   },
   "dependencies": {
     "@clerk/localizations": "^4.9.2",
-    "@clerk/nextjs": "^7.5.7",
+    "@clerk/nextjs": "^7.9.23",
     "@supabase/supabase-js": "^2.106.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

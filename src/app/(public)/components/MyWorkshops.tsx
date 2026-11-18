@@ -24,13 +24,13 @@ export default function MyWorkshops() {
   ];
 
   const MAIN_WORKSHOPS = [
-    {
-      title: "Renacer del \n abuso narcisista",
-      description: "Contá historias que conectan de verdad.",
-      href: "/talleres/video-creativo",
-      cta: "Ver taller",
-      srcImg: "/servicios/renacer-luego-abuso-narcisista.jpeg",
-    },
+    // {
+    //   title: "Renacer del \n abuso narcisista",
+    //   description: "Contá historias que conectan de verdad.",
+    //   href: "/talleres/video-creativo",
+    //   cta: "Ver taller",
+    //   srcImg: "/servicios/renacer-luego-abuso-narcisista.jpeg",
+    // },
     {
       title: "Desata tu \n voz ",
       description: "Tu voz como herramienta de transformación.",
