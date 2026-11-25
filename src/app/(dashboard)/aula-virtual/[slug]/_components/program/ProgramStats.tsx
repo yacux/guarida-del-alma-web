@@ -25,7 +25,7 @@ export function ProgramStats({
       label: "Sesiones individuales",
       value:
         individualSessionsCount > 0
-          ? `${individualSessionsCount} sesiones`
+          ? `${individualSessionsCount} sesionessss`
           : "No incluidas",
     },
     {

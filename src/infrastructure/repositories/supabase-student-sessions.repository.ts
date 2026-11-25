@@ -26,6 +26,7 @@ export class SupabaseStudentSessionsRepository implements IStudentSessionsReposi
       .eq("student_id", params.studentId)
       .eq("product_id", params.productId)
       .eq("status", "active")
+      .gt("expires_at", new Date().toISOString())
       .maybeSingle();
 
     if (error) {
