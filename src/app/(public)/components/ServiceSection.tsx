@@ -96,7 +96,7 @@ export default function ServiceSection({
                 key={`${service.title}-${index}`}
                 className="basis-[84%] sm:basis-[72%] md:basis-[60%]"
               >
-                <div className="h-full">
+                <div className="gap-20">
                   <ServiceCard {...service} />
                 </div>
               </CarouselItem>
