@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Hero from "./components/Hero";
-import MyCourses from "./components/MyCourses";
-import MyWorkshops from "./components/MyWorkshops";
+import MyCoursesAndWorkshops from "./components/MyCoursesAndWorkshops";
 import Testimonies from "./components/Testimonies";
 import FeaturedProducts from "./components/FeaturedProducts";
 import SpaceForYou from "./components/SpaceForYou";
@@ -128,8 +127,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* ── CURSOS PRINCIPALES ───────────────────────────────── */}
-      <MyCourses />
+      {/* ── CURSOS y TALLERES ───────────────────────────────── */}
+      <MyCoursesAndWorkshops />
 
       {/* ── 6. ACOMPAÑAMIENTO INDIVIDUAL ───────────────────────── */}
       <section
@@ -163,9 +162,6 @@ export default function Home() {
           </Link>
         </div>
       </section>
-
-      {/* ── TALLERES ────────────────────────────────────────── */}
-      <MyWorkshops />
 
       {/* ── PROGRAMAS DE TRANSFORMACIÓN ─────────────────────── */}
       <TransformationPrograms />

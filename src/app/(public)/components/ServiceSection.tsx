@@ -1,7 +1,16 @@
-import ServiceCard from "./ServiceCard";
-import Image from "next/image";
+"use client";
 
-interface Benefit {
+import ServiceCard from "./ServiceCard";
+import type { ProductType } from "@/core/entities/shared";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+
+export interface Benefit {
   texto: string;
   resaltado?: string;
   extra?: string;
@@ -9,12 +18,14 @@ interface Benefit {
   onlyText?: boolean;
 }
 
-interface ServiceData {
+export interface ServiceData {
   title: string;
   description: string;
   href: string;
   cta: string;
   srcImg: string;
+  productType?: ProductType;
+  priceArs?: number;
 }
 
 interface ServiceSectionProps {
@@ -33,81 +44,73 @@ export default function ServiceSection({
   inverted = false,
 }: ServiceSectionProps) {
   return (
-    <section className="relative h-full py-20 bg-violet-50 overflow-hidden">
-      {/* Gradiantes de desvanecimiento horizontales*/}
-      <div className="bg-linear-to-b from-violet-50 to-transparent z-30 absolute top-0 w-full h-12 sm:h-20" />
-      <div className="bg-linear-to-t from-violet-50 to-transparent z-30 absolute bottom-0 w-full h-12 sm:h-20" />
-      {/* Gradiantes de desvanecimiento verticales */}
-      <div className="bg-linear-to-l from-transparent to-violet-50 z-30 absolute top-0 left-0 h-full w-10 sm:w-20" />
-      <div className="bg-linear-to-r from-transparent to-violet-50 z-30 absolute top-0 right-0 h-full w-10 sm:w-20" />
-
-      {/* Fondo decorativo (Ondas) */}
-      {/* Aplicamos rotación inversa y alineación según la prop 'inverted' */}
+    <div className="container-guarida grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-20 items-center relative z-10">
+      {/* Columna de Contenido (Título + Beneficios) */}
       <div
-        className={`left-0 absolute ${inverted ? "-rotate-14" : "-rotate-33"} md:${inverted ? "" : "rotate-52"} w-[160%] md:w-[116%] top-20 md:top-0 inset-0 pointer-events-none`}
+        className={`lg:col-span-2 relative z-10 content-center ${inverted ? "lg:order-last" : ""}`}
       >
-        {/* <Image
-          src="/onda.svg"
-          alt="onda"
-          fill
-          className="opacity-16 object-cover "
-        /> */}
-        <Image
-          src="/onda.svg"
-          alt="onda"
-          width={3000}
-          height={1000}
-          className="translate-y-1/5 opacity-12 object-cover absolute"
-        />
-        <Image
-          src="/onda2.svg"
-          alt="onda"
-          width={3000}
-          height={1000}
-          className="translate-y-1/6 object-cover opacity-27"
-        />
-      </div>
+        <h2 className="text-4xl md:text-5xl font-spiritual text-guarida-violet mb-8">
+          {title}
+          <span className="italic text-guarida-fuchsia">{strongTitle}</span>
+        </h2>
 
-      <div className="container-guarida grid grid-cols-1 lg:grid-cols-2 gap-20 relative">
-        {/* Columna de Contenido (Título + Beneficios) */}
-        {/* order-last en LG hará que se mueva a la derecha si está invertido */}
-        <div
-          className={`relative z-10 content-center ${inverted ? "lg:order-last" : ""}`}
-        >
-          <h2 className="text-4xl md:text-5xl font-spiritual text-guarida-violet mb-8">
-            {title}
-            <span className="italic text-guarida-fuchsia">{strongTitle}</span>
-          </h2>
-
-          <ul className="space-y-4 text-guarida-violet/94 text-lg leading-relaxed max-w-md">
-            {benefits.map((item, index) => (
-              <li key={`benefit-${index}`} className="flex items-start gap-3">
-                <span className="text-guarida-fuchsia mt-0.5 text-xl">✓</span>
-                {item.onlyText ? (
-                  <span className="italic">{item.texto}</span>
-                ) : (
-                  <span>
-                    {item.texto}
-                    <strong
-                      className={`text-guarida-fuchsia font-medium ${item.isItalic ? "italic" : ""}`}
-                    >
-                      {item.resaltado}
-                    </strong>
-                    {item.extra}
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Columna de Cards */}
-        <div className="relative z-10 flex flex-col gap-10 justify-center pt-6">
-          {services.map((service, index) => (
-            <ServiceCard key={`${service.title}-${index}`} {...service} />
+        <ul className="space-y-4 text-guarida-violet/94 text-lg leading-relaxed max-w-md">
+          {benefits.map((item, index) => (
+            <li key={`benefit-${index}`} className="flex items-start gap-3">
+              <span className="text-guarida-fuchsia mt-0.5 text-xl">✓</span>
+              {item.onlyText ? (
+                <span className="italic">{item.texto}</span>
+              ) : (
+                <span>
+                  {item.texto}
+                  <strong
+                    className={`text-guarida-fuchsia font-medium ${item.isItalic ? "italic" : ""}`}
+                  >
+                    {item.resaltado}
+                  </strong>
+                  {item.extra}
+                </span>
+              )}
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
-    </section>
+
+      {/* Columna de Cards con Carrusel en eje X y adelanto visual */}
+      <div className="relative z-10 w-full min-w-0 lg:col-span-3">
+        <Carousel
+          opts={{
+            align: "start",
+            loop: false,
+            slidesToScroll: 1,
+          }}
+          className="w-full relative"
+        >
+          {/* Gradientes de desvanecimiento verticales */}
+
+          <CarouselContent className="relative p-4">
+            <div className="bg-linear-to-l from-transparent to-violet-50/70 z-30 absolute top-0 left-0 h-full w-3 sm:w-5 pointer-events-none" />
+            <div className="bg-linear-to-r from-transparent to-violet-50/70 z-30 absolute top-0 right-0 h-full w-3 sm:w-5 pointer-events-none" />
+            {services.map((service, index) => (
+              <CarouselItem
+                key={`${service.title}-${index}`}
+                className="basis-[84%] sm:basis-[72%] md:basis-[60%]"
+              >
+                <div className="h-full">
+                  <ServiceCard {...service} />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+
+          {services.length > 1 && (
+            <div className="flex items-center justify-end gap-3 mt-3 pr-2">
+              <CarouselPrevious className="static translate-y-0 border-guarida-fuchsia/30 text-guarida-violet hover:bg-guarida-fuchsia hover:text-white cursor-pointer" />
+              <CarouselNext className="static translate-y-0 border-guarida-fuchsia/30 text-guarida-violet hover:bg-guarida-fuchsia hover:text-white cursor-pointer" />
+            </div>
+          )}
+        </Carousel>
+      </div>
+    </div>
   );
 }

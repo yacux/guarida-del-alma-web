@@ -2,8 +2,11 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import "./globals.css";
-import { Inter, Raleway } from "next/font/google";
+import { Inter, Raleway, Geist } from "next/font/google";
 import { esES } from "@clerk/localizations";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${inter.variable} ${raleway.variable}`}>
+    <html lang="es" className={cn(inter.variable, raleway.variable, "font-sans", geist.variable)}>
       <body className="min-h-screen flex flex-col bg-linear-to-r via-35% from-guarida-violet via-guarida-dark-violet to-guarida-dark-violet text-guarida-violet">
         <ClerkProvider localization={esES}>{children}</ClerkProvider>
       </body>
